@@ -9,41 +9,23 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:outputLabel value="Nombre: *"/>
-            <p:inputText value="#{pruebaController.persona.nombre}" required="true" requiredMessage="Nombre es un campo obligatorio"
-            />
-            
-            <p:outputLabel value="Apellido1: *"/>
-            <p:inputText value="#{pruebaController.persona.apellido1}" required="true" requiredMessage="Nombre es un campo obligatorio"
-            />
-            
-            <p:outputLabel value="Apellido2: *"/>
-            <p:inputText value="#{pruebaController.persona.apellido2}" required="true" requiredMessage="Nombre es un campo obligatorio"
-            />
-            
-            <p:outputLabel value="Sexo: "/>
-            <p:selectOneButton value="#{pruebaController.persona.sexo}" >
-                <f:selectItem itemLabel="Masculino" itemValue="M"/>
-                <f:selectItem itemLabel="Femenino" itemValue="F"/>
-            </p:selectOneButton>
-            
-             <p:outputLabel value="Fecha de nacimiento: *"/>
-             <p:calendar  value="#{pruebaController.persona.fechaNacimiento}" required="true" requiredMessage="Fecha de nacimiento es un campo obligatorio"
-                         id="popup"/>
-             
-             <p:outputLabel value="Direccion: *"/>
-             <p:inputText value="#{pruebaController.persona.direccion}" required="true" requiredMessage="Nombre es un campo obligatorio"
-            />
-             
-             <p:outputLabel value="Telefono: *"/>
-             <p:inputText value="#{pruebaController.persona.telefono}" required="true" requiredMessage="Nombre es un campo obligatorio"
-           />
-             <p:outputLabel value="NumeroSS *"/>
-             <p:inputText value="#{pruebaController.persona.numeroSS}" required="true" requiredMessage="Nombre es un campo obligatorio"
-            />
-             
-             <p:commandButton value="Registrar" update="@form" action="#{pruebaController.insertarPersona()}"></p:commandButton>
+            <h1>Bienvenido! Inicia sesión con tu cuenta de usuario o regístrate para acceder a esta aplicación</h1>
+                <div id="usuario">
+                    <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
+                            <p:outputLabel value="Nombre de usuario: "/>
+                            <p:inputText value="#{indexController.usuario.user}" required="true" requiredMessage="Completa el nombre de usuario para iniciar sesión"
+                                         id="txtNombre"/>
+                            <p:message for="txtNombre"/>
 
+                            <p:outputLabel value="Contraseña: "/>
+                            <p:password id="contra1" value="#{indexController.usuario.password}" required="true" requiredMessage="Introduce tu contraseña para iniciar sesión"/>
+                            <p:message for="contra1"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: flex-end">
+                        <p:commandButton value="Iniciar Sesión" update="@form" ></p:commandButton>
+                        <p:commandButton value="Registrar" action="#{indexController.registrar()}"></p:commandButton>
+                    </p:panelGrid>
+                </div>        
         </h:form>
     </h:body>
 </html>
