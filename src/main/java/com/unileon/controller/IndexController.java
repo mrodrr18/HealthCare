@@ -10,6 +10,7 @@ import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -33,9 +34,21 @@ public class IndexController implements Serializable{
        
     }
     
+     public String verificarUsuario(){
+        
+        //Si no es correcto
+        return "/Publico/permisosInsuficientes?faces-redirect=true";
+        
+        //Si es un usuario correcto
+        //return "/privado/inicio?faces-redirect=true";
+        
+    }
+    
     public String registrar(){
+        //EN modo produccion quitar ?faces-redirect=true
         return "/Publico/altausuario?faces-redirect=true";
     }
+    
     
     public Usuario getUsuario() {
         return usuario;

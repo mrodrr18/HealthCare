@@ -6,8 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="index.css" />
     </h:head>
-    <h:body>
+    <h:body id="principal">
         <h:form>
             <h1>Bienvenido! Inicia sesión con tu cuenta de usuario o regístrate para acceder a esta aplicación</h1>
                 <div id="usuario">
@@ -22,7 +23,7 @@
                             <p:message for="contra1"/>
                     </p:panelGrid>
                     <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: flex-end">
-                        <p:commandButton value="Iniciar Sesión" update="@form" ></p:commandButton>
+                        <p:commandButton value="Iniciar Sesión" update="@form" action="#{indexController.verificarUsuario()}"></p:commandButton>
                         <p:commandButton value="Registrar" action="#{indexController.registrar()}"></p:commandButton>
                     </p:panelGrid>
                 </div>        

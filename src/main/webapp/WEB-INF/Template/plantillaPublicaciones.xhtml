@@ -2,30 +2,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />        
         <h:outputStylesheet library = "css" name = "default.css"  />
         <h:outputStylesheet library = "css" name = "cssLayout.css"  />
+        <f:event type="preRenderView" listener="{#plantillaController.verificarYMostrar()}"/>
        
     </h:head>
 
     <h:body>
+        <h:form >
+            <div id="top" >
+                
+                <p:panelGrid columns="2" layout="grid" >
+                <ui:insert name="top">HealthCare</ui:insert>
+                <h:button value="Cerrar Sesión" outcome="#{plantillaController.cerrarSesion()}"></h:button>
+                </p:panelGrid>
 
-        <div id="top">
-            <ui:insert name="top">HealthCare</ui:insert>
-        </div>
+            </div>
 
-        <div id="content" class="center_content">
-            <ui:insert name="content">
-                <h1>HealthCare</h1>
-            </ui:insert>
-        </div>
+            <div id="content" class="center_content">
+                <ui:insert name="content">
+                    <h1>HealthCare</h1>
+                </ui:insert>
+            </div>
 
-        <div id="bottom">
-            <ui:insert name="bottom">Contacto</ui:insert>
-        </div>
+            <div id="bottom">
+                <ui:insert name="bottom">Contacto</ui:insert>
+            </div>
+        </h:form>
 
     </h:body>
 
