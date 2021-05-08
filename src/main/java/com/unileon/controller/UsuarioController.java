@@ -11,6 +11,8 @@ import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -42,6 +44,7 @@ public class UsuarioController implements Serializable{
             
             //CODIGO DE INSERTAR EN LA BASE DE DATOS, EL TIPO SIEMPRE AL ASIGNARSE DESDE
             //ALTAUSUARIO ES 2=PACIENTES, LOS OTROS DE FORMA MANUAL
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
         }catch(Exception e){
             System.err.println("Error al insertar usuario");
         }
