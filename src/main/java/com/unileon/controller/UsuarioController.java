@@ -44,6 +44,11 @@ public class UsuarioController implements Serializable{
             
             //CODIGO DE INSERTAR EN LA BASE DE DATOS, EL TIPO SIEMPRE AL ASIGNARSE DESDE
             //ALTAUSUARIO ES 2=PACIENTES, LOS OTROS DE FORMA MANUAL
+            usuario.setPersona(persona);
+            usuario.setTipo(2);
+            usuario.setUltimaConexion("prueba");
+        
+            usuarioEJB.create(usuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
         }catch(Exception e){
             System.err.println("Error al insertar usuario");

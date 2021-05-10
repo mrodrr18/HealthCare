@@ -5,19 +5,24 @@
  */
 package com.unileon.controller;
 
-import com.unileon.EJB.UsuarioFacadeLocal;
+import com.unileon.modelo.Persona;
 import com.unileon.modelo.Usuario;
+import com.unileon.EJB.UsuarioFacadeLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
  *
- * @author mrrtr
+ * @author usuario
  */
+
 @Named
 @ViewScoped
 public class IndexController implements Serializable{
@@ -34,22 +39,22 @@ public class IndexController implements Serializable{
        
     }
     
-     public String verificarUsuario(){
+    public String verificarUsuario(){
+        Usuario resultado = usuarioEJB.consultarUsuario(usuario);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", resultado);
+        System.out.println("ANTES DEL IF");
+        if(resultado == null) return "/publico/sinPrivilegios?faces-redirect=true";
+        else{ 
+            System.out.println("PRINT DEL ELSE");
+            return "/privado/inicio?faces-redirect=true";
         
-        //Si no es correcto
-        return "/Publico/permisosInsuficientes?faces-redirect=true";
-        
-        //Si es un usuario correcto
-        //return "/privado/inicio?faces-redirect=true";
-        
+        }
     }
     
     public String registrar(){
-        //EN modo produccion quitar ?faces-redirect=true
-        return "/Publico/altausuario?faces-redirect=true";
+        return "/publico/altausuario?faces-redirect=true";
     }
-    
-    
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -57,8 +62,14 @@ public class IndexController implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
+    public UsuarioFacadeLocal getUsuarioEJB() {
+        return usuarioEJB;
+    }
+
+    public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
+        this.usuarioEJB = usuarioEJB;
+    }    
     
     
 }
-    
