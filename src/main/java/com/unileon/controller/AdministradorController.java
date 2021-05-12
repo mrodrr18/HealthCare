@@ -27,8 +27,12 @@ public class AdministradorController implements Serializable{
     
     public String crearUsuario(){
         System.out.println("Crear nuevo usuario");
-         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "NUEVO ", "AÑADIDO");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+         
         return "/publico/altausuario?faces-redirect=true";
+    }
+    
+    public String verInventario(){
+         
+        return "/privado/inventarioVista?faces-redirect=true";
     }
 }
