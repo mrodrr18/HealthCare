@@ -15,16 +15,16 @@
     </h:head>
 
     <h:body>
-        <h:form >
+        <h:form> 
             <div id="top" >
                 
                 <p:panelGrid columns="3" layout="grid" style="align-content: center" >
                     
-                    <p:graphicImage library ="img" name="logo.gif"  width="200" height="100" />
+                    <p:graphicImage library ="img" name="logo.gif"  width="260" height="120" />
 
                     <ui:insert name="top">HealthCare</ui:insert>
-
-                    <h:button value="Cerrar Sesión" outcome="#{plantillaController.cerrarSesion()}"></h:button>
+                    
+                    <p:commandButton value="Cerrar Sesión" icon="pi pi-fw pi-power-off" action="#{plantillaController.cerrarSesion()}"/>
                     
                 </p:panelGrid>
 
@@ -40,7 +40,6 @@
                 <ui:insert name="bottom">Contacto</ui:insert>
             </div>
         </h:form>
-
     </h:body>
 
 </html>

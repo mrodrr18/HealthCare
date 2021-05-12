@@ -35,7 +35,7 @@ public class PlantillaController implements Serializable{
     }
     
     public String cerrarSesion(){
-        
+        System.out.println("Cierro Sesion");
         return "/index?faces-redirect=true";
     }
 }

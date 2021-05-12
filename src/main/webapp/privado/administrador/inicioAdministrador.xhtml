@@ -1,14 +1,31 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-                content
+                <h:form>
+                    <p:growl id="messages" showDetail="true"/>
+                    <p:menubar>
+                        <p:submenu label="Nuevo Usuario" icon="pi pi-fw pi-file">
+                            
+                            <p:menuitem value="Médico" icon="pi pi-fw pi-bookmark" update = "messages" action="#{administradorController.crearUsuario}"/>
+                            <p:menuitem value="Auxiliar" icon="pi pi-fw pi-bookmark" action="#{administradorController.crearUsuario}"/>
+                            <p:menuitem value="Paciente" icon="pi pi-fw pi-video" action="#{administradorController.crearUsuario}"/>
+                           
+                        </p:submenu>
+                        
+                        <p:menuitem value="Inventario" icon="pi pi-fw pi-align-left" ajax="false" action="#{administradorController.crearUsuario}"/>
+                        
+                    </p:menubar>
+                </h:form>
             </ui:define>
 
         </ui:composition>
