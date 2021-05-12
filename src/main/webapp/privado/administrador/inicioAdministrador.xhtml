@@ -16,9 +16,9 @@
                     <p:menubar>
                         <p:submenu label="Nuevo Usuario" icon="pi pi-fw pi-file">
                             
-                            <p:menuitem value="Médico" icon="pi pi-fw pi-bookmark" update = "messages" action="#{administradorController.crearUsuario}"/>
-                            <p:menuitem value="Auxiliar" icon="pi pi-fw pi-bookmark" action="#{administradorController.crearUsuario}"/>
-                            <p:menuitem value="Paciente" icon="pi pi-fw pi-video" action="#{administradorController.crearUsuario}"/>
+                            <p:menuitem value="Médico" icon="pi pi-fw pi-bookmark" outcome="#{administradorController.crearUsuario()}"/>
+                            <p:menuitem value="Auxiliar" icon="pi pi-fw pi-bookmark" outcome="#{administradorController.crearUsuario()}"/>
+                            <p:menuitem value="Paciente" icon="pi pi-fw pi-video" outcome="#{administradorController.crearUsuario()}"/>
                            
                         </p:submenu>
                         
