@@ -7,6 +7,7 @@ package com.unileon.controller;
 
 import com.unileon.modelo.Inventario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -24,7 +25,12 @@ public class InventarioController implements Serializable{
     private List<Inventario> listaProductos;
     @PostConstruct
     public void init(){
-       
+       listaProductos = new ArrayList <Inventario>();
+       Inventario producto = new Inventario();
+       producto.setNombre("Jeringuilla");
+       producto.setDescripcion("MARCA TAL");
+       producto.setUnidades(2);
+       listaProductos.add(producto);
     }
     
     /*public void insertarProducto(){
@@ -50,4 +56,12 @@ public class InventarioController implements Serializable{
         }
         
     }*/
+
+    public List<Inventario> getListaProductos() {
+        return listaProductos;
+    }
+
+    public void setListaProductos(List<Inventario> listaProductos) {
+        this.listaProductos = listaProductos;
+    }
 }

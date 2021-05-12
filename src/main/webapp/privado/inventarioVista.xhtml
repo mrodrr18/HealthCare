@@ -16,17 +16,17 @@
                 
                 <h:form>
                     <div class="card">
-                        <p:dataTable var="Producto" value="#{inventarioController.listaProductos}">
+                        <p:dataTable var="producto" value="#{inventarioController.listaProductos}">
                             <p:column headerText="Nombre">
-                                <h:outputText value="#{inventario.nombre}" />
+                                <h:outputText value="#{producto.nombre}" />
                             </p:column>
 
                             <p:column headerText="Descripción">
-                                <h:outputText value="#{inventario.descripcion}" />
+                                <h:outputText value="#{producto.descripcion}" />
                             </p:column>
 
                             <p:column headerText="Unidades">
-                                <h:outputText value="#{inventario.unidades}" />
+                                <h:outputText value="#{producto.unidades}" />
                             </p:column>
 
                             
