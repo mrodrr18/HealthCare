@@ -30,4 +30,9 @@ public class AdministradorController implements Serializable{
          
         return "/publico/altausuario?faces-redirect=true";
     }
+    
+    public String verInventario(){
+         
+        return "/privado/inventarioVista?faces-redirect=true";
+    }
 }
