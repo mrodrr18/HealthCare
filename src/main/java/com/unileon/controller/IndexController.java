@@ -46,9 +46,9 @@ public class IndexController implements Serializable{
         if(resultado == null) return "/publico/permisosInsuficientes?faces-redirect=true";
         else{ 
             System.out.println("PRINT DEL ELSE");
-            return "/privado/inicioMedico?faces-redirect=true";
-            //return "/privado/inicioAuxiliar?faces-redirect=true";
-            //return "/privado/inicioPaciente?faces-redirect=true";
+            return "/privado/medico/inicioMedico?faces-redirect=true";
+            //return "/privado/auxiliarinicioAuxiliar?faces-redirect=true";
+            //return "/privado/paciente/inicioPaciente?faces-redirect=true";
         
         }
     }

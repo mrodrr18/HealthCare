@@ -18,9 +18,14 @@
         <h:form >
             <div id="top" >
                 
-                <p:panelGrid columns="2" layout="grid" >
-                <ui:insert name="top">HealthCare</ui:insert>
-                <h:button value="Cerrar Sesión" outcome="#{plantillaController.cerrarSesion()}"></h:button>
+                <p:panelGrid columns="3" layout="grid" style="align-content: center" >
+                    
+                    <p:graphicImage library ="img" name="logo.gif"  width="200" height="100" />
+
+                    <ui:insert name="top">HealthCare</ui:insert>
+
+                    <h:button value="Cerrar Sesión" outcome="#{plantillaController.cerrarSesion()}"></h:button>
+                    
                 </p:panelGrid>
 
             </div>
