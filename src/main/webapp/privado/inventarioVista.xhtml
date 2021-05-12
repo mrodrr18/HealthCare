@@ -1,14 +1,38 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-                Soy el inventario
+                Soy el inventario. (Crud), tipo de Data Table + Header y footer de (Facets)+ (RowAdd) Ahí cojo lo de añadir nuevo
+                + (RowColor) si quedan menos de x unidades lo pone en rojo +(Scroll) si hay muchos articulos +
+                (Sizes) ver el tamaño mas adecuado + (Sort) ordenar + (Sticky HEader) util
+                
+                <h:form>
+                    <div class="card">
+                        <p:dataTable var="Producto" value="#{inventarioController.listaProductos}">
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{inventario.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Descripción">
+                                <h:outputText value="#{inventario.descripcion}" />
+                            </p:column>
+
+                            <p:column headerText="Unidades">
+                                <h:outputText value="#{inventario.unidades}" />
+                            </p:column>
+
+                            
+                        </p:dataTable>
+                    </div>
+                </h:form>
             </ui:define>
 
         </ui:composition>
