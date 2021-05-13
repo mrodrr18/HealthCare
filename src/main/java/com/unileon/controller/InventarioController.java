@@ -43,6 +43,10 @@ public class InventarioController implements Serializable{
        producto.setUnidades(8);
        listaProductos.add(producto);
     }
+    
+    public int numeroDeProductos(){
+        return listaProductos.size();
+    }
     public void nuevoProducto() {
         this.selectedProduct = new Inventario();
     }
@@ -82,6 +86,7 @@ public class InventarioController implements Serializable{
     }
 
     public void deleteSelectedProducts() {
+        System.out.println("Tamaño seleccionados: "+selectedProducts.size());
         this.listaProductos.removeAll(this.selectedProducts);
         this.selectedProducts = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos eliminados"));
