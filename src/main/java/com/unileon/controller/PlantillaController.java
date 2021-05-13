@@ -27,7 +27,7 @@ public class PlantillaController implements Serializable{
     public void verificarYMostrar(){
         try{
             
-            //if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/AppInso2/Publico/permisosinsuficientes.swII");
+            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/AppInso2/publico/permisosinsuficientes.swII");
 
         }catch(Exception e){
             System.err.println("Error en verificar y mostrar");
@@ -35,7 +35,11 @@ public class PlantillaController implements Serializable{
     }
     
     public String cerrarSesion(){
-        System.out.println("Cierro Sesion");
+        try{
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        }catch(Exception e){
+            System.err.println("Error al cerrar sesión");
+        }
         return "/index?faces-redirect=true";
     }
 }

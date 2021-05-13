@@ -37,9 +37,6 @@ public class Usuario implements Serializable{
     @Column(name="password")
     private String password;
     
-    @Column(name="ultimaConexion")
-    private String ultimaConexion;
-    
     @Column(name="tipo")
     private int tipo;
     
@@ -71,14 +68,6 @@ public class Usuario implements Serializable{
         this.password = password;
     }
 
-    public String getUltimaConexion() {
-        return ultimaConexion;
-    }
-
-    public void setUltimaConexion(String ultimaConexion) {
-        this.ultimaConexion = ultimaConexion;
-    }
-
     public int getTipo() {
         return tipo;
     }
@@ -101,7 +90,6 @@ public class Usuario implements Serializable{
         hash = 97 * hash + this.idUsuario;
         hash = 97 * hash + Objects.hashCode(this.user);
         hash = 97 * hash + Objects.hashCode(this.password);
-        hash = 97 * hash + Objects.hashCode(this.ultimaConexion);
         hash = 97 * hash + this.tipo;
         hash = 97 * hash + Objects.hashCode(this.persona);
         return hash;
@@ -129,9 +117,6 @@ public class Usuario implements Serializable{
             return false;
         }
         if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        if (!Objects.equals(this.ultimaConexion, other.ultimaConexion)) {
             return false;
         }
         if (!Objects.equals(this.persona, other.persona)) {

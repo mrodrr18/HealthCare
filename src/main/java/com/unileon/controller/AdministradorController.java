@@ -25,7 +25,9 @@ public class AdministradorController implements Serializable{
         
     }
     
+    //0 medico 1 Auxiliar 2 Paciente 3 Administrador
     public String crearUsuario(){
+        
         System.out.println("Crear nuevo usuario");
          
         return "/publico/altausuario?faces-redirect=true";
