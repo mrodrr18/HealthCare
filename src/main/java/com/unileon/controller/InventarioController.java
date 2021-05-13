@@ -23,13 +23,22 @@ import javax.inject.Named;
 @ViewScoped
 public class InventarioController implements Serializable{
     private List<Inventario> listaProductos;
+    private List<Inventario> selectedProducts;
+    
     @PostConstruct
     public void init(){
        listaProductos = new ArrayList <Inventario>();
+       selectedProducts = new ArrayList <Inventario>();
        Inventario producto = new Inventario();
        producto.setNombre("Jeringuilla");
        producto.setDescripcion("MARCA TAL");
        producto.setUnidades(2);
+       listaProductos.add(producto);
+       
+       producto = new Inventario();
+       producto.setNombre("Anestesia");
+       producto.setDescripcion("MARCA TAL");
+       producto.setUnidades(8);
        listaProductos.add(producto);
     }
     
@@ -64,4 +73,14 @@ public class InventarioController implements Serializable{
     public void setListaProductos(List<Inventario> listaProductos) {
         this.listaProductos = listaProductos;
     }
+
+    public List<Inventario> getSelectedProducts() {
+        return selectedProducts;
+    }
+
+    public void setSelectedProducts(List<Inventario> selectedProducts) {
+        this.selectedProducts = selectedProducts;
+    }
+    
+    
 }

@@ -17,12 +17,13 @@
                 <h:form>
                     <div class="card">
                         <p:dataTable var="producto" value="#{inventarioController.listaProductos}"
-                                     rowKey="#{product.id}" paginator="true"
-                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                                     reflow="true" selection="#{inventarioController.selectedProducts}"
+                                     rowKey="#{producto.idProducto}" paginator="true"
+                                    rows="10" rowSelectMode="add" paginatorPosition="bottom">
                             
                             <p:column selectionMode="multiple" exportable="false"></p:column>
                             
-                            <p:column headerText="Nombre" sortBy="#{product.nombre}">
+                            <p:column headerText="Nombre" sortBy="#{producto.nombre}" filterBy="#{producto.nombre}">
                                 <h:outputText value="#{producto.nombre}" />
                             </p:column>
 
@@ -30,7 +31,7 @@
                                 <h:outputText value="#{producto.descripcion}" />
                             </p:column>
 
-                            <p:column headerText="Unidades" sortBy="#{product.unidades}">
+                            <p:column headerText="Unidades" sortBy="#{producto.unidades}">
                                 <h:outputText value="#{producto.unidades}" />
                             </p:column>
 
