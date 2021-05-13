@@ -11,18 +11,26 @@
         <ui:composition template="./../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-                Soy el inventario. (Crud), tipo de Data Table + Header y footer de (Facets)+ (RowAdd) Ahí cojo lo de añadir nuevo
+                (RowAdd) Ahí cojo lo de añadir nuevo
                 + (RowColor) si quedan menos de x unidades lo pone en rojo +(Scroll) si hay muchos articulos +
                 (Sizes) ver el tamaño mas adecuado + (Sort) ordenar + (Sticky HEader) util
                 
                 <h:form id="form">
+                    <p:growl id="msgs" showDetail="true"/>
+                    
                     <div class="card">
+                        
                         <p:toolbar>
+                            
                             <p:toolbarGroup>
-                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" actionListener="#{inventarioController.nuevoProducto}"
+                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" process="@this" update="form msgs" actionListener="#{inventarioController.nuevoProducto}"
                                                   oncomplete="PF('manageProductDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem">
                                 </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                Inventario de HealthCare
+                                
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
                                 <p:commandButton id="delete-products-button" value="#{inventarioController.deleteButtonMessage}"
@@ -39,6 +47,7 @@
                                      reflow="true" selection="#{inventarioController.selectedProducts}"
                                      rowKey="#{producto.idProducto}" paginator="true"
                                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                            
                             
                             <p:column selectionMode="multiple" exportable="false"></p:column>
                             
@@ -66,7 +75,9 @@
                                     <f:setPropertyActionListener value="#{inventario}" target="#{inventarioController.selectedProduct}"/>
                                 </p:commandButton>
                             </p:column>
-
+                            <f:facet name="footer">
+                                <span class="p-text-bold">Hay un total de #{inventarioController.numeroDeProductos()} productos en el inventario.</span>
+                            </f:facet>
                             
                         </p:dataTable>
                         
