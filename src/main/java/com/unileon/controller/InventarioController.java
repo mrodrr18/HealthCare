@@ -5,11 +5,15 @@
  */
 package com.unileon.controller;
 
+import com.unileon.EJB.InventarioFacadeLocal;
+import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Inventario;
+import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -23,14 +27,25 @@ import org.primefaces.PrimeFaces;
 @Named
 @ViewScoped
 public class InventarioController implements Serializable{
+    
     private List<Inventario> listaProductos;
+    
     private List<Inventario> selectedProducts;
+    
     private Inventario selectedProduct; //Igual habria que tener una clase Producto?
+    
+    private Inventario nuevo;
+    
+    @EJB
+    private InventarioFacadeLocal inventarioEJB;
     
     @PostConstruct
     public void init(){
        listaProductos = new ArrayList <Inventario>();
        selectedProducts = new ArrayList <Inventario>();
+       selectedProduct = new Inventario();
+       nuevo = new Inventario();
+       
        Inventario producto = new Inventario();
        producto.setNombre("Jeringuilla");
        producto.setDescripcion("MARCA TAL");
@@ -46,9 +61,6 @@ public class InventarioController implements Serializable{
     
     public int numeroDeProductos(){
         return listaProductos.size();
-    }
-    public void nuevoProducto() {
-        this.selectedProduct = new Inventario();
     }
     
     public void guardarProducto() {
@@ -70,6 +82,21 @@ public class InventarioController implements Serializable{
         this.selectedProduct = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto eliminado"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+    }
+
+    public void nuevoProducto(){
+        
+        try{
+            System.out.println("Entro a nuevo producto");
+            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            nuevo.setUsuario(us);
+            inventarioEJB.create(nuevo);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
+        }catch(Exception e){
+            System.err.println("Error al insertar usuario");
+        }
+        
     }
     
     public String getDeleteButtonMessage() {
@@ -116,6 +143,14 @@ public class InventarioController implements Serializable{
 
     public void setSelectedProduct(Inventario selectedProduct) {
         this.selectedProduct = selectedProduct;
+    }
+
+    public Inventario getNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(Inventario nuevo) {
+        this.nuevo = nuevo;
     }
     
     

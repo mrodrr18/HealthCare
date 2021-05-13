@@ -85,24 +85,24 @@
                                 widgetVar="manageProductDialog" responsive="true">
                             
                             <p:outputPanel id="manage-product-content" class="ui-fluid">
-                                <p:outputPanel >
+                                <p:outputPanel>
                                     <div class="p-field">
                                         <p:outputLabel for="nombre">Name</p:outputLabel>
-                                        <p:inputText id="nombre" value="#{inventarioController.selectedProduct.nombre}" required="true"/>
+                                        <p:inputText id="nombre" value="#{inventarioController.nuevo.nombre}" required="true"/>
                                     </div>
                                     <div class="p-field">
                                         <p:outputLabel for="descripcion">Descripción</p:outputLabel>
-                                        <p:inputTextarea id="descripcion" value="#{inventarioController.selectedProduct.descripcion}" required="true"/>
+                                        <p:inputTextarea id="descripcion" value="#{inventarioController.nuevo.descripcion}" required="true"/>
                                     </div>
                                     <div class="p-field">
                                         <p:outputLabel for="unidades">Unidades</p:outputLabel>
-                                        <p:inputTextarea id="unidades" value="#{inventarioController.selectedProduct.unidades}" required="true"/>
+                                        <p:inputTextarea id="unidades" value="#{inventarioController.nuevo.unidades}" required="true"/>
                                     </div>
                                 </p:outputPanel>
                             </p:outputPanel>
                          
                             <f:facet name="footer">
-                                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.guardarProducto}"
+                                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.nuevoProducto()}"
                                                   />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                                  class="ui-button-secondary"/>
