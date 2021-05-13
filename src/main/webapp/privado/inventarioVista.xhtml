@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -14,8 +15,26 @@
                 + (RowColor) si quedan menos de x unidades lo pone en rojo +(Scroll) si hay muchos articulos +
                 (Sizes) ver el tamaño mas adecuado + (Sort) ordenar + (Sticky HEader) util
                 
-                <h:form>
+                <h:form id="form">
                     <div class="card">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" actionListener="#{inventarioController.nuevoProducto}"
+                                                  oncomplete="PF('manageProductDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton id="delete-products-button" value="#{inventarioController.deleteButtonMessage}"
+                                                 icon="pi pi-trash" actionListener="#{inventarioController.deleteSelectedProducts}"
+                                                 styleClass="ui-button-danger" disabled="#{!inventarioController.hasSelectedProducts()}"
+                                                 update="@this">
+                                    <p:confirm header="Confirmation" message="Delete the selected products?"
+                                               icon="pi pi-exclamation-triangle"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        
+                        </p:toolbar>
                         <p:dataTable var="producto" value="#{inventarioController.listaProductos}"
                                      reflow="true" selection="#{inventarioController.selectedProducts}"
                                      rowKey="#{producto.idProducto}" paginator="true"
@@ -34,9 +53,64 @@
                             <p:column headerText="Unidades" sortBy="#{producto.unidades}">
                                 <h:outputText value="#{producto.unidades}" />
                             </p:column>
+                            
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-pencil" 
+                                                 oncomplete="PF('manageProductDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <f:setPropertyActionListener value="#{inventario}" target="#{inventarioController.selectedProduct}"/>
+                                     
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                                 oncomplete="PF('deleteProductDialog').show()">
+                                    <f:setPropertyActionListener value="#{inventario}" target="#{inventarioController.selectedProduct}"/>
+                                </p:commandButton>
+                            </p:column>
 
                             
                         </p:dataTable>
+                        
+                        <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
+                                widgetVar="manageProductDialog" responsive="true">
+                            
+                            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                                <p:outputPanel >
+                                    <div class="p-field">
+                                        <p:outputLabel for="nombre">Name</p:outputLabel>
+                                        <p:inputText id="nombre" value="#{inventarioController.selectedProduct.nombre}" required="true"/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="descripcion">Descripción</p:outputLabel>
+                                        <p:inputTextarea id="descripcion" value="#{inventarioController.selectedProduct.descripcion}" required="true"/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="unidades">Unidades</p:outputLabel>
+                                        <p:inputTextarea id="unidades" value="#{inventarioController.selectedProduct.unidades}" required="true"/>
+                                    </div>
+                                </p:outputPanel>
+                            </p:outputPanel>
+                         
+                            <f:facet name="footer">
+                                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.guardarProducto}"
+                                                  />
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
+
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                         message="¿Desea borrar el producto seleccionado?" header="Confirm" severity="warn">
+                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{inventarioController.borrarProducto}"
+                                             process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('deleteProductDialog').hide()"/>
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                             icon="pi pi-times"/>
+                        </p:confirmDialog>
                     </div>
                 </h:form>
             </ui:define>
