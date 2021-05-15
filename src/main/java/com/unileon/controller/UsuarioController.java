@@ -28,6 +28,8 @@ public class UsuarioController implements Serializable{
     
     private Persona persona;
     
+    private String tipoAltaUsuario;
+    
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
     
@@ -56,8 +58,10 @@ public class UsuarioController implements Serializable{
     }
     
     public boolean tipoActivado(){
-        if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) return false;
-        else return true;
+        /*if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) return false;
+        else return true;*/
+        return false; //Hay que hacer para que solo este en true con el administrador
+        
     }
 
     public Usuario getUsuario() {
@@ -83,7 +87,14 @@ public class UsuarioController implements Serializable{
     public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
         this.usuarioEJB = usuarioEJB;
     }
-    
+
+    public String getTipoAltaUsuario() {
+        return tipoAltaUsuario;
+    }
+
+    public void setTipoAltaUsuario(String tipoAltaUsuario) {
+        this.tipoAltaUsuario = tipoAltaUsuario;
+    }
     
     
 }

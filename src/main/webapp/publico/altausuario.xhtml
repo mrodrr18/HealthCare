@@ -62,7 +62,7 @@
                                          id="txtUser"/>
                                          <p:message for="txtUser"/>
 
-                            <p:outputLabel for="contra1" value="Constraseña: "/>
+                            <p:outputLabel for="contra1" value="Contraseña: "/>
                             <p:password id="contra1" value="#{usuarioController.usuario.password}" match="nonFeedback" required="true" requiredMessage="La contraseña es un campo obligatorio"
                                          />
                                          <p:message for="contra1"/>
@@ -71,7 +71,21 @@
                             <p:password id="nonFeedback" required="true" requiredMessage="Repetir contraseña es un campo obligatorio"
                                          />
                                          <p:message for="nonFeedback"/>
+                                         
+                            <p:outputLabel for="seleccionarTipo" value="Tipo de usuario" />
+                            <p:selectOneMenu id="seleccionarTipo" value="#{usuarioController.tipoAltaUsuario}"
+                                hideNoSelectionOption="#{not empty usuarioController.tipoAltaUsuario}"
+                                disabled="#{!usuarioController.tipoActivado()}">
+                                
+                                <f:selectItem itemLabel="Selecciona un tipo de usuario" itemValue="#{null}" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Médico" itemValue="0"/>
+                                <f:selectItem itemLabel="Auxiliar" itemValue="1"/>
+                                <f:selectItem itemLabel="Paciente" itemValue="2"/>
+                            </p:selectOneMenu>
+                            <p:message for="seleccionarTipo"/>
+                            
                         </p:panelGrid>
+                        
                     </p:fieldset>
 
                     <p:commandButton value="Registrar" update="@form" action="#{usuarioController.insertarUsuario()}"></p:commandButton>

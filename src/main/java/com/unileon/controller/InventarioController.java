@@ -32,7 +32,7 @@ public class InventarioController implements Serializable{
     
     private List<Inventario> selectedProducts;
     
-    private Inventario selectedProduct; //Igual habria que tener una clase Producto?
+    private Inventario selectedProduct;
     
     private Inventario nuevo;
     
@@ -97,6 +97,9 @@ public class InventarioController implements Serializable{
             System.err.println("Error al insertar usuario");
         }
         
+    }
+    public void editarProducto(){
+        System.out.println(selectedProduct.getNombre()+"!!!!!!!!");
     }
     
     public String getDeleteButtonMessage() {
