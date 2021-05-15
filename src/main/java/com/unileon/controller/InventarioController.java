@@ -41,12 +41,11 @@ public class InventarioController implements Serializable{
     
     @PostConstruct
     public void init(){
-       listaProductos = new ArrayList <Inventario>();
-       selectedProducts = new ArrayList <Inventario>();
+       listaProductos = inventarioEJB.findAll();
        selectedProduct = new Inventario();
        nuevo = new Inventario();
        
-       Inventario producto = new Inventario();
+       /*Inventario producto = new Inventario();
        producto.setNombre("Jeringuilla");
        producto.setDescripcion("MARCA TAL");
        producto.setUnidades(2);
@@ -56,7 +55,7 @@ public class InventarioController implements Serializable{
        producto.setNombre("Anestesia");
        producto.setDescripcion("MARCA TAL");
        producto.setUnidades(8);
-       listaProductos.add(producto);
+       listaProductos.add(producto);*/
     }
     
     public int numeroDeProductos(){
@@ -94,7 +93,7 @@ public class InventarioController implements Serializable{
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
         }catch(Exception e){
-            System.err.println("Error al insertar usuario");
+            System.err.println("Error al insertar producto");
         }
         
     }

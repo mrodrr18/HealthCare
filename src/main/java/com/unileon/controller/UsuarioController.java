@@ -48,7 +48,7 @@ public class UsuarioController implements Serializable{
             //ALTAUSUARIO ES 2=PACIENTES, LOS OTROS DE FORMA MANUAL
             System.out.println("Entro en el metodo");
             usuario.setPersona(persona);
-            usuario.setTipo(2);   
+            usuario.setTipo(Integer.parseInt(tipoAltaUsuario));   
             usuarioEJB.create(usuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
         }catch(Exception e){
@@ -58,9 +58,8 @@ public class UsuarioController implements Serializable{
     }
     
     public boolean tipoActivado(){
-        /*if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) return false;
-        else return true;*/
-        return false; //Hay que hacer para que solo este en true con el administrador
+        if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) return false;
+        else return true;
         
     }
 

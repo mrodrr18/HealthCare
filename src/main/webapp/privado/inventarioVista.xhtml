@@ -23,7 +23,7 @@
                         <p:toolbar>
                             
                             <p:toolbarGroup>
-                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" process="@this" update="form msgs" actionListener="#{inventarioController.nuevoProducto}"
+                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" process="@this" update="form msgs" 
                                                   oncomplete="PF('addProductDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem">
                                 </p:commandButton>
@@ -33,8 +33,8 @@
                                 
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
-                                <p:commandButton id="delete-products-button" value="#{inventarioController.deleteButtonMessage}"
-                                                 icon="pi pi-trash" actionListener="#{inventarioController.deleteSelectedProducts}"
+                                <p:commandButton id="delete-products-button" value="#{inventarioController.getDeleteButtonMessage()}"
+                                                 icon="pi pi-trash" actionListener="#{inventarioController.deleteSelectedProducts()}"
                                                  styleClass="ui-button-danger" disabled="#{!inventarioController.hasSelectedProducts()}"
                                                  update="@this">
                                     <p:confirm header="Confirmation" message="Delete the selected products?"
@@ -103,7 +103,7 @@
                          
                             <f:facet name="footer">
                                 <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.nuevoProducto()}"
-                                                  onclick="#{inventarioController.nuevoProducto()}"/>
+                                                  />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
                             </f:facet>
