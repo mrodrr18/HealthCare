@@ -26,6 +26,7 @@ public class AdministradorController implements Serializable{
     }
     
     public String crearUsuario(){
+        
         System.out.println("Crear nuevo usuario");
          
         return "/publico/altausuario?faces-redirect=true";

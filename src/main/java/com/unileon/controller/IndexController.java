@@ -42,14 +42,21 @@ public class IndexController implements Serializable{
     public String verificarUsuario(){
         Usuario resultado = usuarioEJB.consultarUsuario(usuario);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", resultado);
-        System.out.println("ANTES DEL IF");
+
         if(resultado == null) return "/publico/permisosInsuficientes?faces-redirect=true";
+        
         else{ 
-            System.out.println("PRINT DEL ELSE");
-            return "/privado/administrador/inicioAdministrador?faces-redirect=true";
-            //return "/privado/medico/inicioMedico?faces-redirect=true";
-            //return "/privado/auxiliarinicioAuxiliar?faces-redirect=true";
-            //return "/privado/paciente/inicioPaciente?faces-redirect=true";
+            //0 medico 1 Auxiliar 2 Paciente 3 Administrador
+            switch (resultado.getTipo()) {
+                case 0:
+                    return "/privado/medico/inicioMedico?faces-redirect=true";
+                case 1:
+                    return "/privado/auxiliarinicioAuxiliar?faces-redirect=true";
+                case 2:
+                    return "/privado/paciente/inicioPaciente?faces-redirect=true";
+                default:
+                    return "/privado/administrador/inicioAdministrador?faces-redirect=true";
+            }
         
         }
     }
