@@ -24,7 +24,7 @@
                             
                             <p:toolbarGroup>
                                 <p:commandButton value="Nuevo producto" icon="pi pi-plus" process="@this" update="form msgs" actionListener="#{inventarioController.nuevoProducto}"
-                                                  oncomplete="PF('manageProductDialog').show()"
+                                                  oncomplete="PF('addProductDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem">
                                 </p:commandButton>
                             </p:toolbarGroup>
@@ -67,12 +67,12 @@
                                 <p:commandButton icon="pi pi-pencil" 
                                                  oncomplete="PF('manageProductDialog').show()" 
                                                  styleClass="edit-button rounded-button ui-button-success" process="@this">
-                                    <f:setPropertyActionListener value="#{inventario}" target="#{inventarioController.selectedProduct}"/>
+                                    <f:setPropertyActionListener value="#{producto}" target="#{inventarioController.selectedProduct}"/>
                                      
                                 </p:commandButton>
                                 <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                                  oncomplete="PF('deleteProductDialog').show()">
-                                    <f:setPropertyActionListener value="#{inventario}" target="#{inventarioController.selectedProduct}"/>
+                                    <f:setPropertyActionListener value="#{producto}" target="#{inventarioController.selectedProduct}"/>
                                 </p:commandButton>
                             </p:column>
                             <f:facet name="footer">
@@ -80,29 +80,58 @@
                             </f:facet>
                             
                         </p:dataTable>
-                        
                         <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
-                                widgetVar="manageProductDialog" responsive="true">
+                                widgetVar="addProductDialog" responsive="true">
                             
-                            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                            <p:outputPanel id="add-product-content" class="ui-fluid">
                                 <p:outputPanel>
+                                    
                                     <div class="p-field">
-                                        <p:outputLabel for="nombre">Name</p:outputLabel>
-                                        <p:inputText id="nombre" value="#{inventarioController.nuevo.nombre}" required="true"/>
+                                        <p:outputLabel for="nombre_add">Nombre</p:outputLabel>
+                                        <p:inputText id="nombre_add" value="#{inventarioController.nuevo.nombre}" required="true"/>
                                     </div>
                                     <div class="p-field">
-                                        <p:outputLabel for="descripcion">Descripción</p:outputLabel>
-                                        <p:inputTextarea id="descripcion" value="#{inventarioController.nuevo.descripcion}" required="true"/>
+                                        <p:outputLabel for="descripcion_add">Descripción</p:outputLabel>
+                                        <p:inputTextarea id="descripcion_add" value="#{inventarioController.nuevo.descripcion}" required="true"/>
                                     </div>
                                     <div class="p-field">
-                                        <p:outputLabel for="unidades">Unidades</p:outputLabel>
-                                        <p:inputTextarea id="unidades" value="#{inventarioController.nuevo.unidades}" required="true"/>
+                                        <p:outputLabel for="unidades_add">Unidades</p:outputLabel>
+                                        <p:inputTextarea id="unidades_add" value="#{inventarioController.nuevo.unidades}" required="true"/>
                                     </div>
                                 </p:outputPanel>
                             </p:outputPanel>
                          
                             <f:facet name="footer">
                                 <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.nuevoProducto()}"
+                                                  />
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
+                        <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
+                                widgetVar="manageProductDialog" responsive="true">
+                            
+                            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                                <p:outputPanel>
+                                    <p:column rendered="#{not empty inventarioController.selectedProduct}">
+                                        <div class="p-field">
+                                            <p:outputLabel for="nombre_edit">Nombre</p:outputLabel>
+                                            <p:inputText id="nombre_edit"  value="#{inventarioController.selectedProduct.nombre}" required="true"/>
+                                        </div>
+                                        <div class="p-field">
+                                            <p:outputLabel for="descripcion_edit">Descripción</p:outputLabel>
+                                            <p:inputTextarea id="descripcion_edit" value="#{inventarioController.selectedProduct.descripcion}" required="true"/>
+                                        </div>
+                                        <div class="p-field">
+                                            <p:outputLabel for="unidades_edit">Unidades</p:outputLabel>
+                                            <p:inputTextarea id="unidades_edit" value="#{inventarioController.selectedProduct.unidades}" required="true"/>
+                                        </div>
+                                    </p:column>
+                                </p:outputPanel>
+                            </p:outputPanel>
+                         
+                            <f:facet name="footer">
+                                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{inventarioController.editarProducto()}"
                                                   />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                                  class="ui-button-secondary"/>
