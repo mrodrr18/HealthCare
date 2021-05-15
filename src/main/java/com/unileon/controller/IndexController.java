@@ -51,7 +51,7 @@ public class IndexController implements Serializable{
                 case 0:
                     return "/privado/medico/inicioMedico?faces-redirect=true";
                 case 1:
-                    return "/privado/auxiliarinicioAuxiliar?faces-redirect=true";
+                    return "/privado/auxiliar/inicioAuxiliar?faces-redirect=true";
                 case 2:
                     return "/privado/paciente/inicioPaciente?faces-redirect=true";
                 default:
