@@ -103,7 +103,7 @@
                          
                             <f:facet name="footer">
                                 <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.nuevoProducto()}"
-                                                  />
+                                                  onclick="#{inventarioController.nuevoProducto()}"/>
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
                             </f:facet>
