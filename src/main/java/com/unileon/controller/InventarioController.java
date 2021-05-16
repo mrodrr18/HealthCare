@@ -83,7 +83,7 @@ public class InventarioController implements Serializable{
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
 
-    public void nuevoProducto(){
+    public String nuevoProducto(){
         
         try{
             System.out.println("Entro a nuevo producto");
@@ -92,9 +92,11 @@ public class InventarioController implements Serializable{
             inventarioEJB.create(nuevo);
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
+            
         }catch(Exception e){
             System.err.println("Error al insertar producto");
         }
+        return "/privado/inventarioVista?faces-redirect=true";
         
     }
     public void editarProducto(){

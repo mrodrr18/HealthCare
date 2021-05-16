@@ -102,10 +102,12 @@
                             </p:outputPanel>
                          
                             <f:facet name="footer">
-                                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inventarioController.nuevoProducto()}"
-                                                  />
+                                
+                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{inventarioController.nuevoProducto()}"
+                                                 ajax="false"  />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
+                                
                             </f:facet>
                         </p:dialog>
                         <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
@@ -113,25 +115,25 @@
                             
                             <p:outputPanel id="manage-product-content" class="ui-fluid">
                                 <p:outputPanel>
-                                    <p:column rendered="#{not empty inventarioController.selectedProduct}">
+                                    <p:column >
                                         <div class="p-field">
                                             <p:outputLabel for="nombre_edit">Nombre</p:outputLabel>
-                                            <p:inputText id="nombre_edit"  value="#{inventarioController.selectedProduct.nombre}" required="true"/>
+                                            <p:inputText id="nombre_edit"  value="CAMBIAR" required="true"/>
                                         </div>
                                         <div class="p-field">
                                             <p:outputLabel for="descripcion_edit">Descripción</p:outputLabel>
-                                            <p:inputTextarea id="descripcion_edit" value="#{inventarioController.selectedProduct.descripcion}" required="true"/>
+                                            <p:inputTextarea id="descripcion_edit" value="CAMBIAR" required="true"/>
                                         </div>
                                         <div class="p-field">
                                             <p:outputLabel for="unidades_edit">Unidades</p:outputLabel>
-                                            <p:inputTextarea id="unidades_edit" value="#{inventarioController.selectedProduct.unidades}" required="true"/>
+                                            <p:inputTextarea id="unidades_edit" value="CAMBIAR" required="true"/>
                                         </div>
                                     </p:column>
                                 </p:outputPanel>
                             </p:outputPanel>
                          
                             <f:facet name="footer">
-                                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{inventarioController.editarProducto()}"
+                                <p:commandButton value="Editar" process="@this" icon="pi pi-check" actionListener="#{inventarioController.editarProducto()}"
                                                   />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                                  class="ui-button-secondary"/>
