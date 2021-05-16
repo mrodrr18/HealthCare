@@ -35,11 +35,16 @@ public class PlantillaController implements Serializable{
     }
     
     public String cerrarSesion(){
+        
         try{
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            System.out.println("Voy a cerrar sesión");
+            return "/index?faces-redirect=true";
         }catch(Exception e){
             System.err.println("Error al cerrar sesión");
+             return null;
         }
-        return "/index?faces-redirect=true";
+       
+        
     }
 }

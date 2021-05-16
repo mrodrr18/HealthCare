@@ -23,7 +23,7 @@
 
                     <ui:insert name="top">HealthCare</ui:insert>
                     
-                    <p:commandButton value="Cerrar Sesión" icon="pi pi-fw pi-power-off" action="#{plantillaController.cerrarSesion()}"/>
+                    <p:commandButton value="Cerrar Sesión" process="@this" icon="pi pi-fw pi-power-off" action="#{plantillaController.cerrarSesion()}"/>
                     
                 </p:panelGrid>
 
