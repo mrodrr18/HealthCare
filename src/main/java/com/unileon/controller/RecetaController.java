@@ -5,12 +5,18 @@
  */
 package com.unileon.controller;
 
+import com.unileon.EJB.InventarioFacadeLocal;
+import com.unileon.EJB.RecetaFacadeLocal;
 import com.unileon.modelo.Receta;
+import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -24,33 +30,31 @@ public class RecetaController implements Serializable {
 
     private List<Receta> listaRecetas;
     private Receta nuevo;
+    
+    @EJB
+    private RecetaFacadeLocal recetaEJB;
 
     @PostConstruct
     public void init() {
         nuevo = new Receta();
-        listaRecetas = new ArrayList<Receta>();
-
-        Receta r = new Receta();
-        r.setDias(6);
-        r.setFecha(new Date());
-        r.setNombreMedicamento("Ibuprofeno");
-        r.setTiempoTomas(8);
-        r.setVecesPorDia(2);
-        listaRecetas.add(r);
-        
-        r = new Receta();
-        r.setDias(6);
-        r.setFecha(new Date());
-        r.setNombreMedicamento("Paracetamol");
-        r.setTiempoTomas(8);
-        r.setVecesPorDia(2);
-        listaRecetas.add(r);
+        listaRecetas = recetaEJB.findAll();
         
         
     }
     
     public void guardarNuevaReceta(){
-        System.out.println("Nueva receta guardada");
+        try{
+            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            nuevo.setUsuario(us);
+            recetaEJB.create(nuevo);
+            System.out.println("Nueva receta");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
+            
+        }catch(Exception e){
+            System.err.println("Error al insertar receta");
+        }
+        System.out.println(nuevo.getNombreMedicamento());
+        //return "/privado/medico/inicioMedico?faces-redirect=true";
     }
 
     public List<Receta> getListaRecetas() {

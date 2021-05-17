@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -45,8 +46,9 @@ public class InventarioController implements Serializable{
        selectedProduct = new Inventario();
        nuevo = new Inventario();
        
-       /*Inventario producto = new Inventario();
-       producto.setNombre("Jeringuilla");
+       //Inventario producto = new Inventario();
+       
+       /*producto.setNombre("Jeringuilla");
        producto.setDescripcion("MARCA TAL");
        producto.setUnidades(2);
        listaProductos.add(producto);
@@ -64,11 +66,12 @@ public class InventarioController implements Serializable{
     
     public void guardarProducto() {
         if (this.selectedProduct.getNombre() == null) {
-            
-            this.listaProductos.add(this.selectedProduct);
+            System.out.println("Producto a null");
+            //this.listaProductos.add(this.selectedProduct);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto añadido"));
         }
         else {
+            System.out.println("Producto " + this.selectedProduct.getNombre());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto actualizado"));
         }
 
@@ -77,8 +80,8 @@ public class InventarioController implements Serializable{
     }
     
     public void borrarProducto() {
-        this.listaProductos.remove(this.selectedProduct);
-        this.selectedProduct = null;
+        //this.inventarioEJB.remove(nuevo);
+        System.out.println("Producto " + this.selectedProduct.getNombre());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto eliminado"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }

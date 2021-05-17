@@ -118,15 +118,15 @@
                                     <p:column >
                                         <div class="p-field">
                                             <p:outputLabel for="nombre_edit">Nombre</p:outputLabel>
-                                            <p:inputText id="nombre_edit"  value="CAMBIAR" required="true"/>
+                                            <p:inputText id="nombre_edit"  value="#{inventarioController.selectedProduct.nombre}" required="true"/>
                                         </div>
                                         <div class="p-field">
                                             <p:outputLabel for="descripcion_edit">Descripción</p:outputLabel>
-                                            <p:inputTextarea id="descripcion_edit" value="CAMBIAR" required="true"/>
+                                            <p:inputTextarea id="descripcion_edit" value="#{inventarioController.selectedProduct.descripcion}" required="true"/>
                                         </div>
                                         <div class="p-field">
                                             <p:outputLabel for="unidades_edit">Unidades</p:outputLabel>
-                                            <p:inputNumber id="unidades_edit" value="12" required="true"/>
+                                            <p:inputNumber id="unidades_edit" value="#{inventarioController.selectedProduct.unidades}" required="true"/>
                                         </div>
                                     </p:column>
                                 </p:outputPanel>
@@ -134,7 +134,7 @@
                          
                             <f:facet name="footer">
                                 <p:commandButton value="Editar" process="@this" icon="pi pi-check" actionListener="#{inventarioController.editarProducto()}"
-                                                  />
+                                                  ajax="false" />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                                  class="ui-button-secondary"/>
                             </f:facet>
@@ -142,8 +142,8 @@
 
                         <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
                                          message="¿Desea borrar el producto seleccionado?" header="Confirm" severity="warn">
-                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{inventarioController.borrarProducto}"
-                                             process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{inventarioController.borrarProducto()}"
+                                             process="@this" oncomplete="PF('deleteProductDialog').hide()" ajax="false"/>
                             <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('deleteProductDialog').hide()"/>
                         </p:confirmDialog>
