@@ -5,10 +5,12 @@
  */
 package com.unileon.controller;
 
+import com.unileon.modelo.Historial;
 import com.unileon.modelo.Persona;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -22,9 +24,11 @@ import javax.inject.Named;
 @ViewScoped
 public class PacienteController implements Serializable{
     private List <Usuario> listaPacientes;
+    private List <Historial> listaHistorial;
     @PostConstruct
     public void init(){
      listaPacientes = new ArrayList <Usuario> ();
+     listaHistorial = new ArrayList <Historial>();
         
         Usuario paciente = new Usuario();
         Persona p = new Persona();
@@ -60,6 +64,19 @@ public class PacienteController implements Serializable{
         paciente.setPersona(p);
         listaPacientes.add(paciente);
         
+        Historial h = new Historial();
+        h.setSintomas("Dolor de cabeza");
+        h.setFechaModificacion(new Date(12/06/2021));
+        h.setTratamiento("Paracetamol");
+        h.setDiagnostico("Estres");
+        listaHistorial.add(h);
+        
+        h=new Historial();
+        h.setSintomas("Dolor en el brazo");
+        h.setFechaModificacion(new Date(12/04/2021));
+        h.setTratamiento("Traumatologo");
+        h.setDiagnostico("Caida, rotura de radio");
+        listaHistorial.add(h);
     }
     public String verMedicos(){
         return "/privado/paciente/solicitarCita?faces-redirect=true";
@@ -85,6 +102,15 @@ public class PacienteController implements Serializable{
     public void setListaPacientes(List<Usuario> listaPacientes) {
         this.listaPacientes = listaPacientes;
     }
+
+    public List<Historial> getListaHistorial() {
+        return listaHistorial;
+    }
+
+    public void setListaHistorial(List<Historial> listaHistorial) {
+        this.listaHistorial = listaHistorial;
+    }
+    
     
     
 }
