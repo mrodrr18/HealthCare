@@ -5,7 +5,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    <head>
+        <script library="js" name="calendar.js" />
+    </head>
     <body>
 
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
@@ -31,7 +33,9 @@
                                     <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
                                                      process="@this" oncomplete="PF('nuevoDiagnostico').show()"
                                                  styleClass="ui-button-success" />
-                                    <p:commandButton icon="pi pi-bookmark" value="Nueva Receta"/>
+                                    <p:commandButton icon="pi pi-bookmark" value="Nueva Receta"
+                                                     process="@this" oncomplete="PF('nuevaReceta').show()"
+                                                 styleClass="ui-button-success" />
                                 </f:facet>
                             </p:card>
                         </p:dataViewGridItem>
@@ -61,11 +65,52 @@
 
                             <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{historialController.guardarNuevo()}"
                                              ajax="false"  />
-                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
+                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoDiagnostico').hide()"
                                              class="ui-button-secondary"/>
 
                         </f:facet>
                     </p:dialog>
+                   <p:dialog header="Nueva Receta" showEffect="fade" modal="true"
+                                widgetVar="nuevaReceta" responsive="true">
+                            
+                        <p:outputPanel id="nuevaReceta" class="ui-fluid">
+                            <p:outputPanel>
+
+                                <div class="p-field">
+                                    <p:outputLabel for="nombre_medicamento">Nombre del medicamento</p:outputLabel>
+                                    <p:inputTextarea id="nombre_medicamento" value="#{recetaController.nuevo.nombreMedicamento}" required="true"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="fecha_toma">Fecha</p:outputLabel>
+                                    <p:datePicker id="fecha_toma" value="#{recetaController.nuevo.fecha}"
+                                               pattern="dd/MM/yyyy" locale="es" required="true"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="periodo_toma">Periodo (días)</p:outputLabel>
+                                    <p:inputNumber id="periodo_toma" value="#{recetaController.nuevo.dias}" required="true"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="dosis_por_dia">Dosis/día</p:outputLabel>
+                                    <p:inputNumber id="dosis_por_dia" value="#{recetaController.nuevo.vecesPorDia}" required="true"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="tiempo_entre_tomas">Tiempo entre tomas (horas)</p:outputLabel>
+                                    <p:inputNumber id="tiempo_entre_tomas" value="#{recetaController.nuevo.tiempoTomas}" required="true"/>
+                                </div>
+                            </p:outputPanel>
+                        </p:outputPanel>
+
+                        <f:facet name="footer">
+
+                            <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{recetaController.guardarNuevaReceta()}"
+                                             ajax="false"  />
+                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevaReceta').hide()"
+                                             class="ui-button-secondary"/>
+
+                        </f:facet>
+                    </p:dialog>
+                   
+                    
                 </h:form>
             </ui:define>
 
