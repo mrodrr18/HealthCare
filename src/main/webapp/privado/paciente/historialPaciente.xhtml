@@ -12,7 +12,7 @@
             <ui:define name="content">
                 <h:form>
                     <div class="card">
-                        <p:dataTable var="h" value="#{pacienteController.listaHistorial}">
+                        <p:dataTable var="h" value="#{historialController.listaHistorial}">
                              <p:column headerText="Fecha">
                                 <h:outputText value="#{h.fechaModificacion}" />
                             </p:column>
