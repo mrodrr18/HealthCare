@@ -5,13 +5,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    <head>
+        <script library="js" name="calendar.js" />
+    </head>
     <body>
 
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
                 <h:form>
+                     
                     <p:dataView id="medicosDisponibles" var="medico" value="#{medicoController.listaMedicos}" layout="grid">
                         <p:dataViewGridItem>
                             <p:card style="width: 18em">
@@ -26,11 +29,51 @@
                                 </f:facet>
                                 
                                 <f:facet name="footer" >
-                                    <p:commandButton icon="pi pi-calendar-plus" value="Nueva Cita"/>
+                                    <p:commandButton icon="pi pi-calendar-plus" value="Nueva Cita"
+                                        process="@this" oncomplete="PF('nuevaCita').show()"
+                                                 styleClass="ui-button-success"/>
                                 </f:facet>
                             </p:card>
                         </p:dataViewGridItem>
                     </p:dataView>
+                    <p:dialog header="Solicitar Cita" showEffect="fade" modal="true"
+                                widgetVar="nuevaCita" responsive="true">
+                            
+                        <p:outputPanel id="nuevaCita" class="ui-fluid">
+                            <p:outputPanel>
+                                <h:form>
+                                    <div class="p-field">
+                                        <p:outputLabel for="fecha_add">Fecha</p:outputLabel>
+                                        <p:datePicker  value="#{citasController.nuevo.fecha}" 
+                                                       pattern="dd/MM/yyyy" locale="es"
+                                             required="true" id="fecha_add"/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="causa_add">Causa</p:outputLabel>
+                                        <p:inputTextarea id="causa_add" value="#{citasController.nuevo.causa}" required="true"/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="urgencia_add">Urgencia</p:outputLabel>
+                                        <p:selectOneMenu id="urgencia_add" value="#{citasController.nuevo.urgente}">
+                                            <f:selectItem itemLabel="Seleccione una opción" itemValue=""/>
+                                            <f:selectItem itemLabel="Sí" itemValue="1"/>
+                                            <f:selectItem itemLabel="No" itemValue="0"/>
+                                        </p:selectOneMenu>
+
+                                    </div>
+                                </h:form>
+                            </p:outputPanel>
+                        </p:outputPanel>
+
+                        <f:facet name="footer">
+
+                            <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{citasController.guardarNuevacita()}"
+                                             ajax="false"  />
+                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
+                                             class="ui-button-secondary"/>
+
+                        </f:facet>
+                    </p:dialog>
                 </h:form>
             </ui:define>
 
