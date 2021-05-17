@@ -25,6 +25,10 @@ public class PacienteController implements Serializable{
     public String verMedicos(){
         return "/privado/paciente/solicitarCita?faces-redirect=true";
     }
+    public String verCitas(){
+         
+        return "/privado/paciente/citasPaciente?faces-redirect=true";
+    }
     public String verHistorial(){
          
         return "/privado/paciente/historialPaciente?faces-redirect=true";
