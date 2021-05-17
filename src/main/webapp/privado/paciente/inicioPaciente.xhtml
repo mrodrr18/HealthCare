@@ -14,7 +14,15 @@
                 <h:form>
                     <p:growl id="messages" showDetail="true"/>
                     <p:menubar>
-                        <p:menuitem value="Ver médicos" icon="pi pi-fw pi-id-card" ajax="false" outcome="#{pacienteController.verMedicos()}"/>
+                        <p:submenu label="Ver médicos" icon="pi pi-fw pi-id-card" >
+                            <p:menuitem value="Cardiología" icon="pi pi-fw pi-user" outcome="#{pacienteController.verMedicos()}"/>
+                            <p:menuitem value="Neurología" icon="pi pi-fw pi-user" outcome="#{pacienteController.verMedicos()}"/> 
+                            <p:menuitem value="Nutrición" icon="pi pi-fw pi-user" outcome="#{pacienteController.verMedicos()}"/>
+                            <p:menuitem value="Traumatología" icon="pi pi-fw pi-user" outcome="#{pacienteController.verMedicos()}"/>
+                                
+                        </p:submenu>
+                        
+                        <p:menuitem value="Citas" icon="pi pi-fw pi-calendar-times" ajax="false" outcome="#{pacienteController.verCitas()}"/>
                         
                         <p:menuitem value="Historial" icon="pi pi-fw pi-book" ajax="false" outcome="#{pacienteController.verHistorial()}"/>
                         
