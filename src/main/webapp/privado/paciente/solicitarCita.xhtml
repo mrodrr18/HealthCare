@@ -44,8 +44,8 @@
                                 <h:form>
                                     <div class="p-field">
                                         <p:outputLabel for="fecha_add">Fecha</p:outputLabel>
-                                        <p:calendar  value="#{citasController.nuevo.fecha}" 
-                                              pattern="dd/MM/yyyy"
+                                        <p:datePicker  value="#{citasController.nuevo.fecha}" 
+                                                       pattern="dd/MM/yyyy" locale="es"
                                              required="true" id="fecha_add"/>
                                     </div>
                                     <div class="p-field">
@@ -54,7 +54,12 @@
                                     </div>
                                     <div class="p-field">
                                         <p:outputLabel for="urgencia_add">Urgencia</p:outputLabel>
-                                        <p:inputTextarea id="urgencia_add" value="#{citasController.nuevo.urgente}" required="true"/>
+                                        <p:selectOneMenu id="urgencia_add" value="#{citasController.nuevo.urgente}">
+                                            <f:selectItem itemLabel="Seleccione una opción" itemValue=""/>
+                                            <f:selectItem itemLabel="Sí" itemValue="1"/>
+                                            <f:selectItem itemLabel="No" itemValue="0"/>
+                                        </p:selectOneMenu>
+
                                     </div>
                                 </h:form>
                             </p:outputPanel>
