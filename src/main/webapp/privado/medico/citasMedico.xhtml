@@ -1,18 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-                Aqui aparecen todas las citas solicitadas a cada medico
-            </ui:define>
+                <h:form>
+                    <div class="card">
+                        <p:dataTable var="cita" value="#{citasController.listaCitas}">
+                             <p:column headerText="Fecha">
+                                 <h:outputText value="#{cita.fecha}" />
+                            </p:column>
+                            
+                            <p:column headerText="Nombre del paciente">
+                                <h:outputText value="#{cita.usuario.persona.nombre}  #{cita.usuario.persona.nombre}" />
+                            </p:column>
 
-            <ui:define name="bottom">
-                bottom
+                            <p:column headerText="Causa">
+                                <h:outputText value="#{cita.causa}" />
+                            </p:column>
+
+                           <p:column headerText="Urgencia">
+                               <h:outputText value="#{cita.urgente}" />
+                            </p:column>
+                           
+                        </p:dataTable>
+                    </div>
+                </h:form>
             </ui:define>
 
         </ui:composition>
