@@ -15,8 +15,18 @@
             <ui:define name="content">
                <h:form>
                    
-                    <p:dataView id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" layout="grid">
-                        <p:dataViewGridItem>
+                    <div class="p-d-flex p-ai-center p-jc-between" >
+                        <p:column >
+                        <span>Listado de Pacientes</span>
+                        </p:column>
+                        <p:column>
+                        <p:inputText id="globalFilter" onkeyup="PF('tablaPacientes').filter()" style="width:10rem" placeholder="Introduce un nombre: " />
+                        </p:column>
+                    </div>
+                    <p:dataView id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" 
+                                 widgetVar="tablaPacientes" layout="grid"  >
+                        
+                        <p:dataViewGridItem >
                             <p:card style="width: 24em">
                                 <f:facet name="header">
                                     <p:graphicImage alt="user header" library ="img" name="imagenPaciente.png" width="40" height="180"/>
