@@ -20,7 +20,9 @@
                         <span>Listado de Pacientes</span>
                         </p:column>
                         <p:column>
-                        <p:inputText id="globalFilter" onkeyup="PF('tablaPacientes').filter()" style="width:10rem" placeholder="Introduce un nombre: " />
+                            <p:inputText id="globalFilter" onkeyup="PF('tablaPacientes').filter()" style="width:10rem" placeholder="Introduce un nombre: " value="#{pacienteController.nombreCompleto}"/>
+                        <p:commandButton value="Buscar" process="@this" icon="pi pi-check" action="#{pacienteController.buscar()}"
+                                             ajax="false"  />
                         </p:column>
                     </div>
                     <p:dataView id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" 
@@ -73,7 +75,7 @@
 
                         <f:facet name="footer">
 
-                            <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{historialController.guardarNuevo()}"
+                            <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{historialController.guardarNuevo(paciente.idUsuario)}"
                                              ajax="false"  />
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoDiagnostico').hide()"
                                              class="ui-button-secondary"/>

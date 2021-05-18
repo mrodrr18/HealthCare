@@ -32,4 +32,14 @@ public interface UsuarioFacadeLocal {
     
     Usuario consultarUsuario(Usuario us);
     
+    List<Usuario> listarPacientes();
+    
+    Usuario buscarId(int id);
+    
+    List<Usuario> buscarNombre(String nombre);
+    
+    List<Usuario> buscarApellido1(String nombre, String apellido1);
+    
+    List<Usuario> buscarApellido2(String nombre, String apellido1, String apellido2);
+    
 }

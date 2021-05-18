@@ -5,6 +5,7 @@
  */
 package com.unileon.controller;
 
+import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Historial;
 import com.unileon.modelo.Persona;
 import com.unileon.modelo.Usuario;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -23,47 +25,36 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class PacienteController implements Serializable{
+    
     private List <Usuario> listaPacientes;
+    
+    private String nombreCompleto;
+    
+    @EJB
+    private UsuarioFacadeLocal usuarioEJB;
+    
     @PostConstruct
     public void init(){
-     listaPacientes = new ArrayList <Usuario> ();
         
-        Usuario paciente = new Usuario();
-        Persona p = new Persona();
-        p.setNombre("Pablo");
-        p.setSexo("M");
-        paciente.setPersona(p);
-        listaPacientes.add(paciente);
-        
-        paciente=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        paciente.setPersona(p);
-        listaPacientes.add(paciente);
-        
-        paciente=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        paciente.setPersona(p);
-        listaPacientes.add(paciente);
-        paciente=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        paciente.setPersona(p);
-        listaPacientes.add(paciente);
-        
-        paciente=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        paciente.setPersona(p);
-        listaPacientes.add(paciente);
-        
+        nombreCompleto = new String();
+        listaPacientes = usuarioEJB.listarPacientes();
         
     }
+    
+    public void buscar(){
+        String[] partes = this.nombreCompleto.split(" ");
+        
+        if(partes.length == 1) this.listaPacientes = usuarioEJB.buscarNombre(partes[0]);
+        
+        else if(partes.length == 2) this.listaPacientes = usuarioEJB.buscarApellido1(partes[0], partes[1]);
+        
+        else if(partes.length == 3) this.listaPacientes = usuarioEJB.buscarApellido2(partes[0], partes[1], partes[2]);
+        
+        else if(partes.length > 3) this.listaPacientes = null;
+        
+        System.out.println("Entro a buscar " + partes.length);
+    }
+    
     public String verMedicos(){
         return "/privado/paciente/solicitarCita?faces-redirect=true";
     }
@@ -88,6 +79,24 @@ public class PacienteController implements Serializable{
     public void setListaPacientes(List<Usuario> listaPacientes) {
         this.listaPacientes = listaPacientes;
     }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public UsuarioFacadeLocal getUsuarioEJB() {
+        return usuarioEJB;
+    }
+
+    public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
+        this.usuarioEJB = usuarioEJB;
+    }
+    
+    
 
     
     

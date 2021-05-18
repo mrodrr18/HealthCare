@@ -5,8 +5,10 @@
  */
 package com.unileon.controller;
 
+import com.unileon.EJB.HistorialFacadeLocal;
 import com.unileon.EJB.InventarioFacadeLocal;
 import com.unileon.EJB.RecetaFacadeLocal;
+import com.unileon.modelo.Historial;
 import com.unileon.modelo.Receta;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
@@ -33,11 +35,14 @@ public class RecetaController implements Serializable {
     
     @EJB
     private RecetaFacadeLocal recetaEJB;
+    
+    @EJB
+    private HistorialFacadeLocal historialEJB;
 
     @PostConstruct
     public void init() {
         nuevo = new Receta();
-        listaRecetas = recetaEJB.findAll();
+        listaRecetas = this.listarRecetas();
         
         
     }
@@ -46,6 +51,7 @@ public class RecetaController implements Serializable {
         try{
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             nuevo.setUsuario(us);
+            //Hay que meter el historial
             recetaEJB.create(nuevo);
             System.out.println("Nueva receta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
@@ -55,6 +61,37 @@ public class RecetaController implements Serializable {
         }
         System.out.println(nuevo.getNombreMedicamento());
         //return "/privado/medico/inicioMedico?faces-redirect=true";
+    }
+    
+    public List<Receta> listarRecetas(){
+        try{
+            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            
+            //Todas las recetas
+            List<Receta> lista = recetaEJB.findAll();
+            
+            //Todos los diagnosticos almacenados a ese paciente
+            List<Historial> listaHistoriales = historialEJB.listarDiagnosticos(us);
+            
+            //Elimino las recetas que no sean de ese paciente
+            for(int i = 0; i <lista.size(); i++){
+                boolean encontrado = false;
+                int j = 0;
+                while(j < listaHistoriales.size() && !encontrado){
+                    if(lista.get(i).getHistorial().equals(listaHistoriales.get(j))) encontrado = true;
+                    j++;
+                }
+                if (!encontrado) lista.remove(i);
+            }
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Recetas listadas","Aviso"));
+            
+            return lista;
+            
+        }catch(Exception e){
+            System.err.println("Error al listas recetas");
+        }
+        return null;
     }
 
     public List<Receta> getListaRecetas() {
@@ -73,4 +110,21 @@ public class RecetaController implements Serializable {
         this.nuevo = nuevo;
     }
 
+    public RecetaFacadeLocal getRecetaEJB() {
+        return recetaEJB;
+    }
+
+    public void setRecetaEJB(RecetaFacadeLocal recetaEJB) {
+        this.recetaEJB = recetaEJB;
+    }
+
+    public HistorialFacadeLocal getHistorialEJB() {
+        return historialEJB;
+    }
+
+    public void setHistorialEJB(HistorialFacadeLocal historialEJB) {
+        this.historialEJB = historialEJB;
+    }
+
+    
 }

@@ -52,6 +52,10 @@ public class Receta implements Serializable{
     @JoinColumn(name="idUsuario")
     @ManyToOne
     private Usuario usuario;
+    
+    @JoinColumn(name="idHistorial")
+    @ManyToOne
+    private Historial historial;
 
     public int getIdReceta() {
         return idReceta;
@@ -109,16 +113,25 @@ public class Receta implements Serializable{
         this.usuario = usuario;
     }
 
+    public Historial getHistorial() {
+        return historial;
+    }
+
+    public void setHistorial(Historial historial) {
+        this.historial = historial;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 59 * hash + this.idReceta;
-        hash = 59 * hash + Objects.hashCode(this.nombreMedicamento);
-        hash = 59 * hash + Objects.hashCode(this.fecha);
-        hash = 59 * hash + this.dias;
-        hash = 59 * hash + this.vecesPorDia;
-        hash = 59 * hash + this.tiempoTomas;
-        hash = 59 * hash + Objects.hashCode(this.usuario);
+        hash = 79 * hash + this.idReceta;
+        hash = 79 * hash + Objects.hashCode(this.nombreMedicamento);
+        hash = 79 * hash + Objects.hashCode(this.fecha);
+        hash = 79 * hash + this.dias;
+        hash = 79 * hash + this.vecesPorDia;
+        hash = 79 * hash + this.tiempoTomas;
+        hash = 79 * hash + Objects.hashCode(this.usuario);
+        hash = 79 * hash + Objects.hashCode(this.historial);
         return hash;
     }
 
@@ -155,8 +168,13 @@ public class Receta implements Serializable{
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
+        if (!Objects.equals(this.historial, other.historial)) {
+            return false;
+        }
         return true;
     }
+
+    
     
     
 }
