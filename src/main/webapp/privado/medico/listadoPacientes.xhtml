@@ -45,9 +45,7 @@
                                     <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
                                                      process="@this" oncomplete="PF('nuevoDiagnostico').show()"
                                                  styleClass="ui-button-success" />
-                                    <p:commandButton icon="pi pi-bookmark" value="Nueva Receta"
-                                                     process="@this" oncomplete="PF('nuevaReceta').show()"
-                                                 styleClass="ui-button-success" />
+                                    
                                 </f:facet>
                             </p:card>
                         </p:dataViewGridItem>
@@ -70,14 +68,38 @@
                                     <p:outputLabel for="tratamiento_add">Tratamiento</p:outputLabel>
                                     <p:inputTextarea id="tratamiento_add" value="#{historialController.nuevo.tratamiento}" required="true"/>
                                 </div>
+                                
                             </p:outputPanel>
                         </p:outputPanel>
 
                         <f:facet name="footer">
 
-                            <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{historialController.guardarNuevo(paciente.idUsuario)}"
-                                             ajax="false"  />
+                            <p:commandButton value="Guardar" icon="pi pi-check" onclick="#{historialController.guardarNuevo(paciente.idUsuario)}"
+                                              oncomplete="PF('preguntaReceta').show()" />
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoDiagnostico').hide()"
+                                             class="ui-button-secondary"/>
+
+                        </f:facet>
+                    </p:dialog>
+                   <p:dialog header="Receta" showEffect="fade" modal="true"
+                                widgetVar="preguntaReceta" responsive="true">
+                            
+                        <p:outputPanel id="preguntaReceta" class="ui-fluid">
+                            <p:outputPanel>
+
+                                <div class="p-field">
+                                    <p>¿Desea crear una nueva receta?</p>
+                                </div>
+                                
+                            </p:outputPanel>
+                        </p:outputPanel>
+
+                       <f:facet name="footer">
+
+                           <p:commandButton value="Sí" icon="pi pi-bookmark"
+                                                     process="@this" oncomplete="PF('nuevaReceta').show()"
+                                                 styleClass="ui-button-success"  />
+                            <p:commandButton value="No" icon="pi pi-times" onclick="PF('preguntaReceta').hide()"
                                              class="ui-button-secondary"/>
 
                         </f:facet>
@@ -114,8 +136,8 @@
 
                        <f:facet name="footer">
 
-                           <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{recetaController.guardarNuevaReceta()}"
-                                             ajax="false"  />
+                           <p:commandButton value="Guardar" process="@this" icon="pi pi-check" onclick="#{recetaController.guardarNuevaReceta()}"
+                                              ajax="false"/>
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoReceta').hide()"
                                              class="ui-button-secondary"/>
 

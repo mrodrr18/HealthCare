@@ -53,7 +53,7 @@ public class HistorialController implements Serializable{
     
     public void guardarNuevo(int idUs){
         
-        try{
+        /*try{
             Usuario us = usuarioEJB.buscarId(idUs);
             nuevo.setUsuario(us);
             nuevo.setFechaModificacion(new Date());
@@ -63,7 +63,7 @@ public class HistorialController implements Serializable{
             
         }catch(Exception e){
             System.err.println("Error al insertar diagnostico");
-        }
+        }*/
         System.out.println("Nuevo diagnóstico en el historial");
     }
     public Historial getNuevo() {

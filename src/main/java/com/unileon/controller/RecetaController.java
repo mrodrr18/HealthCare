@@ -48,7 +48,7 @@ public class RecetaController implements Serializable {
     }
     
     public void guardarNuevaReceta(){
-        try{
+        /*try{
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             nuevo.setUsuario(us);
             //Hay que meter el historial
@@ -58,7 +58,7 @@ public class RecetaController implements Serializable {
             
         }catch(Exception e){
             System.err.println("Error al insertar receta");
-        }
+        }*/
         System.out.println(nuevo.getNombreMedicamento());
         //return "/privado/medico/inicioMedico?faces-redirect=true";
     }
