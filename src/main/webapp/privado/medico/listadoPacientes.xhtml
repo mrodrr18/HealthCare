@@ -13,35 +13,38 @@
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-               <h:form>
-                   
-                    <div class="p-d-flex p-ai-center p-jc-between" >
-                        <p:column >
-                        <span>Listado de Pacientes</span>
+               
+                   <p:panelGrid>
+                       
+                       <p:row  >
+                       <p:column style="align-content: flex-start">
+                            <span>Listado de Pacientes</span>
+                       </p:column>
+                        <p:column style="align-content: flex-end">
+                            <p:inputText id="globalFilter"  style="width:10rem" placeholder="Introduce un nombre: " value="#{pacienteController.nombreCompleto}"/>
+                            <p:commandButton    process="pacientesAsignados"  value="Buscar" ajax="false" immediate="true" icon="pi pi-check" action="#{pacienteController.buscar()}"
+                                             />
                         </p:column>
-                        <p:column>
-                            <p:inputText id="globalFilter" onkeyup="PF('tablaPacientes').filter()" style="width:10rem" placeholder="Introduce un nombre: " value="#{pacienteController.nombreCompleto}"/>
-                        <p:commandButton value="Buscar" process="@this" icon="pi pi-check" action="#{pacienteController.buscar()}"
-                                             ajax="false"  />
-                        </p:column>
-                    </div>
+                    </p:row>
+                   </p:panelGrid>
+                    
                     <p:dataView id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" 
                                  widgetVar="tablaPacientes" layout="grid"  >
                         
                         <p:dataViewGridItem >
                             <p:card style="width: 24em">
+                                
                                 <f:facet name="header">
                                     <p:graphicImage alt="user header" library ="img" name="imagenPaciente.png" width="40" height="180"/>
                                 </f:facet>
-                                <f:facet name="title">
-                                    #{paciente.persona.nombre} #{paciente.persona.apellido1}
-                                </f:facet>
+                                
+                                    <h:outputText value="#{paciente.persona.nombre} #{paciente.persona.apellido1}" />
+                                
                                 <p> Sexo: #{paciente.persona.sexo} </p>
                                 <p> Dirección Postal: #{paciente.persona.direccion} </p>
                                 <p> Teléfono: #{paciente.persona.telefono} </p>
                                 
                                 <f:facet name="footer" >
-                                    <p>Seleccione una opción:</p>
                                     <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
                                                      process="@this" oncomplete="PF('nuevoDiagnostico').show()"
                                                  styleClass="ui-button-success" />
@@ -49,6 +52,7 @@
                                 </f:facet>
                             </p:card>
                         </p:dataViewGridItem>
+                        
                     </p:dataView>
                     <p:dialog header="Detalles del diagnóstico del paciente" showEffect="fade" modal="true"
                                 widgetVar="nuevoDiagnostico" responsive="true">
@@ -74,7 +78,7 @@
 
                         <f:facet name="footer">
 
-                            <p:commandButton value="Guardar" icon="pi pi-check" onclick="#{historialController.guardarNuevo(paciente.idUsuario)}"
+                            <p:commandButton value="Guardar" icon="pi pi-check" action="#{historialController.guardarNuevo(paciente.idUsuario)}"
                                               oncomplete="PF('preguntaReceta').show()" />
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoDiagnostico').hide()"
                                              class="ui-button-secondary"/>
@@ -98,8 +102,9 @@
 
                            <p:commandButton value="Sí" icon="pi pi-bookmark"
                                                      process="@this" oncomplete="PF('nuevaReceta').show()"
-                                                 styleClass="ui-button-success"  />
-                            <p:commandButton value="No" icon="pi pi-times" onclick="PF('preguntaReceta').hide()"
+                                                 styleClass="ui-button-success" 
+                                                 onclick="PF('preguntaReceta').hide()"/>
+                            <p:commandButton value="No" icon="pi pi-times" onclick="PF('preguntaReceta').hide(), PF('nuevoReceta').hide()"
                                              class="ui-button-secondary"/>
 
                         </f:facet>
@@ -136,8 +141,8 @@
 
                        <f:facet name="footer">
 
-                           <p:commandButton value="Guardar" process="@this" icon="pi pi-check" onclick="#{recetaController.guardarNuevaReceta()}"
-                                              ajax="false"/>
+                           <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{recetaController.guardarNuevaReceta()}"
+                                              oncomplete="PF('preguntaReceta').show()" />
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoReceta').hide()"
                                              class="ui-button-secondary"/>
 
@@ -145,7 +150,6 @@
                     </p:dialog>
                    
                     
-                </h:form>
             </ui:define>
 
         </ui:composition>
