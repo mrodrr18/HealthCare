@@ -46,4 +46,80 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         else return resultado.get(0);
     }
     
+    @Override
+    public List<Usuario> listarPacientes(){
+        String consulta = "FROM Usuario u WHERE u.tipo=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", 2);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
+    }
+    
+    @Override
+    public List<Usuario> buscarNombre(String nombre){
+        String consulta = "FROM Usuario u WHERE u.persona.nombre=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", nombre);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
+    }
+    
+    @Override
+    public Usuario buscarId(int id){
+        String consulta = "FROM Usuario u WHERE u.id=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", id);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado.get(0);
+    }
+    
+    @Override
+    public List<Usuario> buscarApellido1(String nombre, String apellido1){
+        String consulta = "FROM Usuario u WHERE u.persona.nombre=:param1 and u.persona.apellido1=:param2";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", nombre);
+        
+        query.setParameter("param2", apellido1);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
+    }
+    
+    @Override
+    public List<Usuario> buscarApellido2(String nombre, String apellido1, String apellido2){
+        String consulta = "FROM Usuario u WHERE u.persona.nombre=:param1 and u.persona.apellido1=:param2 and u.persona.apellido2=:param3";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", nombre);
+        
+        query.setParameter("param2", apellido1);
+
+        query.setParameter("param3", apellido2);
+
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
+    }
+    
 }
