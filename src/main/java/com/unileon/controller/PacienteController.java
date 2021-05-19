@@ -52,7 +52,10 @@ public class PacienteController implements Serializable{
         
         else if(partes.length > 3) this.listaPacientes = null;
         
-        System.out.println("Entro a buscar " + partes.length);
+        System.out.println("Entro a buscar " + partes[0].length());
+        if(partes[0].length()==0){
+           this.listaPacientes = usuarioEJB.listarPacientes();
+        }
     }
     
     public String verMedicos(){
