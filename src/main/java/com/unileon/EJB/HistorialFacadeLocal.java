@@ -6,6 +6,7 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Historial;
+import com.unileon.modelo.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface HistorialFacadeLocal {
     List<Historial> findRange(int[] range);
 
     int count();
+    
+    List<Historial> listarDiagnosticos(Usuario us);
     
 }

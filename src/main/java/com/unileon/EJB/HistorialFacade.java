@@ -6,9 +6,12 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Historial;
+import com.unileon.modelo.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,20 @@ public class HistorialFacade extends AbstractFacade<Historial> implements Histor
 
     public HistorialFacade() {
         super(Historial.class);
+    }
+    
+    @Override
+    public List<Historial> listarDiagnosticos(Usuario us){
+        String consulta = "FROM Historial h WHERE h.usuario=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", us);
+        
+        List<Historial> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
     }
     
 }
