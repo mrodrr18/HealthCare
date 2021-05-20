@@ -33,9 +33,9 @@
                                 
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
-                                <p:commandButton id="delete-products-button" value="#{inventarioController.getDeleteButtonMessage()}"
-                                                 icon="pi pi-trash" actionListener="#{inventarioController.deleteSelectedProducts()}"
-                                                 styleClass="ui-button-danger" disabled="#{!inventarioController.hasSelectedProducts()}"
+                                <p:commandButton id="delete-products-button" value="#{inventarioController.deleteButtonMessage}"
+                                                 icon="pi pi-trash" actionListener="#{inventarioController.deleteSelectedPublicaciones()}"
+                                                 styleClass="ui-button-danger" disabled="#{!inventarioController.hasSelectedProductos()}"
                                                  update="@this">
                                     <p:confirm header="Confirmation" message="Delete the selected products?"
                                                icon="pi pi-exclamation-triangle"/>
@@ -43,11 +43,16 @@
                             </p:toolbarGroup>
                         
                         </p:toolbar>
-                        <p:dataTable var="producto" value="#{inventarioController.listaProductos}"
-                                     reflow="true" selection="#{inventarioController.selectedProducts}"
+                        <p:dataTable id="dt-products" widgetVar="dtProducts" var="producto" value="#{inventarioController.listaProductos}"
+                                     reflow="true" styleClass="products-table" selection="#{inventarioController.selectedProducts}"
                                      rowKey="#{producto.idProducto}" paginator="true"
                                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
                             
+                            <p:ajax event="rowSelect" update=":form:delete-product-button" />
+                            <p:ajax event="rowUnselect" />
+                            <p:ajax event="rowSelectCheckbox" />
+                            <p:ajax event="rowUnselectCheckbox" />
+                            <p:ajax event="toggleSelect" />
                             
                             <p:column selectionMode="multiple" exportable="false"></p:column>
                             
@@ -68,7 +73,7 @@
                                                  oncomplete="PF('manageProductDialog').show()" 
                                                  styleClass="edit-button rounded-button ui-button-success" process="@this">
                                     <f:setPropertyActionListener value="#{producto}" target="#{inventarioController.selectedProduct}"/>
-                                     
+                                    <p:resetInput target=":form:manage-product-content"/>
                                 </p:commandButton>
                                 <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                                  oncomplete="PF('deleteProductDialog').show()">
@@ -103,7 +108,7 @@
                          
                             <f:facet name="footer">
                                 
-                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{inventarioController.nuevoProducto()}"
+                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{inventarioController.saveProduct()}"
                                                  ajax="false"  />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
@@ -133,7 +138,7 @@
                             </p:outputPanel>
                          
                             <f:facet name="footer">
-                                <p:commandButton value="Editar" process="@this" icon="pi pi-check" actionListener="#{inventarioController.editarProducto()}"
+                                <p:commandButton value="Editar" process="@this" icon="pi pi-check" actionListener="#{inventarioController.saveProduct()}"
                                                   ajax="false" />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                                  class="ui-button-secondary"/>
@@ -142,7 +147,7 @@
 
                         <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
                                          message="¿Desea borrar el producto seleccionado?" header="Confirm" severity="warn">
-                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{inventarioController.borrarProducto()}"
+                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{inventarioController.deleteProduct()}"
                                              process="@this" oncomplete="PF('deleteProductDialog').hide()" ajax="false"/>
                             <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('deleteProductDialog').hide()"/>

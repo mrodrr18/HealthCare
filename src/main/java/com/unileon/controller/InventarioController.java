@@ -43,12 +43,11 @@ public class InventarioController implements Serializable{
     @PostConstruct
     public void init(){
        listaProductos = inventarioEJB.findAll();
-       selectedProduct = new Inventario();
        nuevo = new Inventario();
        
-       //Inventario producto = new Inventario();
+       Inventario producto = new Inventario();
        
-       /*producto.setNombre("Jeringuilla");
+       producto.setNombre("Jeringuilla");
        producto.setDescripcion("MARCA TAL");
        producto.setUnidades(2);
        listaProductos.add(producto);
@@ -57,14 +56,14 @@ public class InventarioController implements Serializable{
        producto.setNombre("Anestesia");
        producto.setDescripcion("MARCA TAL");
        producto.setUnidades(8);
-       listaProductos.add(producto);*/
+       listaProductos.add(producto);
     }
     
     public int numeroDeProductos(){
         return listaProductos.size();
     }
     
-    public void guardarProducto() {
+    /*public void guardarProducto() {
         if (this.selectedProduct.getNombre() == null) {
             System.out.println("Producto a null");
             //this.listaProductos.add(this.selectedProduct);
@@ -77,9 +76,56 @@ public class InventarioController implements Serializable{
 
         PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+    }*/
+    
+    public void saveProduct() {
+        if (this.selectedProduct.getIdProducto() == 0) {
+            inventarioEJB.create(selectedProduct);
+            this.listaProductos.add(selectedProduct);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto añadida"));
+        }
+        else {
+            inventarioEJB.edit(selectedProduct);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Publicacion Actualizada"));
+        }
+
+        PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
     
-    public void borrarProducto() {
+    public void deleteProduct() {
+        inventarioEJB.remove(this.selectedProduct);
+        this.listaProductos.remove(this.selectedProduct);
+        this.selectedProduct = null;        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Eliminado"));
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+    }
+
+    public String getDeleteButtonMessage() {
+        if (hasSelectedProductos()) {            
+            int size = this.selectedProducts.size();
+            return size > 1 ? size + " products selected" : "1 product selected";
+        }
+
+        return "Eliminado";
+    }
+
+    public boolean hasSelectedProductos() {
+        return this.selectedProduct != null && !this.selectedProducts.isEmpty();
+    }
+
+    public void deleteSelectedPublicaciones() {
+        this.listaProductos.removeAll(this.selectedProducts);
+        for(Inventario pr:this.selectedProducts){
+            inventarioEJB.remove(pr);
+        }
+        this.selectedProducts= null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos Eliminados"));
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+        PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
+    }
+    
+    /*public void borrarProducto() {
         //this.inventarioEJB.remove(nuevo);
         System.out.println("Producto " + this.selectedProduct.getNombre());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto eliminado"));
@@ -126,6 +172,12 @@ public class InventarioController implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos eliminados"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
+    }*/
+    
+    public void openNew() {
+        this.selectedProduct = new Inventario();
+        
+       System.out.println(listaProductos.size());
     }
 
     public List<Inventario> getListaProductos() {
