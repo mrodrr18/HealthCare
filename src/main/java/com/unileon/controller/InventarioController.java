@@ -12,6 +12,7 @@ import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -20,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -47,23 +49,13 @@ public class InventarioController implements Serializable{
        
        Inventario producto = new Inventario();
        
-       producto.setNombre("Jeringuilla");
-       producto.setDescripcion("MARCA TAL");
-       producto.setUnidades(2);
-       listaProductos.add(producto);
-       
-       producto = new Inventario();
-       producto.setNombre("Anestesia");
-       producto.setDescripcion("MARCA TAL");
-       producto.setUnidades(8);
-       listaProductos.add(producto);
     }
     
     public int numeroDeProductos(){
         return listaProductos.size();
     }
     
-    /*public void guardarProducto() {
+    public void guardarProducto() {
         if (this.selectedProduct.getNombre() == null) {
             System.out.println("Producto a null");
             //this.listaProductos.add(this.selectedProduct);
@@ -76,56 +68,30 @@ public class InventarioController implements Serializable{
 
         PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-    }*/
-    
-    public void saveProduct() {
-        if (this.selectedProduct.getIdProducto() == 0) {
-            inventarioEJB.create(selectedProduct);
-            this.listaProductos.add(selectedProduct);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto añadida"));
-        }
-        else {
-            inventarioEJB.edit(selectedProduct);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Publicacion Actualizada"));
-        }
-
-        PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
-    
-    public void deleteProduct() {
-        inventarioEJB.remove(this.selectedProduct);
-        this.listaProductos.remove(this.selectedProduct);
-        this.selectedProduct = null;        
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Eliminado"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+    public void onRowEdit(RowEditEvent event) {
+        
+        System.out.println("ENTRA");
+        System.out.println("HOLADFJADKFDSA");
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto editado"));
+        PrimeFaces.current().ajax().update("form:msg", "form:tabla");
+    }
+    public void hola (){
+        System.out.println("HOLADFJADKFDSA");
+    }
+    public void onRowCancel(RowEditEvent event) {
+         System.out.println("ENTRA");
+         System.out.println("HOLADFJADKFDSA");
     }
 
-    public String getDeleteButtonMessage() {
-        if (hasSelectedProductos()) {            
-            int size = this.selectedProducts.size();
-            return size > 1 ? size + " products selected" : "1 product selected";
-        }
-
-        return "Eliminado";
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        
+         System.out.println("ENTRA");
     }
-
-    public boolean hasSelectedProductos() {
-        return this.selectedProduct != null && !this.selectedProducts.isEmpty();
-    }
-
-    public void deleteSelectedPublicaciones() {
-        this.listaProductos.removeAll(this.selectedProducts);
-        for(Inventario pr:this.selectedProducts){
-            inventarioEJB.remove(pr);
-        }
-        this.selectedProducts= null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos Eliminados"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-        PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
-    }
-    
-    /*public void borrarProducto() {
+    public void borrarProducto() {
         //this.inventarioEJB.remove(nuevo);
         System.out.println("Producto " + this.selectedProduct.getNombre());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto eliminado"));
@@ -133,7 +99,6 @@ public class InventarioController implements Serializable{
     }
 
     public String nuevoProducto(){
-        
         try{
             System.out.println("Entro a nuevo producto");
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -172,7 +137,7 @@ public class InventarioController implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos eliminados"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
-    }*/
+    }
     
     public void openNew() {
         this.selectedProduct = new Inventario();

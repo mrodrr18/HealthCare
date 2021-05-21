@@ -16,15 +16,12 @@
                 (Sizes) ver el tamaño mas adecuado + (Sort) ordenar + (Sticky HEader) util
                 
                 <h:form id="form">
-                    <p:growl id="msgs" showDetail="true"/>
-                    
                     <div class="card">
-                        
-                        <p:toolbar>
+                        <p:growl id="msg" showDetail="true"/>
+                        <p:toolbar >
                             
                             <p:toolbarGroup>
-                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" process="@this" update="form msgs" 
-                                                  oncomplete="PF('addProductDialog').show()"
+                                <p:commandButton value="Nuevo producto" icon="pi pi-plus"  oncomplete="PF('addProductDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem">
                                 </p:commandButton>
                             </p:toolbarGroup>
@@ -32,64 +29,58 @@
                                 Inventario de HealthCare
                                 
                             </p:toolbarGroup>
-                            <p:toolbarGroup align="right">
-                                <p:commandButton id="delete-products-button" value="#{inventarioController.deleteButtonMessage}"
-                                                 icon="pi pi-trash" actionListener="#{inventarioController.deleteSelectedPublicaciones()}"
-                                                 styleClass="ui-button-danger" disabled="#{!inventarioController.hasSelectedProductos()}"
-                                                 update="@this">
-                                    <p:confirm header="Confirmation" message="Delete the selected products?"
-                                               icon="pi pi-exclamation-triangle"/>
-                                </p:commandButton>
-                            </p:toolbarGroup>
-                        
                         </p:toolbar>
-                        <p:dataTable id="dt-products" widgetVar="dtProducts" var="producto" value="#{inventarioController.listaProductos}"
-                                     reflow="true" styleClass="products-table" selection="#{inventarioController.selectedProducts}"
-                                     rowKey="#{producto.idProducto}" paginator="true"
-                                    rows="10" rowSelectMode="add" paginatorPosition="bottom">
-                            
-                            <p:ajax event="rowSelect" update=":form:delete-product-button" />
-                            <p:ajax event="rowUnselect" />
-                            <p:ajax event="rowSelectCheckbox" />
-                            <p:ajax event="rowUnselectCheckbox" />
-                            <p:ajax event="toggleSelect" />
-                            
-                            <p:column selectionMode="multiple" exportable="false"></p:column>
+                        <p:dataTable id="tabla" var="producto" value="#{inventarioController.listaProductos}" editable="true"
+                                     style="margin-bottom:20px">
+
+                            <p:ajax event="rowEdit" listener="#{inventarioController.onRowEdit}"  update="tabla" />
+                            <p:ajax event="rowEditCancel" listener="#{inventarioController.onRowCancel}"  update="tabla" />
                             
                             <p:column headerText="Nombre" sortBy="#{producto.nombre}" filterBy="#{producto.nombre}">
-                                <h:outputText value="#{producto.nombre}" />
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{producto.nombre}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="nombreInput" value="#{producto.nombre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                                
                             </p:column>
 
                             <p:column headerText="Descripción">
-                                <h:outputText value="#{producto.descripcion}" />
-                            </p:column>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{producto.descripcion}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="descripcionInput" value="#{producto.descripcion}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor> </p:column>
 
                             <p:column headerText="Unidades" sortBy="#{producto.unidades}">
-                                <h:outputText value="#{producto.unidades}" />
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{producto.unidades}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="unidadesInput" value="#{producto.unidades}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
                             
-                            <p:column exportable="false">
-                                <p:commandButton icon="pi pi-pencil" 
-                                                 oncomplete="PF('manageProductDialog').show()" 
-                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
-                                    <f:setPropertyActionListener value="#{producto}" target="#{inventarioController.selectedProduct}"/>
-                                    <p:resetInput target=":form:manage-product-content"/>
-                                </p:commandButton>
-                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-                                                 oncomplete="PF('deleteProductDialog').show()">
-                                    <f:setPropertyActionListener value="#{producto}" target="#{inventarioController.selectedProduct}"/>
-                                </p:commandButton>
-                            </p:column>
-                            <f:facet name="footer">
-                                <span class="p-text-bold">Hay un total de #{inventarioController.numeroDeProductos()} productos en el inventario.</span>
-                            </f:facet>
                             
+                            <p:column style="width:6rem">
+                                <p:rowEditor editTitle="Edit Row"  cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                            </p:column>
                         </p:dataTable>
+                                    
+                    
                         <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
                                 widgetVar="addProductDialog" responsive="true">
                             
                             <p:outputPanel id="add-product-content" class="ui-fluid">
-                                <p:outputPanel>
+                                <p:outputPanel  >
                                     
                                     <div class="p-field">
                                         <p:outputLabel for="nombre_add">Nombre</p:outputLabel>
@@ -108,57 +99,14 @@
                          
                             <f:facet name="footer">
                                 
-                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{inventarioController.saveProduct()}"
-                                                 ajax="false"  />
+                                <p:commandButton value="Guardar" process=" @this" icon="pi pi-check" action="#{inventarioController.nuevoProducto()}"
+                                                  ajax="false"   />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
                                 
                             </f:facet>
                         </p:dialog>
-                        <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
-                                widgetVar="manageProductDialog" responsive="true">
-                            
-                            <p:outputPanel id="manage-product-content" class="ui-fluid">
-                                <p:outputPanel>
-                                    <p:column >
-                                        <div class="p-field">
-                                            <p:outputLabel for="nombre_edit">Nombre</p:outputLabel>
-                                            <p:inputText id="nombre_edit"  value="#{inventarioController.selectedProduct.nombre}" required="true"/>
-                                        </div>
-                                        <div class="p-field">
-                                            <p:outputLabel for="descripcion_edit">Descripción</p:outputLabel>
-                                            <p:inputTextarea id="descripcion_edit" value="#{inventarioController.selectedProduct.descripcion}" required="true"/>
-                                        </div>
-                                        <div class="p-field">
-                                            <p:outputLabel for="unidades_edit">Unidades</p:outputLabel>
-                                            <p:inputNumber id="unidades_edit" value="#{inventarioController.selectedProduct.unidades}" required="true"/>
-                                        </div>
-                                    </p:column>
-                                </p:outputPanel>
-                            </p:outputPanel>
-                         
-                            <f:facet name="footer">
-                                <p:commandButton value="Editar" process="@this" icon="pi pi-check" actionListener="#{inventarioController.saveProduct()}"
-                                                  ajax="false" />
-                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
-                                                 class="ui-button-secondary"/>
-                            </f:facet>
-                        </p:dialog>
-
-                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
-                                         message="¿Desea borrar el producto seleccionado?" header="Confirm" severity="warn">
-                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{inventarioController.deleteProduct()}"
-                                             process="@this" oncomplete="PF('deleteProductDialog').hide()" ajax="false"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                             onclick="PF('deleteProductDialog').hide()"/>
-                        </p:confirmDialog>
-
-                        <p:confirmDialog global="true" showEffect="fade" width="300">
-                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                                             icon="pi pi-times"/>
-                        </p:confirmDialog>
-                    </div>
+                    </div>   
                 </h:form>
             </ui:define>
 

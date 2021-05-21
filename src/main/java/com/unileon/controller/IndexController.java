@@ -43,7 +43,7 @@ public class IndexController implements Serializable{
         Usuario resultado = usuarioEJB.consultarUsuario(usuario);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", resultado);
 
-        if(resultado == null) return "/publico/permisosInsuficientes?faces-redirect=true";
+        if(resultado == null) return "/publico/sinPrivilegios?faces-redirect=true";
         
         else{ 
             //0 medico 1 Auxiliar 2 Paciente 3 Administrador
