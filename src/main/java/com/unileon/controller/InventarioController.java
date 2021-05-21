@@ -69,28 +69,7 @@ public class InventarioController implements Serializable{
         PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
-    public void onRowEdit(RowEditEvent event) {
-        
-        System.out.println("ENTRA");
-        System.out.println("HOLADFJADKFDSA");
-        
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto editado"));
-        PrimeFaces.current().ajax().update("form:msg", "form:tabla");
-    }
-    public void hola (){
-        System.out.println("HOLADFJADKFDSA");
-    }
-    public void onRowCancel(RowEditEvent event) {
-         System.out.println("ENTRA");
-         System.out.println("HOLADFJADKFDSA");
-    }
-
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-        
-         System.out.println("ENTRA");
-    }
+   
     public void borrarProducto() {
         //this.inventarioEJB.remove(nuevo);
         System.out.println("Producto " + this.selectedProduct.getNombre());
