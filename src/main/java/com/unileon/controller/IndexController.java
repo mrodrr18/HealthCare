@@ -63,6 +63,7 @@ public class IndexController implements Serializable{
     
     public String registrar(){
         return "/publico/altausuario?faces-redirect=true";
+        //return "prueba?faces-redirect=true";
     }
 
     public Usuario getUsuario() {
