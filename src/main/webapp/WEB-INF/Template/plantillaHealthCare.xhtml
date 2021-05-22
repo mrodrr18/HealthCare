@@ -18,11 +18,10 @@
         <h:form> 
             <div id="top" >
                 
-                <p:panelGrid columns="3" layout="grid" style="align-content: center" >
+                <p:panelGrid columns="2" layout="grid"   >
                     
-                    <p:graphicImage library ="img" name="logo.gif"  width="260" height="120" />
-
-                    <ui:insert name="top">HealthCare</ui:insert>
+                    <p:graphicImage library ="img" name="logo.gif"  width="600" height="120" />
+                    
                     
                     <p:commandButton process="@this" value="Cerrar Sesión" icon="pi pi-fw pi-power-off" action="#{plantillaController.cerrarSesion()}"/>
                     
@@ -32,12 +31,38 @@
 
             <div id="content" class="center_content">
                 <ui:insert name="content">
-                    <h1>HealthCare</h1>
                 </ui:insert>
             </div>
 
             <div id="bottom">
-                <ui:insert name="bottom">Contacto</ui:insert>
+                <ui:insert name="bottom" >
+                     <p:toolbar>
+                            
+                            <p:toolbarGroup>
+                                <p> Contacto: </p>
+                            </p:toolbarGroup>
+                         <p:toolbarGroup align="right" style=" margin-right: 45px">
+                                <p> Redes sociales: </p>
+                            </p:toolbarGroup>
+                     </p:toolbar>
+                    
+                    <p:toolbar >
+                            
+                        <p:toolbarGroup align=" left" >
+                                <p> Número de teléfono: 987569784 </p>
+                                <p> Correo electrónico: contacto@healthcare.es </p>
+                        </p:toolbarGroup>
+                        <p:toolbarGroup align=" right" style=" margin-right: 15px" >
+                            <p:link > <i class="pi pi-twitter" /> @healthcare </p:link>
+                            <p:spacer/>
+                            <p:spacer/>
+                            
+                            <p:link> <i class="pi pi-facebook" /> healthcare </p:link>
+                            <p:spacer/>
+                        </p:toolbarGroup>
+                     </p:toolbar>
+                    
+                </ui:insert>
             </div>
         </h:form>
     </h:body>
