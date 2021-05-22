@@ -18,11 +18,10 @@
         <h:form> 
             <div id="top" >
                 
-                <p:panelGrid columns="3" layout="grid" style="align-content: center" >
+                <p:panelGrid columns="2" layout="grid"   >
                     
-                    <p:graphicImage library ="img" name="logo.gif"  width="260" height="120" />
-
-                    <ui:insert name="top">HealthCare</ui:insert>
+                    <p:graphicImage library ="img" name="logo.gif"  width="600" height="120" />
+                    
                     
                     <p:commandButton process="@this" value="Cerrar Sesión" icon="pi pi-fw pi-power-off" action="#{plantillaController.cerrarSesion()}"/>
                     
