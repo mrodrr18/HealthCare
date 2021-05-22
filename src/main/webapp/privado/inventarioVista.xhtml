@@ -5,22 +5,20 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
     <body>
-
         <ui:composition template="./../WEB-INF/Template/plantillaHealthCare.xhtml">
-
             <ui:define name="content">
-                (RowAdd) Ahí cojo lo de añadir nuevo
-                + (RowColor) si quedan menos de x unidades lo pone en rojo +(Scroll) si hay muchos articulos +
-                (Sizes) ver el tamaño mas adecuado + (Sort) ordenar + (Sticky HEader) util
                 
                 <h:form id="form">
+                    <p:growl id="msgs" showDetail="true"/>
+                    
                     <div class="card">
-                        <p:toolbar >
+                        
+                        <p:toolbar>
                             
                             <p:toolbarGroup>
-                                <p:commandButton value="Nuevo producto" icon="pi pi-plus"  oncomplete="PF('addProductDialog').show()"
+                                <p:commandButton value="Nuevo producto" icon="pi pi-plus" process="@this"
+                                                  oncomplete="PF('addProductDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem">
                                 </p:commandButton>
                             </p:toolbarGroup>
@@ -30,54 +28,47 @@
                             </p:toolbarGroup>
                             
                             <p:toolbarGroup>
-                                <p:selectOneMenu id="lista_editar" value="#{inventarioController.nuevo}" 
-                                panelStyle="width:180px"  var="c"
-                                filter="true" filterMatchMode="startsWith">
-
-                                    <f:selectItems    value="#{inventarioController.listaProductos}" var="producto" itemLabel="#{producto.nombre}" itemValue="#{producto}"/>
-
-                                    <p:column>
-
-                                        <p:commandButton value="#{c.nombre}"  action="#{inventarioController.borrarProducto()}"  oncomplete="PF('manageProductDialog').show()"
-                                                 styleClass="ui-button-success" style="margin-right: .5rem">
-                                        </p:commandButton>
-                                    </p:column>
-
-                        </p:selectOneMenu>
+                                <p:commandButton value="Pulse para editar producto" icon="pi pi-pencil" process="@this" ajax="false"
+                                                 action="#{inventarioController.editarProducto()}" immediate="true" 
+                                                styleClass="ui-button-success" style="margin-right: .5rem">
+                                </p:commandButton>
+                                
+                            </p:toolbarGroup>
+                            
+                            <p:toolbarGroup>
+                                <p:commandButton value="Pulse para eliminar un producto" icon="pi pi-trash" process="@this" ajax="false"
+                                                 action="#{inventarioController.borrarProducto()}" immediate="true" 
+                                                styleClass="ui-button-success" style="margin-right: .5rem">
+                                </p:commandButton>
                                 
                             </p:toolbarGroup>
                         </p:toolbar>
-                        <p:dataTable id="tabla" var="producto" value="#{inventarioController.listaProductos}" editable="true"
-                                     style="margin-bottom:20px">
-
-                           
-                            
+                        <p:dataTable var="producto" value="#{inventarioController.listaProductos}"
+                                     reflow="true" selection="#{inventarioController.selectedProducts}"
+                                     rowKey="#{producto.idProducto}" paginator="true"
+                                    rows="10" rowSelectMode="add" paginatorPosition="bottom">
+       
                             <p:column headerText="Nombre" sortBy="#{producto.nombre}" filterBy="#{producto.nombre}">
-                                
-                                <h:outputText value="#{producto.nombre}"/>
-                                    
-                                
+                                <h:outputText value="#{producto.nombre}" />
                             </p:column>
-
                             <p:column headerText="Descripción">
-                                
-                                        <h:outputText value="#{producto.descripcion}"/>
+                                <h:outputText value="#{producto.descripcion}" />
                             </p:column>
-
                             <p:column headerText="Unidades" sortBy="#{producto.unidades}">
-                                
-                                        <h:outputText value="#{producto.unidades}"/>
-                                   
+                                <h:outputText value="#{producto.unidades}" />
                             </p:column>
+                            
+                            
+                            <f:facet name="footer">
+                                <span class="p-text-bold">Hay un total de #{inventarioController.numeroDeProductos()} productos en el inventario.</span>
+                            </f:facet>
                             
                         </p:dataTable>
-                                    
-                    
                         <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
                                 widgetVar="addProductDialog" responsive="true">
                             
                             <p:outputPanel id="add-product-content" class="ui-fluid">
-                                <p:outputPanel  >
+                                <p:outputPanel>
                                     
                                     <div class="p-field">
                                         <p:outputLabel for="nombre_add">Nombre</p:outputLabel>
@@ -89,57 +80,52 @@
                                     </div>
                                     <div class="p-field">
                                         <p:outputLabel for="unidades_add">Unidades</p:outputLabel>
-                                        <p:inputNumber id="unidades_add" value="#{inventarioController.nuevo.unidades}" required="true"/>
+                                        <p:inputTextarea id="unidades_add" value="#{inventarioController.nuevo.unidades}" required="true"/>
                                     </div>
                                 </p:outputPanel>
                             </p:outputPanel>
-                         
+
                             <f:facet name="footer">
                                 
-                                <p:commandButton value="Guardar" process=" @this" icon="pi pi-check" action="#{inventarioController.nuevoProducto()}"
-                                                    />
+                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{inventarioController.nuevoProducto()}"
+                                                 ajax="false"  />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
-                                
+
                             </f:facet>
                         </p:dialog>
-                        
                         <p:dialog header="Detalles del producto" showEffect="fade" modal="true"
                                 widgetVar="manageProductDialog" responsive="true">
-                            
+
                             <p:outputPanel id="manage-product-content" class="ui-fluid">
-                                <p:outputPanel  >
-                                    
-                                    <div class="p-field">
-                                        <p:outputLabel for="nombre_edit">Nombre</p:outputLabel>
-                                        <p:inputText id="nombre_edit" value="#{inventarioController.nuevo}" required="true"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="descripcion_edit">Descripción</p:outputLabel>
-                                        <p:inputTextarea id="descripcion_edit" value="#{inventarioController.nuevo.descripcion}" required="true"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="unidades_edit">Unidades</p:outputLabel>
-                                        <p:inputNumber id="unidades_edit" value="#{inventarioController.nuevo.unidades}" required="true"/>
-                                    </div>
+                                <p:outputPanel>
+                                     <p:column >
+                                        <div class="p-field">
+                                            <p:outputLabel for="nombre_edit">Nombre</p:outputLabel>
+                                            <p:inputText id="nombre_edit"  value="CAMBIAR" required="true"/>
+                                        </div>
+                                        <div class="p-field">
+                                            <p:outputLabel for="descripcion_edit">Descripción</p:outputLabel>
+                                            <p:inputTextarea id="descripcion_edit" value="CAMBIAR" required="true"/>
+                                        </div>
+                                        <div class="p-field">
+                                            <p:outputLabel for="unidades_edit">Unidades</p:outputLabel>
+                                           <p:inputTextarea id="unidades_edit" value="CAMBIAR" required="true"/>
+                                        </div>
+                                    </p:column>
                                 </p:outputPanel>
                             </p:outputPanel>
-                         
+
                             <f:facet name="footer">
-                                
-                                <p:commandButton value="Editar" process=" @this" icon="pi pi-check" action="#{inventarioController.editarProducto()}"
-                                                  ajax="false"   />
-                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
+                               <p:commandButton value="Editar"  process="@this" icon="pi pi-check" actionListener="#{inventarioController.editarProducto()}"
+                                                  />
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                                  class="ui-button-secondary"/>
-                                
                             </f:facet>
                         </p:dialog>
                     </div>
-                    
                 </h:form>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

@@ -79,7 +79,7 @@
                         <f:facet name="footer">
 
                             <p:commandButton value="Guardar" icon="pi pi-check" action="#{historialController.guardarNuevo(paciente.idUsuario)}"
-                                              oncomplete="PF('preguntaReceta').show()" />
+                                              oncomplete="PF('preguntaReceta').show()" ajax="true" />
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoDiagnostico').hide()"
                                              class="ui-button-secondary"/>
 

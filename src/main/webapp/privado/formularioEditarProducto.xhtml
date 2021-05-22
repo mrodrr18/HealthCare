@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/Template/plantillaHealthCare.xhtml">
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <h1>FORMULARIO DE EDICIÓN DE UN PRODUCTO DEL INVENTARIO</h1>
+                    <p:fieldset legend="Selecciona un producto que desee editar">
+                        <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: center">
+                            <p:selectOneMenu id="lista_editar" value="#{inventarioController.nuevo}" 
+                                    panelStyle="width:180px"  var="c"
+                                    filter="true" filterMatchMode="startsWith">
+
+                                        <f:selectItems    value="#{inventarioController.listaProductos}" var="producto" itemLabel="#{producto.nombre}" itemValue="#{producto}"/>
+
+                                        <p:column>
+
+                                            <p:commandButton process="@form" immediate="true" value="#{c.nombre}"  action="#{inventarioController.borrarProducto()}" 
+                                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                                            </p:commandButton>
+                                        </p:column>
+
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
+                             
+                            <p:outputLabel for="txtNombre" value="Nombre:"/>
+                            <p:inputText  value="#{inventarioController.nuevo.nombre}" required="true" requiredMessage="El nombre es un campo obligatorio"
+                                         id="txtNombre"/>
+                                         <p:message for="txtNombre"/>
+                            <p:outputLabel for="txtDescripcion" value="Descripción:"/>
+                            <p:inputText value="#{inventarioController.nuevo.descripcion}" required="true" requiredMessage="La descripción es un campo obligatorio"
+                                         id="txtDescripcion"/>
+                                         <p:message for="txtDescripcion"/>
+                            <p:outputLabel for="txtUnidades" value="Unidades:"/>
+                            <p:inputNumber value="#{inventarioController.nuevo.unidades}" required="true" requiredMessage="Las unidades es un campo obligatorio"
+                                         id="txtUnidades"/>
+                                         <p:message for="txtUnidades"/>
+
+                            
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="1">
+                            <p:commandButton process="@form" ajax="false" immediate="true" value="Guardar"  action="#{inventarioController.guardarProductoEditado()}" 
+                                    styleClass="ui-button-success" style="margin-right: .5rem">
+                           </p:commandButton>
+                        </p:panelGrid>
+                    </p:fieldset>
+                    
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

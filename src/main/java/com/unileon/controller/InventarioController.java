@@ -46,7 +46,6 @@ public class InventarioController implements Serializable{
     public void init(){
        listaProductos = inventarioEJB.findAll();
        nuevo = new Inventario();
-       
        Inventario producto = new Inventario();
        
     }
@@ -70,14 +69,24 @@ public class InventarioController implements Serializable{
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
    
-    public void borrarProducto() {
+    public String borrarProducto() {
         //this.inventarioEJB.remove(nuevo);
-        System.out.println("Producto " + this.selectedProduct.getNombre());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto eliminado"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+        System.out.println("Borrar Producto");
+        return "/privado/formularioBorrarProducto?faces-redirect=true";
     }
-
+    
+    public String guardarProductoEditado(){
+        System.out.println("He guardado el producto que acabo de editar");
+        return "/privado/inventarioVista?faces-redirect=true";
+    }
+    
+    public String eliminarProductoInventario(){
+        System.out.println("He eliminado el producto del inventario");
+        return "/privado/inventarioVista?faces-redirect=true";
+    }
+    
     public String nuevoProducto(){
+        System.out.println("HOLA");
         try{
             System.out.println("Entro a nuevo producto");
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -92,9 +101,11 @@ public class InventarioController implements Serializable{
         return "/privado/inventarioVista?faces-redirect=true";
         
     }
-    public void editarProducto(){
-        System.out.println(selectedProduct.getNombre()+"!!!!!!!!");
+    public String editarProducto(){
+        System.out.println("HOLA SOY EDITAR");
+        return "/privado/formularioEditarProducto?faces-redirect=true";
     }
+    
     
     public String getDeleteButtonMessage() {
         if (hasSelectedProducts()) {
@@ -155,6 +166,8 @@ public class InventarioController implements Serializable{
     public void setNuevo(Inventario nuevo) {
         this.nuevo = nuevo;
     }
+
+      
     
     
     
