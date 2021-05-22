@@ -6,9 +6,11 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Inventario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,20 @@ public class InventarioFacade extends AbstractFacade<Inventario> implements Inve
 
     public InventarioFacade() {
         super(Inventario.class);
+    }
+    
+    @Override 
+    public Inventario consultarInventario(String nombre){
+        String consulta = "FROM Inventario i WHERE i.nombre=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", nombre);
+        
+        List<Inventario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado.get(0);
     }
     
 }

@@ -9,6 +9,7 @@ import com.unileon.EJB.InventarioFacadeLocal;
 import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Inventario;
 import com.unileon.modelo.Usuario;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,10 @@ public class InventarioController implements Serializable{
     
     private Inventario nuevo;
     
+    private Inventario editar;
+    
+    private Inventario borrar;
+    
     @EJB
     private InventarioFacadeLocal inventarioEJB;
     
@@ -46,8 +51,8 @@ public class InventarioController implements Serializable{
     public void init(){
        listaProductos = inventarioEJB.findAll();
        nuevo = new Inventario();
-       Inventario producto = new Inventario();
-       
+       editar = new Inventario();
+       borrar = new Inventario();
     }
     
     public int numeroDeProductos(){
@@ -68,6 +73,11 @@ public class InventarioController implements Serializable{
         PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
+    
+    public void cambiarProductoEditar(Inventario i){
+        System.out.println("Cambiar editar Producto");
+        editar = i;
+    }
    
     public String borrarProducto() {
         //this.inventarioEJB.remove(nuevo);
@@ -76,12 +86,44 @@ public class InventarioController implements Serializable{
     }
     
     public String guardarProductoEditado(){
-        System.out.println("He guardado el producto que acabo de editar");
+        
+        if(editar == null) System.out.println("El producto a editar es null");
+        else{
+            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            Inventario i = inventarioEJB.consultarInventario(editar.getNombre());
+            if (i == null) System.out.println("El producto no está registrado");
+            else{
+                editar.setIdProducto(i.getIdProducto());
+                editar.setUsuario(us);
+                inventarioEJB.edit(editar);
+            }
+            
+            //System.out.println("He editado el producto" + i.getNombre());
+        }
         return "/privado/inventarioVista?faces-redirect=true";
     }
     
     public String eliminarProductoInventario(){
-        System.out.println("He eliminado el producto del inventario");
+        System.out.println("He eliminado el producto del inventario" + borrar.getNombre());
+        try{
+            if(borrar == null){
+                System.out.println("El producto a borrar es null");
+            }
+            else{
+                Inventario i = inventarioEJB.consultarInventario(borrar.getNombre());
+                if (i == null){
+                    System.out.println("El producto no está registrado");
+                }
+                else{
+                    inventarioEJB.remove(i);
+                }
+
+                //System.out.println("He editado el producto" + i.getNombre());
+            }
+        }catch(Exception e){
+            System.err.println("Error al borrar producto");
+        }
+        
         return "/privado/inventarioVista?faces-redirect=true";
     }
     
@@ -89,9 +131,15 @@ public class InventarioController implements Serializable{
         System.out.println("HOLA");
         try{
             System.out.println("Entro a nuevo producto");
-            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            nuevo.setUsuario(us);
-            inventarioEJB.create(nuevo);
+            Inventario i = inventarioEJB.consultarInventario(nuevo.getNombre());
+            if (i == null){
+                Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+                nuevo.setUsuario(us);
+                inventarioEJB.create(nuevo);
+            }
+            else{
+                System.out.println("El producto ya existe");
+            }
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
             
@@ -167,7 +215,31 @@ public class InventarioController implements Serializable{
         this.nuevo = nuevo;
     }
 
-      
+    public Inventario getEditar() {
+        return editar;
+    }
+
+    public void setEditar(Inventario editar) {
+        this.editar = editar;
+    }
+
+    public InventarioFacadeLocal getInventarioEJB() {
+        return inventarioEJB;
+    }
+
+    public void setInventarioEJB(InventarioFacadeLocal inventarioEJB) {
+        this.inventarioEJB = inventarioEJB;
+    }
+
+    public Inventario getBorrar() {
+        return borrar;
+    }
+
+    public void setBorrar(Inventario borrar) {
+        this.borrar = borrar;
+    }
+
+    
     
     
     

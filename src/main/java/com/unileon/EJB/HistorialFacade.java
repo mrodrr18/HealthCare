@@ -46,4 +46,6 @@ public class HistorialFacade extends AbstractFacade<Historial> implements Histor
         else return resultado;
     }
     
+    
+    
 }

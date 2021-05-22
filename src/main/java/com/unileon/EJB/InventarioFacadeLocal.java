@@ -30,4 +30,6 @@ public interface InventarioFacadeLocal {
 
     int count();
     
+    Inventario consultarInventario(String nombre);
+    
 }

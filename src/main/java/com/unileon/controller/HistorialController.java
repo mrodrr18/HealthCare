@@ -6,8 +6,10 @@
 package com.unileon.controller;
 
 import com.unileon.EJB.HistorialFacadeLocal;
+import com.unileon.EJB.RecetaFacadeLocal;
 import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Historial;
+import com.unileon.modelo.Receta;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,8 +34,13 @@ public class HistorialController implements Serializable{
     
     private Historial nuevo; 
     
+    private Receta nuevaReceta;
+    
     @EJB
     private HistorialFacadeLocal historialEJB;
+
+    @EJB
+    private RecetaFacadeLocal recetaEJB;
     
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
@@ -41,6 +48,7 @@ public class HistorialController implements Serializable{
     @PostConstruct
     public void init(){
         nuevo = new Historial();
+        nuevaReceta = new Receta();
         this.listarHistoriales();
       
     }
@@ -51,21 +59,44 @@ public class HistorialController implements Serializable{
         this.listaHistorial = historialEJB.listarDiagnosticos(us);
     }
     
-    public void guardarNuevo(int idUs){
+    public void guardarNuevo(){
         
-        /*try{
-            Usuario us = usuarioEJB.buscarId(idUs);
+        try{
+            //Guardo el historial
+            /*Usuario us = usuarioEJB.buscarId(idUs);
             nuevo.setUsuario(us);
             nuevo.setFechaModificacion(new Date());
             historialEJB.create(nuevo);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
             System.out.println(idUs);
             
+            this.guardarReceta();*/
+            
         }catch(Exception e){
             System.err.println("Error al insertar diagnostico");
-        }*/
-        System.out.println("Nuevo diagnóstico en el historial");
+        }
+        System.out.println("Nuevo diagnóstico en el historial" + nuevo.getSintomas());
     }
+    
+    public void guardarReceta(){
+        //Guardo la receta
+        Usuario usuarioR = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        List <Historial> diagnosticos = historialEJB.listarDiagnosticos(usuarioR);
+        
+        //Busco el último diagnostico
+        Historial result = diagnosticos.get(0);
+        for(int i = 0; i < diagnosticos.size(); i++){
+            if(diagnosticos.get(i).getFechaModificacion().compareTo(result.getFechaModificacion()) >= 0) {
+                result = diagnosticos.get(i);
+            }
+        }
+        nuevaReceta.setHistorial(result);
+        nuevaReceta.setUsuario(usuarioR);
+        recetaEJB.create(nuevaReceta);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
+        System.out.println("Receta creada");   
+    }
+    
     public Historial getNuevo() {
         return nuevo;
     }
@@ -96,6 +127,22 @@ public class HistorialController implements Serializable{
 
     public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
         this.usuarioEJB = usuarioEJB;
+    }
+
+    public Receta getNuevaReceta() {
+        return nuevaReceta;
+    }
+
+    public void setNuevaReceta(Receta nuevaReceta) {
+        this.nuevaReceta = nuevaReceta;
+    }
+
+    public RecetaFacadeLocal getRecetaEJB() {
+        return recetaEJB;
+    }
+
+    public void setRecetaEJB(RecetaFacadeLocal recetaEJB) {
+        this.recetaEJB = recetaEJB;
     }
     
     

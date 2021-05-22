@@ -38,10 +38,11 @@ public class UsuarioController implements Serializable{
         usuario = new Usuario();
         
         persona = new Persona();
+        tipoAltaUsuario = "2";
     }
     
     public void insertarUsuario(){
-        
+        System.out.println(tipoAltaUsuario);
         try{
             
             //CODIGO DE INSERTAR EN LA BASE DE DATOS, EL TIPO SIEMPRE AL ASIGNARSE DESDE

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -30,21 +31,24 @@ public class PacienteController implements Serializable{
     
     private String nombreCompleto;
     
+    private String n;
+    
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
     
     @PostConstruct
     public void init(){
         
-        nombreCompleto = new String();
+        
+        n = new String();
         listaPacientes = usuarioEJB.listarPacientes();
         
     }
     
     public void buscar(){
-        String[] partes = this.nombreCompleto.split(" ");
-        
-        if(partes.length == 1) this.listaPacientes = usuarioEJB.buscarNombre(partes[0]);
+        //String[] partes = this.nombreCompleto.split(" ");
+        System.out.println("El nombre es " + this.nombreCompleto );
+        /*if(partes.length == 0) this.listaPacientes = usuarioEJB.buscarNombre(partes[0]);
         
         else if(partes.length == 2) this.listaPacientes = usuarioEJB.buscarApellido1(partes[0], partes[1]);
         
@@ -52,10 +56,10 @@ public class PacienteController implements Serializable{
         
         else if(partes.length > 3) this.listaPacientes = null;
         
-        System.out.println("Entro a buscar " + partes[0].length());
-        if(partes[0].length()==0){
+        System.out.println("Entro a buscar " + partes.length + nombreCompleto);
+        if(partes.length==0){
            this.listaPacientes = usuarioEJB.listarPacientes();
-        }
+        }*/
     }
     
     public String verMedicos(){
@@ -97,6 +101,14 @@ public class PacienteController implements Serializable{
 
     public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
         this.usuarioEJB = usuarioEJB;
+    }
+
+    public String getN() {
+        return n;
+    }
+
+    public void setN(String n) {
+        this.n = n;
     }
     
     

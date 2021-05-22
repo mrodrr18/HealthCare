@@ -27,7 +27,7 @@ public class PlantillaController implements Serializable{
     public void verificarYMostrar(){
         try{
             
-            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/AppInso2/publico/permisosinsuficientes.swII");
+            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/HealthCare/publico/sinPrivilegios.healthcare");
 
         }catch(Exception e){
             System.err.println("Error en verificar y mostrar");
