@@ -48,6 +48,8 @@ public class PacienteController implements Serializable{
     public void buscar(){
         //String[] partes = this.nombreCompleto.split(" ");
         System.out.println("El nombre es " + this.nombreCompleto );
+        this.listaPacientes = usuarioEJB.buscarNombre(this.nombreCompleto);
+        System.out.println("Tam: "+this.listaPacientes.size());
         /*if(partes.length == 0) this.listaPacientes = usuarioEJB.buscarNombre(partes[0]);
         
         else if(partes.length == 2) this.listaPacientes = usuarioEJB.buscarApellido1(partes[0], partes[1]);

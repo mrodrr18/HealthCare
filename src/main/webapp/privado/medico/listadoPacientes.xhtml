@@ -24,16 +24,16 @@
                                          id="txtNombre"/>
                                          <p:message for="txtNombre"/>
                             
-                            <p:commandButton value="Buscar" process="@parent"  action="#{pacienteController.buscar()}"></p:commandButton>
+                                         <p:commandButton value="Buscar" process=" @parent"  action="#{pacienteController.buscar()}"></p:commandButton>
 
                         </p:panelGrid>
                     </p:fieldset>
                     
-
-                    <p:dataView id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" 
+                    
+                    <p:dataView  id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" 
                                  widgetVar="tablaPacientes" layout="grid"  >
                         
-                        <p:dataViewGridItem >
+                        <p:dataViewGridItem rendered="true" >
                             <p:card style="width: 24em">
                                 
                                 <f:facet name="header">
