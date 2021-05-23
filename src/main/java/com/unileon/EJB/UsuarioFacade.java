@@ -89,6 +89,20 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
     
     @Override
+    public Usuario buscarUser(String user){
+        String consulta = "FROM Usuario u WHERE u.user=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", user);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado.get(0);
+    }
+    
+    @Override
     public List<Usuario> buscarApellido1(String nombre, String apellido1){
         String consulta = "FROM Usuario u WHERE u.persona.nombre=:param1 and u.persona.apellido1=:param2";
         

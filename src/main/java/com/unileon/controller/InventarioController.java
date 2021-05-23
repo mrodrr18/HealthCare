@@ -87,12 +87,16 @@ public class InventarioController implements Serializable{
     
     public String guardarProductoEditado(){
         
-        if(editar == null) System.out.println("El producto a editar es null");
+        if(editar == null) {
+            System.out.println("El producto a editar es null");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Debes escribir el nombre del producto que quieres editar."));
+        }
         else{
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             Inventario i = inventarioEJB.consultarInventario(editar.getNombre());
-            if (i == null){ System.out.println("El producto no está registrado");
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso","El producto no está registrado"));
+            if (i == null){ 
+                System.out.println("El producto no está registrado");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.","El producto no está registrado"));
             }else{
                 editar.setIdProducto(i.getIdProducto());
                 editar.setUsuario(us);
@@ -115,11 +119,15 @@ public class InventarioController implements Serializable{
         try{
             if(borrar == null){
                 System.out.println("El producto a borrar es null");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Debes escribir el nombre del producto que quieres eliminar."));
+
             }
             else{
                 Inventario i = inventarioEJB.consultarInventario(borrar.getNombre());
                 if (i == null){
                     System.out.println("El producto no está registrado");
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Ese producto no está registrado."));
+
                 }
                 else{
                     inventarioEJB.remove(i);
@@ -129,13 +137,14 @@ public class InventarioController implements Serializable{
             }
         }catch(Exception e){
             System.err.println("Error al borrar producto");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Error al borrar el producto."));
+
         }
         
         return "/privado/inventarioVista?faces-redirect=true";
     }
     
     public String nuevoProducto(){
-        System.out.println("HOLA");
         try{
             System.out.println("Entro a nuevo producto");
             Inventario i = inventarioEJB.consultarInventario(nuevo.getNombre());
@@ -143,15 +152,19 @@ public class InventarioController implements Serializable{
                 Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
                 nuevo.setUsuario(us);
                 inventarioEJB.create(nuevo);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
+
             }
             else{
                 System.out.println("El producto ya existe");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error: El producto ya existe","Error"));
+
             }
-            
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
-            
+                        
         }catch(Exception e){
             System.err.println("Error al insertar producto");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Error al insertar el producto."));
+
         }
         return "/privado/inventarioVista?faces-redirect=true";
         

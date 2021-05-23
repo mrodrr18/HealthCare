@@ -42,4 +42,6 @@ public interface UsuarioFacadeLocal {
     
     List<Usuario> buscarApellido2(String nombre, String apellido1, String apellido2);
     
+    Usuario buscarUser(String user);
+    
 }

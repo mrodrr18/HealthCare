@@ -37,6 +37,9 @@
                                 
                                     <p:outputLabel for="tiempo_entre_tomas">Tiempo entre tomas (horas)</p:outputLabel>
                                     <p:inputNumber id="tiempo_entre_tomas" value="#{recetaController.nuevo.tiempoTomas}" required="true"/>
+                                    
+                                    <p:outputLabel for="user">Usuario del paciente</p:outputLabel>
+                                    <p:inputText id="user" value="#{recetaController.pacienteR}" required="true"/>
                                
                         </p:panelGrid>
                     </p:fieldset>

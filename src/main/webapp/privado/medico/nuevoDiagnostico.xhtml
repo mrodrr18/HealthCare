@@ -23,14 +23,17 @@
                         <p:panelGrid columns="2"  styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent">
                                 
                                     
-                                        <p:outputLabel for="txtUser" value="Nombre de usuario:"/>
-                                        <p:inputText value="#{historialController.nuevo.sintomas}" required="true" id="txtUser"/>
+                                        <p:outputLabel for="sintomas_add">Síntomas</p:outputLabel>
+                                        <p:inputTextarea id="sintomas_add" value="#{historialController.nuevo.sintomas}" required="true"/>
                                     
                                         <p:outputLabel for="diagnostico_add">Dignostico</p:outputLabel>
                                         <p:inputTextarea id="diagnostico_add" value="#{historialController.nuevo.diagnostico}" required="true"/>
                                     
                                         <p:outputLabel for="tratamiento_add">Tratamiento</p:outputLabel>
                                         <p:inputTextarea id="tratamiento_add" value="#{historialController.nuevo.tratamiento}" required="true"/>
+                                   
+                                        <p:outputLabel for="paciente_add">Nombre de usuario del paciente</p:outputLabel>
+                                        <p:inputTextarea id="paciente_add" value="#{historialController.pacienteDiag}" required="true"/>
                                    
                                
                         </p:panelGrid>
