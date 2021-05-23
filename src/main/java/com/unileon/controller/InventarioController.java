@@ -91,15 +91,22 @@ public class InventarioController implements Serializable{
         else{
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             Inventario i = inventarioEJB.consultarInventario(editar.getNombre());
-            if (i == null) System.out.println("El producto no está registrado");
-            else{
+            if (i == null){ System.out.println("El producto no está registrado");
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso","El producto no está registrado"));
+            }else{
                 editar.setIdProducto(i.getIdProducto());
                 editar.setUsuario(us);
                 inventarioEJB.edit(editar);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","El producto se actualizó correctamente"));
             }
             
             //System.out.println("He editado el producto" + i.getNombre());
         }
+       
+        return null;
+    }
+    public String irAlInventario(){
+         
         return "/privado/inventarioVista?faces-redirect=true";
     }
     
