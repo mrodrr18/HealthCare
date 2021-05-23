@@ -29,12 +29,13 @@
                         </p:panelGrid>
                     </p:fieldset>
                     
-                    
-                    <p:dataView  id="pacientesAsignados" var="paciente" value="#{pacienteController.listaPacientes}" 
-                                 widgetVar="tablaPacientes" layout="grid"  >
+                    <p:accordionPanel var="paciente" value="#{pacienteController.listaPacientes}" 
+                                 widgetVar="tablaPacientes" >
+                   
                         
-                        <p:dataViewGridItem rendered="true" >
-                            <p:card style="width: 24em">
+                        <p:tab title="#{paciente.persona.nombre}">
+                            
+                            <p:card style="width: 24em" >
                                 
                                 <f:facet name="header">
                                     <p:graphicImage alt="user header" library ="img" name="imagenPaciente.png" width="40" height="180"/>
@@ -53,9 +54,9 @@
                                     
                                 </f:facet>
                             </p:card>
-                        </p:dataViewGridItem>
+                        </p:tab>
+                    </p:accordionPanel>
                         
-                    </p:dataView>
                  <p:dialog header="Nuevo Diagnostico" showEffect="fade" modal="true"
                                 widgetVar="addDiag" responsive="true">
                             
