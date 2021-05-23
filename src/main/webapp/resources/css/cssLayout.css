@@ -1,10 +1,11 @@
 
 #top {
     position: relative;
-    background-color: #c2dfef;
+    background-color: #c2dfef !important;
     color: #c2dfef;
     padding: 6px;
     margin: 0px 0px 10px 0px;
+    text-align: center;
 }
 
 #bottom {
