@@ -30,6 +30,8 @@ public class UsuarioController implements Serializable{
     
     private String tipoAltaUsuario;
     
+    private String repPass;
+    
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
     
@@ -42,18 +44,19 @@ public class UsuarioController implements Serializable{
     }
     
     public void insertarUsuario(){
-        System.out.println(tipoAltaUsuario);
         try{
+            Usuario u = usuarioEJB.buscarUser(usuario.getUser());
+            if(u != null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","El nombre de usuario ya existe."));
+            else{
+                usuario.setPersona(persona);
+                usuario.setTipo(Integer.parseInt(tipoAltaUsuario));   
+                usuarioEJB.create(usuario);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","Usuario registrado."));
+            }
             
-            //CODIGO DE INSERTAR EN LA BASE DE DATOS, EL TIPO SIEMPRE AL ASIGNARSE DESDE
-            //ALTAUSUARIO ES 2=PACIENTES, LOS OTROS DE FORMA MANUAL
-            System.out.println("Entro en el metodo");
-            usuario.setPersona(persona);
-            usuario.setTipo(Integer.parseInt(tipoAltaUsuario));   
-            usuarioEJB.create(usuario);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
         }catch(Exception e){
             System.err.println("Error al insertar usuario");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","Error al insertar usuario."));
         }
         
     }
@@ -95,6 +98,15 @@ public class UsuarioController implements Serializable{
     public void setTipoAltaUsuario(String tipoAltaUsuario) {
         this.tipoAltaUsuario = tipoAltaUsuario;
     }
+
+    public String getRepPass() {
+        return repPass;
+    }
+
+    public void setRepPass(String repPass) {
+        this.repPass = repPass;
+    }
+    
     
     
 }
