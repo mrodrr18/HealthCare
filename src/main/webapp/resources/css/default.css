@@ -4,6 +4,8 @@ body {
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     color: #000000;  
     margin: 10px;
+    align-content: center !important;
+    margin: 0 auto;
 }
 
 h1 {
@@ -13,11 +15,12 @@ h1 {
     font-weight: bold;
     margin: 0px;
     padding: 0px;
-    color: #D20005;
+    color: #000000;
+    margin: 0 auto;
 }
-.ui-panelgrid {
-background-color: blue !important;
-font-weight: bold;
+.color {
+    background-color: yellow !important;
+    font-weight: bold;
 }
 a:link, a:visited {
   color: #045491;
