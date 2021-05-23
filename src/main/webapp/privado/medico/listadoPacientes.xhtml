@@ -20,7 +20,7 @@
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             
                             <p:outputLabel for="txtNombre" value="Nombre:"/>
-                            <p:inputText value="#{pacienteController.nombreCompleto}" required="true" requiredMessage="El nombre es un campo obligatorio"
+                            <p:inputText value="#{pacienteController.nombreCompleto}"  
                                          id="txtNombre"/>
                                          <p:message for="txtNombre"/>
                             
@@ -49,8 +49,9 @@
                                 
                                 <f:facet name="footer" >
                                     <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
-                                                     process="@this" oncomplete="PF('addDiag').show()"
+                                                     process="@this" action="#{historialController.irANuevoDiagnostico()}"
                                                  styleClass="ui-button-success" />
+                                    
                                     
                                 </f:facet>
                             </p:card>
@@ -80,76 +81,15 @@
 
                             <f:facet name="footer">
                                 
-                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{historialController.guardarNuevo()}"
+                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check"  action="#{historialController.guardarNuevo()}"
                                                    />
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
                                                  class="ui-button-secondary"/>
 
                             </f:facet>
                         </p:dialog>
-                   <p:dialog header="Receta" showEffect="fade" modal="true"
-                                widgetVar="preguntaReceta" responsive="true">
-                            
-                        <p:outputPanel id="preguntaReceta" class="ui-fluid">
-                            <p:outputPanel>
-
-                                <div class="p-field">
-                                    <p>¿Desea crear una nueva receta?</p>
-                                </div>
-                                
-                            </p:outputPanel>
-                        </p:outputPanel>
-
-                       <f:facet name="footer">
-
-                           <p:commandButton value="Sí" icon="pi pi-bookmark"
-                                                     process="@this" oncomplete="PF('nuevaReceta').show()"
-                                                 styleClass="ui-button-success" 
-                                                 onclick="PF('preguntaReceta').hide()"/>
-                            <p:commandButton value="No" icon="pi pi-times" onclick="PF('preguntaReceta').hide(), PF('nuevoReceta').hide()"
-                                             class="ui-button-secondary"/>
-
-                        </f:facet>
-                    </p:dialog>
-                   <p:dialog header="Nueva Receta" showEffect="fade" modal="true"
-                                widgetVar="nuevaReceta" responsive="true">
-                            
-                        <p:outputPanel id="nuevaReceta" class="ui-fluid">
-                            <p:outputPanel>
-
-                                <div class="p-field">
-                                    <p:outputLabel for="nombre_medicamento">Nombre del medicamento</p:outputLabel>
-                                    <p:inputTextarea id="nombre_medicamento" value="#{historialController.nuevaReceta.nombreMedicamento}" required="true"/>
-                                </div>
-                                <div class="p-field">
-                                    <p:outputLabel for="fecha_toma">Fecha</p:outputLabel>
-                                    <p:datePicker id="fecha_toma" value="#{historialController.nuevaReceta.fecha}"
-                                               pattern="dd/MM/yyyy" locale="es" required="true"/>
-                                </div>
-                                <div class="p-field">
-                                    <p:outputLabel for="periodo_toma">Periodo (días)</p:outputLabel>
-                                    <p:inputNumber id="periodo_toma" value="#{historialController.nuevaReceta.dias}" required="true"/>
-                                </div>
-                                <div class="p-field">
-                                    <p:outputLabel for="dosis_por_dia">Dosis/día</p:outputLabel>
-                                    <p:inputNumber id="dosis_por_dia" value="#{historialController.nuevaReceta.vecesPorDia}" required="true"/>
-                                </div>
-                                <div class="p-field">
-                                    <p:outputLabel for="tiempo_entre_tomas">Tiempo entre tomas (horas)</p:outputLabel>
-                                    <p:inputNumber id="tiempo_entre_tomas" value="#{historialController.nuevaReceta.tiempoTomas}" required="true"/>
-                                </div>
-                            </p:outputPanel>
-                        </p:outputPanel>
-
-                       <f:facet name="footer">
-
-                           <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{historialController.guardarNuevo(paciente.idUsuario)}"
-                                              />
-                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('nuevoReceta').hide()"
-                                             class="ui-button-secondary"/>
-
-                        </f:facet>
-                    </p:dialog>
+                   
+                   
                 
             </ui:define>
 

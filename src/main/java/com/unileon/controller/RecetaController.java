@@ -59,7 +59,8 @@ public class RecetaController implements Serializable {
         }catch(Exception e){
             System.err.println("Error al insertar receta");
         }*/
-        System.out.println(nuevo.getNombreMedicamento());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Nueva Receta guardada"));
+        System.out.println("Guardado "+nuevo.getNombreMedicamento());
         //return "/privado/medico/inicioMedico?faces-redirect=true";
     }
     
@@ -84,7 +85,7 @@ public class RecetaController implements Serializable {
                 if (!encontrado) lista.remove(i);
             }
             
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Recetas listadas","Aviso"));
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Recetas listadas","Aviso"));
             
             return lista;
             

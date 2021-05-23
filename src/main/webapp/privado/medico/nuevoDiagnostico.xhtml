@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="3" layout="grid">
+                     <p:commandButton value="Pacientes" icon="pi pi-fw pi-id-card" process="@this" ajax="false"
+                                      action="#{medicoController.verPacientes()}" immediate="true" 
+                                   styleClass="ui-button-success" style="margin-right: .5rem">
+                   </p:commandButton>
+                    <h1>FORMULARIO PARA AÑADIR UN NUEVO DIAGNÓSTICO</h1>
+                    <p:messages showDetail="true"/>
+                </p:panelGrid>
+                    <p:fieldset >
+                        <p:panelGrid columns="2"  styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent">
+                                
+                                    
+                                        <p:outputLabel for="txtUser" value="Nombre de usuario:"/>
+                                        <p:inputText value="#{historialController.nuevo.sintomas}" required="true" id="txtUser"/>
+                                    
+                                        <p:outputLabel for="diagnostico_add">Dignostico</p:outputLabel>
+                                        <p:inputTextarea id="diagnostico_add" value="#{historialController.nuevo.diagnostico}" required="true"/>
+                                    
+                                        <p:outputLabel for="tratamiento_add">Tratamiento</p:outputLabel>
+                                        <p:inputTextarea id="tratamiento_add" value="#{historialController.nuevo.tratamiento}" required="true"/>
+                                   
+                               
+                        </p:panelGrid>
+                    </p:fieldset>
+                    
+                    
+                <p:commandButton value="Guardar" update="@form" action="#{historialController.guardarNuevo()}"></p:commandButton>
+                <p:commandButton value="Nueva Receta" update="@form"                                                      
+                                 disabled="false" action="#{historialController.irAnuevaReceta()}"></p:commandButton>
+               
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

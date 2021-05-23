@@ -36,6 +36,8 @@ public class HistorialController implements Serializable{
     
     private Receta nuevaReceta;
     
+    private boolean activaReceta;
+    
     @EJB
     private HistorialFacadeLocal historialEJB;
 
@@ -75,7 +77,17 @@ public class HistorialController implements Serializable{
         }catch(Exception e){
             System.err.println("Error al insertar diagnostico");
         }
-        System.out.println("Nuevo diagnóstico en el historial" + nuevo.getSintomas());
+        System.out.println("Nuevo diagnóstico en el historial " + nuevo.getTratamiento());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Nuevo diagnóstico en el historial"));
+        
+        
+        
+    }
+    public String irANuevoDiagnostico(){
+        return "/privado/medico/nuevoDiagnostico?faces-redirect=true";
+    }
+    public String irAnuevaReceta(){
+        return "/privado/medico/nuevaReceta?faces-redirect=true";
     }
     
     public void guardarReceta(){
@@ -95,6 +107,7 @@ public class HistorialController implements Serializable{
         recetaEJB.create(nuevaReceta);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
         System.out.println("Receta creada");   
+        
     }
     
     public Historial getNuevo() {
@@ -143,6 +156,14 @@ public class HistorialController implements Serializable{
 
     public void setRecetaEJB(RecetaFacadeLocal recetaEJB) {
         this.recetaEJB = recetaEJB;
+    }
+
+    public boolean isActivaReceta() {
+        return activaReceta;
+    }
+
+    public void setActivaReceta(boolean activaReceta) {
+        this.activaReceta = activaReceta;
     }
     
     
