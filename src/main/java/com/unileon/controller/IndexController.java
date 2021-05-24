@@ -43,9 +43,11 @@ public class IndexController implements Serializable{
         Usuario resultado = usuarioEJB.consultarUsuario(usuario);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", resultado);
 
-        if(resultado == null) return "/publico/sinPrivilegios?faces-redirect=true";
+        if(resultado == null){ 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.","Para acceder debe estar registrado."));
+           return null;
         
-        else{ 
+        }else{ 
             //0 medico 1 Auxiliar 2 Paciente 3 Administrador
             switch (resultado.getTipo()) {
                 case 0:

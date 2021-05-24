@@ -13,8 +13,15 @@
         <ui:composition template="./../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-               
+                    <p:panelGrid columns="3" layout="grid">
+                     <p:commandButton value="Inventario" icon="pi pi-fw pi-list" process="@this" ajax="false"
+                                    action="#{inventarioController.irAlInventario()}" immediate="true" 
+                                   styleClass="ui-button-success" style="margin-right: .5rem">
+                   </p:commandButton>
                     <h1>FORMULARIO PARA BORRAR UN PRODUCTO</h1>
+                    <p:messages showDetail="true"/>
+                </p:panelGrid>
+                    
                     <p:fieldset legend="Escribe el nombre del producto en el campo de texto">
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             <p:outputLabel for="txtNombre" value="Nombre:"/>

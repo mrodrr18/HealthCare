@@ -131,6 +131,8 @@ public class InventarioController implements Serializable{
                 }
                 else{
                     inventarioEJB.remove(i);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso."," Producto eliminado correctamente."));
+
                 }
 
                 //System.out.println("He editado el producto" + i.getNombre());
@@ -141,7 +143,7 @@ public class InventarioController implements Serializable{
 
         }
         
-        return "/privado/inventarioVista?faces-redirect=true";
+        return null;
     }
     
     public String nuevoProducto(){
@@ -166,7 +168,7 @@ public class InventarioController implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Error al insertar el producto."));
 
         }
-        return "/privado/inventarioVista?faces-redirect=true";
+        return null;
         
     }
     public String editarProducto(){

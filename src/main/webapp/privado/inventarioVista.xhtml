@@ -10,7 +10,13 @@
             <ui:define name="content">
                 
                 <h:form id="form">
+                    <p:panelGrid columns="2" layout="grid">
+                     <p:commandButton value="Actualizar tabla del Inventario" icon="pi pi-fw pi-list" process="@this" ajax="false"
+                                    action="#{inventarioController.irAlInventario()}" immediate="true" 
+                                   styleClass="ui-button-success" style="margin-right: .5rem">
+                   </p:commandButton>
                     <p:messages showDetail="true"/>
+                </p:panelGrid>
                     
                     <div class="card">
                         
