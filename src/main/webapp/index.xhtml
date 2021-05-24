@@ -15,8 +15,13 @@
             <ui:define name="content">
             
 
-                <h1>Bienvenido a HealthCare, inicie sesión o regístrese para acceder.</h1>
+                <p:panelGrid columns="2" layout="grid">
+                    
+                    <h1>Bienvenido a HealthCare, inicie sesión o regístrese para acceder.</h1>
+                    <p:messages showDetail="true"/>
+                </p:panelGrid>
                 <div id="usuario" >
+                    
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                                 <p:outputLabel value="Nombre de usuario: "/>
                                 <p:inputText value="#{indexController.usuario.user}" required="true" requiredMessage="Completa el nombre de usuario para iniciar sesión"
