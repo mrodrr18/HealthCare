@@ -13,30 +13,7 @@
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                     
-                    <p:dataView id="medicosDisponibles" var="medico" value="#{medicoController.listaMedicos}" layout="grid">
-                        <p:dataViewGridItem>
-                            <p:card style="width: 18em">
-                                <f:facet name="header">
-                                    <p:graphicImage alt="user header" library ="img" name="imagenMedico.png" width="50" height="160"/>
-                                </f:facet>
-                                <f:facet name="title">
-                                    Dr. #{medico.persona.nombre} #{medico.persona.apellido1}
-                                </f:facet>
-                                <f:facet name="subtitle">
-                                    Seleccione una opción:
-                                </f:facet>
-                                
-                                <f:facet name="footer" >
-                                    <p:commandButton icon="pi pi-calendar-plus" value="Nueva Cita"
-                                        process="@this" oncomplete="PF('nuevaCita').show()"
-                                                 styleClass="ui-button-success"/>
-                                </f:facet>
-                            </p:card>
-                        </p:dataViewGridItem>
-                    </p:dataView>
-                    <p:dialog header="Solicitar Cita" showEffect="fade" modal="true"
+                <p:dialog header="Solicitar Cita" showEffect="fade" modal="true"
                                 widgetVar="nuevaCita" responsive="true">
                             
                         <p:outputPanel id="nuevaCita" class="ui-fluid">
@@ -74,7 +51,6 @@
 
                         </f:facet>
                     </p:dialog>
-                </h:form>
             </ui:define>
 
         </ui:composition>
