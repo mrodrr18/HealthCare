@@ -12,7 +12,14 @@
 
             <ui:define name="content">
                 <h:form>
-                     
+                    <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Inicio" icon="pi pi-home" process="@this" ajax="false"
+                                    action="#{pacienteController.irAlInicio()}" immediate="true" 
+                                   styleClass="ui-button-raised" style="margin-left: .42rem" >
+                        </p:commandButton>
+                         <h1>LISTADO DE MÉDICOS</h1>
+                         <p:messages showDetail="true"/>
+                     </p:panelGrid>
                     <p:dataView id="medicosDisponibles" var="medico" value="#{medicoController.listaMedicos}" layout="grid">
                         <p:dataViewGridItem>
                             <p:card style="width: 18em">

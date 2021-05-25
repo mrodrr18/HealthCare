@@ -64,6 +64,12 @@ public class PacienteController implements Serializable{
         }*/
     }
     
+    public String irAlInicio(){
+        return "/privado/paciente/inicioPaciente?faces-redirect=true";
+    }
+    public String solicitarCita(){
+        return "/privado/paciente/solicitarCita?faces-redirect=true";
+    }
     public String verMedicos(){
         return "/privado/paciente/listaMedicos?faces-redirect=true";
     }

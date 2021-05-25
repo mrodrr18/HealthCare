@@ -13,44 +13,56 @@
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-                <p:dialog header="Solicitar Cita" showEffect="fade" modal="true"
-                                widgetVar="nuevaCita" responsive="true">
+                <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Citas" icon="pi pi-fw pi-calendar-times" process="@this" ajax="false"
+                                      action="#{pacienteController.verCitas()}" immediate="true" 
+                                   styleClass="ui-button-success" style="margin-left: 1%">
+                   </p:commandButton>
+                    <h1>FORMULARIO PARA SOLICITAR UNA CITA</h1>
+                    <p:messages showDetail="true"/>
+                </p:panelGrid>
+                <p:fieldset legend="Nueva Cita">
+                        <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent">
                             
-                        <p:outputPanel id="nuevaCita" class="ui-fluid">
-                            <p:outputPanel>
-                                <h:form>
-                                    <div class="p-field">
-                                        <p:outputLabel for="fecha_add">Fecha</p:outputLabel>
-                                        <p:datePicker  value="#{citasController.nuevo.fecha}" 
+                            <p:outputLabel for="txtFecha" value="Fecha: "/>
+                            <p:datePicker  value="#{citasController.nuevo.fecha}" 
                                                        pattern="dd/MM/yyyy" locale="es"
-                                             required="true" id="fecha_add"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="causa_add">Causa</p:outputLabel>
-                                        <p:inputTextarea id="causa_add" value="#{citasController.nuevo.causa}" required="true"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="urgencia_add">Urgencia</p:outputLabel>
-                                        <p:selectOneMenu id="urgencia_add" value="#{citasController.nuevo.urgente}">
-                                            <f:selectItem itemLabel="Seleccione una opción" itemValue=""/>
+                                             required="true" id="txtFecha" requiredMessage="La fecha es un campo obligatorio"/>
+                                             
+                                         <p:message for="txtFecha"/>
+                            <p:outputLabel for="txtEspecialidad" value="Especialidad del médico: "/>
+            
+                            <p:selectOneRadio id="txtEspecialidad"  unselectable="true">
+                                <f:selectItem itemLabel="Cardiología" itemValue="Cardiologia"/>
+                                <f:selectItem itemLabel="Neurología" itemValue="Neurologia"/>
+                                <f:selectItem itemLabel="Médico de familia" itemValue="Familia"/>
+                                <f:selectItem itemLabel="Traumatología" itemValue="Traumatologia"/>
+                            </p:selectOneRadio>
+                            <p:message for="txtEspecialidad"/>
+                            
+                            <p:outputLabel for="txtCausa" value="Causa: "/>
+                            
+                            <p:inputTextarea value="#{citasController.nuevo.causa}" required="true" requiredMessage="La causa es un campo obligatorio"
+                                         id="txtCausa"/>
+                                         <p:message for="txtCausa"/>
+                                         
+                            <p:outputLabel for="txtUrgencia" value="Urgente: "/>
+                            <p:selectOneMenu id="txtUrgencia" value="#{citasController.nuevo.urgente}" required="true" requiredMessage="El urgencia de la cita es un campo obligatorio">
+                                            
                                             <f:selectItem itemLabel="Sí" itemValue="1"/>
                                             <f:selectItem itemLabel="No" itemValue="0"/>
+                                            <f:selectItem itemLabel="Seleccione una opción" itemValue=""/>
                                         </p:selectOneMenu>
+                            
+                                         <p:message for="txtUrgencia"/>
+                            
+                        </p:panelGrid>
+                    </p:fieldset>
+                    
 
-                                    </div>
-                                </h:form>
-                            </p:outputPanel>
-                        </p:outputPanel>
-
-                        <f:facet name="footer">
-
-                            <p:commandButton value="Guardar" process="@this" icon="pi pi-check" action="#{citasController.guardarNuevacita()}"
-                                             ajax="false"  />
-                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
-                                             class="ui-button-secondary"/>
-
-                        </f:facet>
-                    </p:dialog>
+                <p:commandButton value="Guardar" update="@form" action="#{citasController.guardarNuevacita()}"></p:commandButton>
+               
+                                       
             </ui:define>
 
         </ui:composition>

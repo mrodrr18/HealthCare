@@ -12,6 +12,18 @@
             <ui:define name="content">
                 <h:form>
                     <div class="card">
+                        <p:toolbar>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Nueva Cita" icon="pi pi-plus" ajax="false" process="@this" action="#{pacienteController.solicitarCita()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup style="margin-right: 10%">
+                                Citas del Paciente
+                                
+                            </p:toolbarGroup>
+                        </p:toolbar>
                         <p:dataTable var="cita" value="#{citasController.listaCitas}">
                              <p:column headerText="Fecha">
                                  <h:outputText value="#{cita.fecha}" />
