@@ -11,6 +11,13 @@
 
             <ui:define name="content">
                 <h:form>
+                    <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Inicio" icon="pi pi-home" process="@this" ajax="false"
+                                    action="#{pacienteController.irAlInicio()}" immediate="true" 
+                                   styleClass="ui-button-raised" style="margin-left: 1%" >
+                        </p:commandButton>
+                         <p:messages showDetail="true"/>
+                     </p:panelGrid>
                     <div class="card">
                         <p:toolbar>
                             

@@ -71,6 +71,10 @@ public class MedicoController implements Serializable{
      public String cancelarCita(){
         return "/privado/medico/cancelarCitaMedico?faces-redirect=true";
     }
+    
+     public String irAlInicio(){
+        return "/privado/medico/inicioMedico?faces-redirect=true";
+    }
      
     public String verPacientes(){
         return "/privado/medico/listadoPacientes?faces-redirect=true";

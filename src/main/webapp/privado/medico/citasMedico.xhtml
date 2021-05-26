@@ -11,6 +11,14 @@
 
             <ui:define name="content">
                 <h:form>
+                     <p:toolbar>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Inicio" icon="pi pi-home" ajax="false"  process="@this" action="#{medicoController.irAlInicio()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                     </p:toolbar>
                     <div class="card">
                         <p:toolbar>
                             
