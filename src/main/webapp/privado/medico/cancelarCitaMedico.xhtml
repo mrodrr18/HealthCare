@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="3" layout="grid">
+                     <p:commandButton value="Citas" icon="pi pi-fw pi-calendar-times" process="@this" ajax="false"
+                                      action="#{medicoController.verCitas()}" immediate="true" 
+                                   styleClass="ui-button-success" style="margin-left: 1%">
+                   </p:commandButton>
+                    <h1>FORMULARIO PARA CANCELAR UNA CITA</h1>
+                    <p:messages showDetail="true"/>
+                </p:panelGrid>
+                    
+                    <p:fieldset legend="Seleccione el horario la cita que desea cancelar">
+                        <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
+                            <p:outputLabel for="lista_cancelar" value="Fecha:"/>
+                            <p:selectOneMenu id="lista_cancelar"  value="#{citasController.listaCitas}" required="true" requiredMessage="Es obligatorio seleccionar una cita"
+                                             panelStyle="width:180px" var="c" filter="true" filterMatchMode="startsWith" >
+                                <f:selectItems value="#{citasController.listaCitas}" var="cita" itemLabel="#{cita.fecha}" itemValue="#{cita}" />
+                                
+                            </p:selectOneMenu>
+                                         <p:message for="lista_cancelar"/>
+                            
+                        </p:panelGrid>
+                    </p:fieldset>
+                    
+
+                <p:commandButton value="Cancelar Cita" update="@form" action="#{citasController.borrarcita()}"></p:commandButton>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

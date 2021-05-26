@@ -11,6 +11,14 @@
 
             <ui:define name="content">
                 <h:form>
+                    <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Inicio" icon="pi pi-home" process="@this" ajax="false"
+                                    action="#{pacienteController.irAlInicio()}" immediate="true" 
+                                   styleClass="ui-button-raised" style="margin-left: 1%" >
+                        </p:commandButton>
+                        <h1> Historial del paciente </h1>
+                         <p:messages showDetail="true"/>
+                     </p:panelGrid>
                     <div class="card">
                         <p:dataTable var="h" value="#{historialController.listaHistorial}">
                              <p:column headerText="Fecha">

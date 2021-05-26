@@ -11,6 +11,13 @@
 
             <ui:define name="content">
                 <h:form>
+                    <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Inicio" icon="pi pi-home" process="@this" ajax="false"
+                                    action="#{pacienteController.irAlInicio()}" immediate="true" 
+                                   styleClass="ui-button-raised" style="margin-left: 1%" >
+                        </p:commandButton>
+                         <p:messages showDetail="true"/>
+                     </p:panelGrid>
                     <div class="card">
                         <p:toolbar>
                             
@@ -22,6 +29,12 @@
                             <p:toolbarGroup style="margin-right: 10%">
                                 Citas del Paciente
                                 
+                            </p:toolbarGroup>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Cancelar Cita" icon="pi pi-minus" ajax="false" process="@this" action="#{pacienteController.cancelarCita()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
                         <p:dataTable var="cita" value="#{citasController.listaCitas}">
@@ -35,6 +48,10 @@
 
                            <p:column headerText="Urgencia">
                                <h:outputText value="#{cita.urgente}" />
+                            </p:column>
+                            
+                            <p:column headerText="Médico">
+                               <h:outputText value="medico_añadir" />
                             </p:column>
                            
                         </p:dataTable>

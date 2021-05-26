@@ -14,8 +14,18 @@
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
-               
-                    <h1>FORMULARIO DE REGISTRO COMO PACIENTE EN HEALTHCARE</h1>
+                     <p:toolbar>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Inicio" icon="pi pi-home"  process="@this" action="#{medicoController.irAlInicio()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup style="margin-right: 10%">
+                             
+                                <h1>FORMULARIO DE REGISTRO COMO PACIENTE EN HEALTHCARE</h1>
+                            </p:toolbarGroup>
+                     </p:toolbar>
                     <p:fieldset legend="Datos personales">
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             
