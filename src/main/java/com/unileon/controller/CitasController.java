@@ -50,6 +50,11 @@ public class CitasController implements Serializable{
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita añadida correctamente"));
         System.out.println("Nueva cita guardada");
     }
+     
+     public void borrarcita(){
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));
+        System.out.println("Cita cancelada: "+nuevo.getFecha());
+    }
 
     public List<Cita> getListaCitas() {
         return listaCitas;

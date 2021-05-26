@@ -23,6 +23,12 @@
                                 Citas del Paciente
                                 
                             </p:toolbarGroup>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Cancelar Cita" icon="pi pi-minus" ajax="false" process="@this" action="#{pacienteController.cancelarCita()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
                         </p:toolbar>
                         <p:dataTable var="cita" value="#{citasController.listaCitas}">
                              <p:column headerText="Fecha">
@@ -35,6 +41,10 @@
 
                            <p:column headerText="Urgencia">
                                <h:outputText value="#{cita.urgente}" />
+                            </p:column>
+                            
+                            <p:column headerText="Médico">
+                               <h:outputText value="medico_añadir" />
                             </p:column>
                            
                         </p:dataTable>

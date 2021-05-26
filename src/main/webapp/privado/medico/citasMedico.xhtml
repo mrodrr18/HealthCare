@@ -12,6 +12,24 @@
             <ui:define name="content">
                 <h:form>
                     <div class="card">
+                        <p:toolbar>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Nueva Cita" icon="pi pi-plus" ajax="false" process="@this" action="#{medicoController.solicitarCita()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup style="margin-right: 10%">
+                                Citas del Paciente
+                                
+                            </p:toolbarGroup>
+                            
+                            <p:toolbarGroup style="margin-left: 1%">
+                                <p:commandButton value="Cancelar Cita" icon="pi pi-minus" ajax="false" process="@this" action="#{medicoController.cancelarCita()}"
+                                                 styleClass="ui-button-success" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
                         <p:dataTable var="cita" value="#{citasController.listaCitas}">
                              <p:column headerText="Fecha">
                                  <h:outputText value="#{cita.fecha}" />
@@ -32,6 +50,7 @@
                         </p:dataTable>
                     </div>
                 </h:form>
+                
             </ui:define>
 
         </ui:composition>
