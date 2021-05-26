@@ -15,7 +15,9 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -31,6 +33,8 @@ public class PacienteController implements Serializable{
     
     private String nombreCompleto;
     
+    private String nombreUsuario;
+    
     private String n;
     
     @EJB
@@ -45,23 +49,21 @@ public class PacienteController implements Serializable{
         
     }
     
-    public void buscar(){
+    public String buscar(){
         //String[] partes = this.nombreCompleto.split(" ");
-        System.out.println("El nombre es " + this.nombreCompleto );
-        this.listaPacientes = usuarioEJB.buscarNombre(this.nombreCompleto);
-        System.out.println("Tam: "+this.listaPacientes.size());
-        /*if(partes.length == 0) this.listaPacientes = usuarioEJB.buscarNombre(partes[0]);
+        System.out.println("El nombre es " + this.nombreUsuario );
+        Usuario paciente = usuarioEJB.buscarUser(nombreUsuario);
+        if (paciente == null || paciente.getTipo() != 2){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","El nombre de usuario introducido no pertenece a un paciente."));
+            return "/privado/medico/listadoPacientes?faces-redirect=true";
+        }
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","El nombre de usuario introducido es correcto."));
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("paciente", paciente);
+            return "/privado/medico/verPaciente?faces-redirect=true";            
+        }
         
-        else if(partes.length == 2) this.listaPacientes = usuarioEJB.buscarApellido1(partes[0], partes[1]);
-        
-        else if(partes.length == 3) this.listaPacientes = usuarioEJB.buscarApellido2(partes[0], partes[1], partes[2]);
-        
-        else if(partes.length > 3) this.listaPacientes = null;
-        
-        System.out.println("Entro a buscar " + partes.length + nombreCompleto);
-        if(partes.length==0){
-           this.listaPacientes = usuarioEJB.listarPacientes();
-        }*/
+
     }
     
     public String irAlInicio(){
@@ -121,9 +123,17 @@ public class PacienteController implements Serializable{
     public void setN(String n) {
         this.n = n;
     }
-    
-    
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+    
+    
+    
     
     
 }

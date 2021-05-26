@@ -40,6 +40,9 @@ public class Usuario implements Serializable{
     @Column(name="tipo")
     private int tipo;
     
+    @Column(name="especialidad")
+    private String especialidad;
+    
     @JoinColumn(name="idPersona")
     @OneToOne(cascade=CascadeType.PERSIST)
     private Persona persona;
@@ -84,14 +87,23 @@ public class Usuario implements Serializable{
         this.persona = persona;
     }
 
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + this.idUsuario;
-        hash = 97 * hash + Objects.hashCode(this.user);
-        hash = 97 * hash + Objects.hashCode(this.password);
-        hash = 97 * hash + this.tipo;
-        hash = 97 * hash + Objects.hashCode(this.persona);
+        int hash = 5;
+        hash = 67 * hash + this.idUsuario;
+        hash = 67 * hash + Objects.hashCode(this.user);
+        hash = 67 * hash + Objects.hashCode(this.password);
+        hash = 67 * hash + this.tipo;
+        hash = 67 * hash + Objects.hashCode(this.especialidad);
+        hash = 67 * hash + Objects.hashCode(this.persona);
         return hash;
     }
 
@@ -119,11 +131,16 @@ public class Usuario implements Serializable{
         if (!Objects.equals(this.password, other.password)) {
             return false;
         }
+        if (!Objects.equals(this.especialidad, other.especialidad)) {
+            return false;
+        }
         if (!Objects.equals(this.persona, other.persona)) {
             return false;
         }
         return true;
     }
+    
+    
     
     
     

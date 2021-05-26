@@ -78,6 +78,13 @@ public class InventarioController implements Serializable{
         System.out.println("Cambiar editar Producto");
         editar = i;
     }
+    
+    public String irAlInicio(){
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if(us.getTipo() == 3) return "Devolver la ruta del administrador";
+        else if(us.getTipo() == 1) return "Devolver la ruta del auxiliar";
+        else return "Llevar al index o al no hay privilegios";
+    }
    
     public String borrarProducto() {
         //this.inventarioEJB.remove(nuevo);

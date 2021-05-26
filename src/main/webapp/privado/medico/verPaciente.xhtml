@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Inicio" icon="pi pi-home" process="@this" ajax="false"
+                                    action="#{verPacienteController.irAlInicio()}" immediate="true" 
+                                   styleClass="ui-button-raised" style="margin-left: 1%" >
+                        </p:commandButton>
+                        <h1> Historial del paciente #{verPacienteController.paciente.user}</h1>
+                         <p:messages showDetail="true"/>
+                     </p:panelGrid>
+                    <div class="card">
+                        <p:dataTable var="h" value="#{verPacienteController.listaHistorial}">
+                             <p:column headerText="Fecha">
+                                <h:outputText value="#{h.fechaModificacion}" />
+                            </p:column>
+
+                            <p:column headerText="Síntomas">
+                                <h:outputText value="#{h.sintomas}" />
+                            </p:column>
+
+                           <p:column headerText="Diagnóstico">
+                               <h:outputText value="#{h.diagnostico}" />
+                            </p:column>
+
+                            <p:column headerText="Tratamiento">
+                                <h:outputText value="#{h.tratamiento}" />
+                            </p:column>
+                            
+                            
+                           
+                        </p:dataTable>
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

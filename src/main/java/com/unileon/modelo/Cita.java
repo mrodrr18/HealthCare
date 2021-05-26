@@ -46,6 +46,10 @@ public class Cita implements Serializable{
     @JoinColumn(name="idUsuario")
     @ManyToOne
     private Usuario usuario;
+    
+    @JoinColumn(name="idMedico")
+    @ManyToOne
+    private Usuario medico;
 
     public int getIdCita() {
         return idCita;
@@ -87,14 +91,23 @@ public class Cita implements Serializable{
         this.usuario = usuario;
     }
 
+    public Usuario getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Usuario medico) {
+        this.medico = medico;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.idCita;
-        hash = 97 * hash + Objects.hashCode(this.fecha);
-        hash = 97 * hash + Objects.hashCode(this.causa);
-        hash = 97 * hash + this.urgente;
-        hash = 97 * hash + Objects.hashCode(this.usuario);
+        hash = 79 * hash + this.idCita;
+        hash = 79 * hash + Objects.hashCode(this.fecha);
+        hash = 79 * hash + Objects.hashCode(this.causa);
+        hash = 79 * hash + this.urgente;
+        hash = 79 * hash + Objects.hashCode(this.usuario);
+        hash = 79 * hash + Objects.hashCode(this.medico);
         return hash;
     }
 
@@ -125,9 +138,11 @@ public class Cita implements Serializable{
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
+        if (!Objects.equals(this.medico, other.medico)) {
+            return false;
+        }
         return true;
     }
-    
     
     
 }
