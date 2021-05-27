@@ -14,6 +14,7 @@
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
+                
                      <p:toolbar>
                             
                             <p:toolbarGroup style="margin-left: 1%">
@@ -23,7 +24,7 @@
                             </p:toolbarGroup>
                             <p:toolbarGroup style="margin-right: 10%">
                              
-                                <h1>FORMULARIO DE REGISTRO COMO PACIENTE EN HEALTHCARE</h1>
+                                <h1>LISTADO DE PACIENTES</h1>
                             </p:toolbarGroup>
                      </p:toolbar>
                     <p:fieldset legend="Datos personales">
@@ -32,18 +33,15 @@
                             <p:outputLabel for="txtNombre" value="Nombre de usuario:"/>
                             <p:inputText value="#{pacienteController.nombreUsuario}"  
                                          id="txtNombre"/>
-                                         <p:message for="txtNombre"/>
                             
-                                         <p:commandButton value="Buscar" process=" @parent"  action="#{pacienteController.buscar()}"></p:commandButton>
+                            <p:messages showDetail="true" />
+                            <p:commandButton value="Buscar" process=" @parent" update="@form" action="#{pacienteController.buscar()}"></p:commandButton>
 
                         </p:panelGrid>
                     </p:fieldset>
                     
-                    <p:accordionPanel var="paciente" value="#{pacienteController.listaPacientes}" 
-                                 widgetVar="tablaPacientes" >
-                   
-                        
-                        <p:tab title="#{paciente.persona.nombre}">
+                <p:dataView id="lista_Pacientes" widgetVar="tablaPacientes" var="paciente" value="#{pacienteController.listaPacientes}" layout="grid">
+                        <p:dataViewGridItem>
                             
                             <p:card style="width: 24em" >
                                 
@@ -52,53 +50,17 @@
                                 </f:facet>
                                 
                                     <h:outputText value="#{paciente.persona.nombre} #{paciente.persona.apellido1}" />
-                                
+                                    <p> Usuario HealthCare:  #{paciente.user} </p>
                                 <p> Sexo: #{paciente.persona.sexo} </p>
                                 <p> Dirección Postal: #{paciente.persona.direccion} </p>
                                 <p> Teléfono: #{paciente.persona.telefono} </p>
                                 
-                                <f:facet name="footer" >
-                                    <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
-                                                     process="@this" action="#{listadoPacientesController.irANuevoDiagnostico()}"
-                                                 styleClass="ui-button-success" />
-                                    
-                                    
-                                </f:facet>
-                            </p:card>
-                        </p:tab>
-                    </p:accordionPanel>
-                        
-                 <p:dialog header="Nuevo Diagnostico" showEffect="fade" modal="true"
-                                widgetVar="addDiag" responsive="true">
-                            
-                            <p:outputPanel id="add-product-content" class="ui-fluid">
-                                <p:outputPanel>
-                                    
-                                    <div class="p-field">
-                                        <p:outputLabel for="txtUser" value="Nombre de usuario:"/>
-                                        <p:inputText value="#{historialController.nuevo.sintomas}" required="true" id="txtUser"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="diagnostico_add">Dignostico</p:outputLabel>
-                                        <p:inputTextarea id="diagnostico_add" value="#{historialController.nuevo.diagnostico}" required="true"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="tratamiento_add">Tratamiento</p:outputLabel>
-                                        <p:inputTextarea id="tratamiento_add" value="#{historialController.nuevo.tratamiento}" required="true"/>
-                                    </div>
-                                </p:outputPanel>
-                            </p:outputPanel>
-
-                            <f:facet name="footer">
                                 
-                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check"  action="#{historialController.guardarNuevo()}"
-                                                   />
-                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
-                                                 class="ui-button-secondary"/>
-
-                            </f:facet>
-                        </p:dialog>
-                   
+                            </p:card>
+                        </p:dataViewGridItem>
+                </p:dataView>
+                        
+                 
                    
                 
             </ui:define>

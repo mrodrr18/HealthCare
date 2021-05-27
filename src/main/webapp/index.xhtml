@@ -24,12 +24,12 @@
                     
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                                 <p:outputLabel value="Nombre de usuario: "/>
-                                <p:inputText value="#{indexController.usuario.user}" required="true" requiredMessage="Completa el nombre de usuario para iniciar sesión"
+                                <p:inputText value="#{indexController.usuario.user}" 
                                              id="txtNombre"/>
                                 <p:message for="txtNombre"/>
 
                                 <p:outputLabel value="Contraseña: "/>
-                                <p:password id="contra1" value="#{indexController.usuario.password}" required="true" requiredMessage="Introduce tu contraseña para iniciar sesión"/>
+                                <p:password id="contra1" value="#{indexController.usuario.password}" />
                                 <p:message for="contra1"/>
                         </p:panelGrid>
                         <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: flex-end">

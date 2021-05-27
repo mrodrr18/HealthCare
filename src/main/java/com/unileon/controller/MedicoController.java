@@ -76,6 +76,10 @@ public class MedicoController implements Serializable{
         return "/privado/medico/inicioMedico?faces-redirect=true";
     }
      
+     public String irAlHistorialPaciente(){
+         return "/privado/medico/verPaciente?faces-redirect=true";
+     }
+     
     public String verPacientes(){
         return "/privado/medico/listadoPacientes?faces-redirect=true";
     }

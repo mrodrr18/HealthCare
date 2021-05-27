@@ -12,13 +12,14 @@
 
             <ui:define name="content">
                 <p:panelGrid columns="3" layout="grid">
-                     <p:commandButton value="Pacientes" icon="pi pi-fw pi-id-card" process="@this" ajax="false"
-                                      action="#{medicoController.verPacientes()}" immediate="true" 
+                     <p:commandButton value="Paciente" icon="pi pi-fw pi-id-card" process="@this" ajax="false"
+                                      action="#{medicoController.irAlHistorialPaciente()}" immediate="true" 
                                    styleClass="ui-button-success" style="margin-right: .5rem">
                    </p:commandButton>
                     <h1>FORMULARIO PARA AÑADIR UNA RECETA</h1>
                     <p:messages showDetail="true"/>
                 </p:panelGrid>
+                
                     <p:fieldset >
                         <p:panelGrid columns="2"  styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent">
                                 

@@ -55,13 +55,14 @@ public class PacienteController implements Serializable{
         Usuario paciente = usuarioEJB.buscarUser(nombreUsuario);
         if (paciente == null || paciente.getTipo() != 2){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","El nombre de usuario introducido no pertenece a un paciente."));
-            return "/privado/medico/listadoPacientes?faces-redirect=true";
+            
         }
         else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","El nombre de usuario introducido es correcto."));
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("paciente", paciente);
             return "/privado/medico/verPaciente?faces-redirect=true";            
         }
+        return null;
         
 
     }
