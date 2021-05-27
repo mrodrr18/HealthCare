@@ -49,53 +49,17 @@
                                 </f:facet>
                                 
                                     <h:outputText value="#{paciente.persona.nombre} #{paciente.persona.apellido1}" />
-                                
+                                    <p> Usuario HealthCare:  #{paciente.user} </p>
                                 <p> Sexo: #{paciente.persona.sexo} </p>
                                 <p> Dirección Postal: #{paciente.persona.direccion} </p>
                                 <p> Teléfono: #{paciente.persona.telefono} </p>
                                 
-                                <f:facet name="footer" >
-                                    <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
-                                                     process="@this" action="#{listadoPacientesController.irANuevoDiagnostico()}"
-                                                 styleClass="ui-button-success" />
-                                    
-                                    
-                                </f:facet>
+                                
                             </p:card>
                         </p:dataViewGridItem>
                 </p:dataView>
                         
-                 <p:dialog header="Nuevo Diagnostico" showEffect="fade" modal="true"
-                                widgetVar="addDiag" responsive="true">
-                            
-                            <p:outputPanel id="add-product-content" class="ui-fluid">
-                                <p:outputPanel>
-                                    
-                                    <div class="p-field">
-                                        <p:outputLabel for="txtUser" value="Nombre de usuario:"/>
-                                        <p:inputText value="#{historialController.nuevo.sintomas}" required="true" id="txtUser"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="diagnostico_add">Dignostico</p:outputLabel>
-                                        <p:inputTextarea id="diagnostico_add" value="#{historialController.nuevo.diagnostico}" required="true"/>
-                                    </div>
-                                    <div class="p-field">
-                                        <p:outputLabel for="tratamiento_add">Tratamiento</p:outputLabel>
-                                        <p:inputTextarea id="tratamiento_add" value="#{historialController.nuevo.tratamiento}" required="true"/>
-                                    </div>
-                                </p:outputPanel>
-                            </p:outputPanel>
-
-                            <f:facet name="footer">
-                                
-                                <p:commandButton value="Guardar" process="@this" icon="pi pi-check"  action="#{historialController.guardarNuevo()}"
-                                                   />
-                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('addProductDialog').hide()"
-                                                 class="ui-button-secondary"/>
-
-                            </f:facet>
-                        </p:dialog>
-                   
+                 
                    
                 
             </ui:define>

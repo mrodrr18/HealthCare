@@ -14,8 +14,16 @@
         <ui:composition template="./../WEB-INF/Template/plantillaPublico.xhtml">
 
             <ui:define name="content">
+                    <p:panelGrid columns="3" layout="grid" >
+                     <p:commandButton value="Inicio" icon="pi pi-home" process="@this" ajax="false"
+                                    action="#{usuarioController.irAlInicio()}" immediate="true" 
+                                   styleClass="ui-button-raised" style="margin-left: .42rem" >
+                        </p:commandButton>
+                          <h1>FORMULARIO DE REGISTRO COMO PACIENTE EN HEALTHCARE</h1>
+                         <p:messages showDetail="true"/>
+                     </p:panelGrid>
                
-                    <h1>FORMULARIO DE REGISTRO COMO PACIENTE EN HEALTHCARE</h1>
+                   
                     <p:fieldset legend="Datos personales">
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             <p:outputLabel for="txtNombre" value="Nombre:"/>
@@ -89,6 +97,7 @@
                             </p:selectOneMenu>
                             <p:message for="seleccionarTipo"/>
                             
+                             <p:outputLabel for="seleccionarEspecialidad" value="Especialidad del Médico" />
                             <p:selectOneMenu id="seleccionarEspecialidad" value="Especialidad"
                                 hideNoSelectionOption="#{not empty usuarioController.tipoAltaUsuario}"
                                 disabled="#{!usuarioController.tipoActivado()}">
