@@ -33,4 +33,6 @@ public interface CitaFacadeLocal {
     
     List<Cita> buscarCitasMedico(Usuario medico);
     
+    List<Cita> buscarCitasPaciente(Usuario paciente);
+    
 }

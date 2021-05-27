@@ -10,6 +10,7 @@ import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Cita;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,8 @@ import javax.inject.Named;
 @ViewScoped
 public class CitasController implements Serializable{
     
-    private List <Cita> listaCitas;
+    private List <Cita> listaCitasMedico;
+    private List <Cita> listaCitasPaciente;
     private Cita nuevo; 
     private String especialidad;
     
@@ -41,20 +43,16 @@ public class CitasController implements Serializable{
     @PostConstruct
     public void init(){
         nuevo = new Cita();
-        listaCitas = new ArrayList <Cita>();
+        listaCitasMedico = new ArrayList<Cita>();
+        listaCitasPaciente = new ArrayList<Cita>();
+        this.listarCitas();
         
-        Cita c = new Cita();
-        c.setCausa("Dolor de cabeza");
-        c.setUrgente(0);
-        c.setFecha(new Date());
-        listaCitas.add(c);
-        
-        c = new Cita();
-        c.setCausa("Dolor de barriga");
-        c.setUrgente(1);
-        c.setFecha(new Date());
-        listaCitas.add(c);
-        
+    }
+    
+    public void listarCitas(){
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if(us.getTipo() == 0) listaCitasMedico = citaEJB.buscarCitasMedico(us);
+        else if(us.getTipo() == 2) listaCitasPaciente = citaEJB.buscarCitasPaciente(us);
     }
     
      public void guardarNuevacita(){
@@ -62,10 +60,14 @@ public class CitasController implements Serializable{
         try{
             if(us == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/HealthCare/publico/sinPrivilegios.healthcare");
             else if(us.getTipo() == 2){
+                
                 nuevo.setUsuario(us);
                 List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
+                System.out.println(nuevo.getCausa() + medicos.size());
+                //nuevo.setFecha(sdf);
                 //Hacer metodo asignar medico, mirar lo de la fecha y la hora
                 Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
+                System.out.println(nuevo.getFecha());
                 if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
                 else{
                     nuevo.setMedico(medico);
@@ -96,6 +98,7 @@ public class CitasController implements Serializable{
     }
      
     public Usuario asignarMedico(List<Usuario> med, Date fecha){
+        System.out.println(med.size());
         int totalMin = fecha.getMinutes() + fecha.getHours()*60;
         for(int i = 0; i < med.size(); i++){
             List <Cita> citas = citaEJB.buscarCitasMedico(med.get(i));
@@ -118,6 +121,7 @@ public class CitasController implements Serializable{
             }
             
         }
+        System.out.println(med.size());
         return null;
     }
     
@@ -154,14 +158,40 @@ public class CitasController implements Serializable{
         System.out.println("Cita cancelada: "+nuevo.getFecha());
     }
 
-    public List<Cita> getListaCitas() {
-        return listaCitas;
+    public List<Cita> getListaCitasMedico() {
+        return listaCitasMedico;
     }
 
-    public void setListaCitas(List<Cita> listaCitas) {
-        this.listaCitas = listaCitas;
+    public void setListaCitasMedico(List<Cita> listaCitasMedico) {
+        this.listaCitasMedico = listaCitasMedico;
     }
 
+    public List<Cita> getListaCitasPaciente() {
+        return listaCitasPaciente;
+    }
+
+    public void setListaCitasPaciente(List<Cita> listaCitasPaciente) {
+        this.listaCitasPaciente = listaCitasPaciente;
+    }
+
+    public UsuarioFacadeLocal getUsuarioEJB() {
+        return usuarioEJB;
+    }
+
+    public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
+        this.usuarioEJB = usuarioEJB;
+    }
+
+    public CitaFacadeLocal getCitaEJB() {
+        return citaEJB;
+    }
+
+    public void setCitaEJB(CitaFacadeLocal citaEJB) {
+        this.citaEJB = citaEJB;
+    }
+
+    
+    
     public Cita getNuevo() {
         return nuevo;
     }

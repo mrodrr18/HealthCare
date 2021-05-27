@@ -46,4 +46,18 @@ public class CitaFacade extends AbstractFacade<Cita> implements CitaFacadeLocal 
         else return resultado;
     }
     
+    @Override
+    public List<Cita> buscarCitasPaciente(Usuario paciente){
+        String consulta = "FROM Cita c WHERE c.usuario=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", paciente);
+        
+        List<Cita> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
+    }
+    
 }

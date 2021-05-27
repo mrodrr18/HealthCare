@@ -59,12 +59,12 @@
                                         </p:selectOneMenu>
                             
                                          <p:message for="txtUrgencia"/>
-                            
+                            <p:commandButton value="Guardar" update="@form" process="@parent" action="#{citasController.guardarNuevacita()}"></p:commandButton>
+
                         </p:panelGrid>
                     </p:fieldset>
                     
 
-                <p:commandButton value="Guardar" update="@form" action="#{citasController.guardarNuevacita()}"></p:commandButton>
                
                                        
             </ui:define>
