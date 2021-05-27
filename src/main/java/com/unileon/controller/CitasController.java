@@ -96,14 +96,61 @@ public class CitasController implements Serializable{
     }
      
     public Usuario asignarMedico(List<Usuario> med, Date fecha){
+        int totalMin = fecha.getMinutes() + fecha.getHours()*60;
         for(int i = 0; i < med.size(); i++){
             List <Cita> citas = citaEJB.buscarCitasMedico(med.get(i));
+            citas = this.filtrarDia(citas, fecha);
+            citas = this.ordenarCitas(citas);
+            for(int j = 0; j < citas.size(); j++){
+                int hora = citas.get(j).getFecha().getHours();
+                int minutos = citas.get(j).getFecha().getMinutes() + hora*60;
+                if(j != citas.size()-1){
+                    int siguientes = citas.get(j+1).getFecha().getMinutes() + citas.get(j+1).getFecha().getHours()*60;
+                    if(totalMin == minutos) break;
+                    else if(totalMin > minutos && totalMin < siguientes){
+                        if((totalMin - minutos) >= 15 && (siguientes - totalMin) >= 15) return med.get(i);
+                        else break;
+                    }
+                }
+                else{
+                    if(totalMin > minutos && (totalMin - minutos) >= 15) return med.get(i);
+                }
+            }
             
         }
         return null;
     }
-     public void borrarcita(){
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));
+    
+    public List<Cita> filtrarDia(List<Cita> citas, Date dia){
+        List<Cita> resultado = new ArrayList<Cita>();
+        for(int i = 0; i < citas.size(); i++){
+            int y = citas.get(i).getFecha().getYear();
+            int m = citas.get(i).getFecha().getMonth();
+            int d = citas.get(i).getFecha().getDay();
+            if(dia.getDay() == d && dia.getMonth() == m && dia.getYear() == y){
+                resultado.add(citas.get(i));
+            }
+        }
+        return resultado;
+    }
+    
+    public List<Cita> ordenarCitas (List<Cita> lista){
+        for(int i=0;i<(lista.size()-1);i++){
+            for(int j=i+1;j<lista.size();j++){
+                if(lista.get(i).getFecha().after(lista.get(j).getFecha())){
+                    //Intercambiamos valores
+                    Cita aux =lista.get(i);
+                    lista.set(i, lista.get(j));
+                    lista.set(j, aux);
+ 
+                }
+            }
+        }
+        return lista;
+    }
+    
+    public void borrarcita(){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));
         System.out.println("Cita cancelada: "+nuevo.getFecha());
     }
 
