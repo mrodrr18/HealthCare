@@ -6,6 +6,7 @@
 package com.unileon.EJB;
 
 import com.unileon.modelo.Cita;
+import com.unileon.modelo.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface CitaFacadeLocal {
     List<Cita> findRange(int[] range);
 
     int count();
+    
+    List<Cita> buscarCitasMedico(Usuario medico);
     
 }

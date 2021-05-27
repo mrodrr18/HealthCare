@@ -31,13 +31,17 @@
                                              
                                          <p:message for="txtFecha"/>
                             <p:outputLabel for="txtEspecialidad" value="Especialidad del médico: "/>
-            
-                            <p:selectOneRadio id="txtEspecialidad"  unselectable="true">
+                            <p:selectOneMenu id="txtEspecialidad" value="#{citasController.especialidad}">
                                 <f:selectItem itemLabel="Cardiología" itemValue="Cardiologia"/>
                                 <f:selectItem itemLabel="Neurología" itemValue="Neurologia"/>
-                                <f:selectItem itemLabel="Médico de familia" itemValue="Familia"/>
                                 <f:selectItem itemLabel="Traumatología" itemValue="Traumatologia"/>
-                            </p:selectOneRadio>
+                                <f:selectItem itemLabel="Oftalmología" itemValue="Oftalmología"/>
+                                <f:selectItem itemLabel="Médico de familia" itemValue="Médico de familia"/>
+                                <f:selectItem itemLabel="Otorrinolaringología" itemValue="Otorrinolaringología"/>
+                                <f:selectItem itemLabel="Urología" itemValue="Urología"/>
+                                <f:selectItem itemLabel="Ginecología" itemValue="Ginecología"/>    
+                            </p:selectOneMenu>
+                            
                             <p:message for="txtEspecialidad"/>
                             
                             <p:outputLabel for="txtCausa" value="Causa: "/>

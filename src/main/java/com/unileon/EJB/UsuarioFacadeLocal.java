@@ -44,4 +44,6 @@ public interface UsuarioFacadeLocal {
     
     Usuario buscarUser(String user);
     
+    List<Usuario> buscarTipo(int tipo, String especialidad);
+    
 }
