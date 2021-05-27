@@ -23,7 +23,7 @@
                             </p:toolbarGroup>
                             <p:toolbarGroup style="margin-right: 10%">
                              
-                                <h1>FORMULARIO DE REGISTRO COMO PACIENTE EN HEALTHCARE</h1>
+                                <h1>LISTADO DE PACIENTES</h1>
                             </p:toolbarGroup>
                      </p:toolbar>
                     <p:fieldset legend="Datos personales">
@@ -39,11 +39,8 @@
                         </p:panelGrid>
                     </p:fieldset>
                     
-                    <p:accordionPanel var="paciente" value="#{pacienteController.listaPacientes}" 
-                                 widgetVar="tablaPacientes" >
-                   
-                        
-                        <p:tab title="#{paciente.persona.nombre}">
+                <p:dataView id="lista_Pacientes" widgetVar="tablaPacientes" var="paciente" value="#{pacienteController.listaPacientes}" layout="grid">
+                        <p:dataViewGridItem>
                             
                             <p:card style="width: 24em" >
                                 
@@ -65,8 +62,8 @@
                                     
                                 </f:facet>
                             </p:card>
-                        </p:tab>
-                    </p:accordionPanel>
+                        </p:dataViewGridItem>
+                </p:dataView>
                         
                  <p:dialog header="Nuevo Diagnostico" showEffect="fade" modal="true"
                                 widgetVar="addDiag" responsive="true">
