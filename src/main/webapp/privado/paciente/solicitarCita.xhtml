@@ -26,7 +26,7 @@
                             
                             <p:outputLabel for="txtFecha" value="Fecha: "/>
                             <p:datePicker  value="#{citasController.nuevo.fecha}" 
-                                                       pattern="dd/MM/yyyy" locale="es"
+                                           pattern="dd/MM/yyyy" locale="es" showTime="true"
                                              required="true" id="txtFecha" requiredMessage="La fecha es un campo obligatorio"/>
                                              
                                          <p:message for="txtFecha"/>

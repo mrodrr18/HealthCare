@@ -65,7 +65,7 @@ public class CitasController implements Serializable{
                 nuevo.setUsuario(us);
                 List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
                 //Hacer metodo asignar medico, mirar lo de la fecha y la hora
-                Usuario medico = this.asignarMedico(medicos);
+                Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
                 if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
                 else{
                     nuevo.setMedico(medico);
@@ -78,7 +78,7 @@ public class CitasController implements Serializable{
                 nuevo.setUsuario(paciente);
                 List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
                 //Hacer metodo asignar medico, mirar lo de la fecha y la hora
-                Usuario medico = this.asignarMedico(medicos);
+                Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
                 if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
                 else{
                     nuevo.setMedico(medico);
@@ -92,9 +92,10 @@ public class CitasController implements Serializable{
         
             System.out.println("Nueva cita guardada");
         }catch(Exception e){}
+        System.out.println(especialidad + nuevo.getFecha());
     }
      
-    public Usuario asignarMedico(List<Usuario> med){
+    public Usuario asignarMedico(List<Usuario> med, Date fecha){
         for(int i = 0; i < med.size(); i++){
             List <Cita> citas = citaEJB.buscarCitasMedico(med.get(i));
             
