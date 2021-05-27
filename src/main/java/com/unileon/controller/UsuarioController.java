@@ -69,9 +69,9 @@ public class UsuarioController implements Serializable{
     
     public String irAlInicio(){
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        if(us == null) return "Volver al index";
-        else if(us.getTipo() == 3) return "Devolver la ruta del administrador";
-        else return "Llevar a no hay privilegios";
+        if(us == null) return "/index.html?faces-redirect=true";
+        else if(us.getTipo() == 3) return "/privado/administrador/inicioAdministrador?faces-redirect=true";
+        else return "/publico/sinPrivilegios?faces-redirect=true";
     }
 
     public Usuario getUsuario() {

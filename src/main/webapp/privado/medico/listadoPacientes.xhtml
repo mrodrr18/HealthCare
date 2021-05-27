@@ -14,6 +14,7 @@
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
 
             <ui:define name="content">
+                
                      <p:toolbar>
                             
                             <p:toolbarGroup style="margin-left: 1%">
@@ -32,9 +33,9 @@
                             <p:outputLabel for="txtNombre" value="Nombre de usuario:"/>
                             <p:inputText value="#{pacienteController.nombreUsuario}"  
                                          id="txtNombre"/>
-                                         <p:message for="txtNombre"/>
                             
-                                         <p:commandButton value="Buscar" process=" @parent"  action="#{pacienteController.buscar()}"></p:commandButton>
+                            <p:messages showDetail="true" />
+                            <p:commandButton value="Buscar" process=" @parent" update="@form" action="#{pacienteController.buscar()}"></p:commandButton>
 
                         </p:panelGrid>
                     </p:fieldset>

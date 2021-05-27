@@ -81,9 +81,9 @@ public class InventarioController implements Serializable{
     
     public String irAlInicio(){
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        if(us.getTipo() == 3) return "Devolver la ruta del administrador";
-        else if(us.getTipo() == 1) return "Devolver la ruta del auxiliar";
-        else return "Llevar al index o al no hay privilegios";
+        if(us.getTipo() == 3) return "/privado/administrador/inicioAdministrador?faces-redirect=true";
+        else if(us.getTipo() == 1) return "/privado/auxiliar/inicioAuxiliar?faces-redirect=true";
+        else return "/publico/sinPrivilegios?faces-redirect=true";
     }
    
     public String borrarProducto() {
