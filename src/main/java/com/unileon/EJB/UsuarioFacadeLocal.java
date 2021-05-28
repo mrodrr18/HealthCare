@@ -34,6 +34,8 @@ public interface UsuarioFacadeLocal {
     
     List<Usuario> listarPacientes();
     
+    List<Usuario> listarMedicos();
+    
     Usuario buscarId(int id);
     
     List<Usuario> buscarNombre(String nombre);

@@ -30,11 +30,11 @@
                     <p:fieldset legend="Datos personales">
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             
-                            <p:outputLabel for="txtNombre" value="Nombre de usuario:"/>
-                            <p:inputText value="#{pacienteController.nombreUsuario}"  
-                                         id="txtNombre"/>
                             
-                            <p:messages showDetail="true" />
+                            <p:selectOneMenu id="group" value="#{pacienteController.nombreUsuario}" filter="true">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems value="#{pacienteController.nombres}"/>
+                            </p:selectOneMenu>
                             <p:commandButton value="Buscar" process=" @parent" update="@form" action="#{pacienteController.buscar()}"></p:commandButton>
 
                         </p:panelGrid>

@@ -2,9 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    <head>
+        <script library="js" name="calendar.js" />
+    </head>
     <body>
 
         <ui:composition template="./../../WEB-INF/Template/plantillaHealthCare.xhtml">
@@ -12,7 +15,7 @@
             <ui:define name="content">
                 <p:panelGrid columns="3" layout="grid" >
                      <p:commandButton value="Citas" icon="pi pi-fw pi-calendar-times" process="@this" ajax="false"
-                                      action="#{medicoController.verCitas()}" immediate="true" 
+                                      action="#{medicoController.irAHistorial()}" immediate="true" 
                                    styleClass="ui-button-success" style="margin-left: 1%">
                    </p:commandButton>
                     <h1>FORMULARIO PARA SOLICITAR UNA CITA</h1>
@@ -23,16 +26,23 @@
                             
                             <p:outputLabel for="txtFecha" value="Fecha: "/>
                             <p:datePicker  value="#{citasController.nuevo.fecha}" 
-                                                       pattern="dd/MM/yyyy" locale="es" showTime="true"
+                                           pattern="dd/MM/yyyy" locale="es" showTime="true"
                                              required="true" id="txtFecha" requiredMessage="La fecha es un campo obligatorio"/>
                                              
                                          <p:message for="txtFecha"/>
-                            
-                            <p:selectOneMenu id="group" value="#{citasController.nombrePac}" filter="true">
-                                <f:selectItem itemLabel="Select One" itemValue=""/>
-                                <f:selectItems value="#{pacienteController.nombres}"/>
+                            <p:outputLabel for="txtEspecialidad" value="Especialidad del médico: "/>
+                            <p:selectOneMenu id="txtEspecialidad" value="#{citasController.especialidad}">
+                                <f:selectItem itemLabel="Cardiología" itemValue="Cardiologia"/>
+                                <f:selectItem itemLabel="Neurología" itemValue="Neurologia"/>
+                                <f:selectItem itemLabel="Traumatología" itemValue="Traumatologia"/>
+                                <f:selectItem itemLabel="Oftalmología" itemValue="Oftalmología"/>
+                                <f:selectItem itemLabel="Médico de familia" itemValue="Médico de familia"/>
+                                <f:selectItem itemLabel="Otorrinolaringología" itemValue="Otorrinolaringología"/>
+                                <f:selectItem itemLabel="Urología" itemValue="Urología"/>
+                                <f:selectItem itemLabel="Ginecología" itemValue="Ginecología"/>    
                             </p:selectOneMenu>
                             
+                            <p:message for="txtEspecialidad"/>
                             
                             <p:outputLabel for="txtCausa" value="Causa: "/>
                             
@@ -49,13 +59,14 @@
                                         </p:selectOneMenu>
                             
                                          <p:message for="txtUrgencia"/>
-                            
+                            <p:commandButton value="Guardar" update="@form" process="@parent" action="#{citasController.guardarNuevacita()}"></p:commandButton>
+
                         </p:panelGrid>
                     </p:fieldset>
                     
 
-                <p:commandButton value="Guardar" update="@form" action="#{citasController.guardarNuevaCitaMedico()}"></p:commandButton>
                
+                                       
             </ui:define>
 
         </ui:composition>

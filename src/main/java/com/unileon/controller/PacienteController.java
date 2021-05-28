@@ -63,9 +63,10 @@ public class PacienteController implements Serializable{
     
     
     public String buscar(){
-        //String[] partes = this.nombreCompleto.split(" ");
+        System.out.println("Hola");
+        String[] partes = nombreUsuario.split(" ");
         System.out.println("El nombre es " + this.nombreUsuario );
-        Usuario paciente = usuarioEJB.buscarUser(nombreUsuario);
+        Usuario paciente = usuarioEJB.buscarApellido2(partes[0], partes[1], partes[2]).get(0);
         if (paciente == null || paciente.getTipo() != 2){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","El nombre de usuario introducido no pertenece a un paciente."));
             

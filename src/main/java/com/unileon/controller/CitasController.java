@@ -35,6 +35,8 @@ public class CitasController implements Serializable{
     private Cita nuevo; 
     private String especialidad;
     private String nombrePac;
+    private List<Date> fechas;
+    private Cita cancelar;
     
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
@@ -48,10 +50,26 @@ public class CitasController implements Serializable{
         nombrePac = new String();
         listaCitasMedico = new ArrayList<Cita>();
         listaCitasPaciente = new ArrayList<Cita>();
+        fechas = new ArrayList<Date>();
         items = new ArrayList<Character>();
         this.listarCitas();
+        this.listarFechas();
         //this.listarPacientes();
         
+    }
+    
+    public void listarFechas(){
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if(us.getTipo() == 0){
+            for (int i = 0; i < listaCitasMedico.size(); i++) {
+                fechas.add(listaCitasMedico.get(i).getFecha());
+            }
+        }
+        else if(us.getTipo() == 2){
+            for (int i = 0; i < listaCitasPaciente.size(); i++) {
+                fechas.add(listaCitasPaciente.get(i).getFecha());
+            }        
+        }
     }
     
     public void listarCitas(){
@@ -60,38 +78,55 @@ public class CitasController implements Serializable{
         else if(us.getTipo() == 2) listaCitasPaciente = citaEJB.buscarCitasPaciente(us);
     }
     
+    public boolean comprobarCita(Date fecha){
+        for(int i = 0; i < listaCitasPaciente.size(); i++){
+            if(listaCitasPaciente.get(i).getFecha().equals(fecha)) return false;
+        }
+        return true;
+    }
+    
      public void guardarNuevacita(){
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         try{
             if(us == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/HealthCare/publico/sinPrivilegios.healthcare");
             else if(us.getTipo() == 2){
-                
-                nuevo.setUsuario(us);
-                List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
-                System.out.println(nuevo.getCausa() + medicos.size());
-                //nuevo.setFecha(sdf);
-                //Hacer metodo asignar medico, mirar lo de la fecha y la hora
-                Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
-                System.out.println(nuevo.getFecha());
-                if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
+                listaCitasPaciente = citaEJB.buscarCitasPaciente(us);
+                boolean comprobar = comprobarCita(nuevo.getFecha());
+                if(!comprobar) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","El paciente ya tiene una cita a esa hora."));
                 else{
-                    nuevo.setMedico(medico);
-                    citaEJB.create(nuevo);
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita añadida correctamente"));
-                } 
+                    nuevo.setUsuario(us);
+                    List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
+                    System.out.println(nuevo.getCausa() + medicos.size());
+                    //nuevo.setFecha(sdf);
+                    //Hacer metodo asignar medico, mirar lo de la fecha y la hora
+                    Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
+                    System.out.println(nuevo.getFecha());
+                    if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
+                    else{
+                        nuevo.setMedico(medico);
+                        citaEJB.create(nuevo);
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita añadida correctamente"));
+                    } 
+                }
+                
             }
             else if(us.getTipo() == 0){
                 Usuario paciente = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("paciente");
-                nuevo.setUsuario(paciente);
-                List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
-                //Hacer metodo asignar medico, mirar lo de la fecha y la hora
-                Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
-                if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
+                listaCitasPaciente = citaEJB.buscarCitasPaciente(paciente);
+                boolean comprobar = comprobarCita(nuevo.getFecha());
+                if(!comprobar) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","El paciente ya tiene una cita a esa hora."));
                 else{
-                    nuevo.setMedico(medico);
-                    citaEJB.create(nuevo);
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita añadida correctamente"));
-                } 
+                    nuevo.setUsuario(paciente);
+                    List<Usuario> medicos = usuarioEJB.buscarTipo(0, especialidad);
+                    //Hacer metodo asignar medico, mirar lo de la fecha y la hora
+                    Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
+                    if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay médicos disponibles para la fecha solicitada."));
+                    else{
+                        nuevo.setMedico(medico);
+                        citaEJB.create(nuevo);
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita añadida correctamente"));
+                    } 
+                }
             }
             else{
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/HealthCare/publico/sinPrivilegios.healthcare");
@@ -136,11 +171,15 @@ public class CitasController implements Serializable{
         int totalMin = fecha.getMinutes() + fecha.getHours()*60;
         for(int i = 0; i < med.size(); i++){
             List <Cita> citas = citaEJB.buscarCitasMedico(med.get(i));
-            if(citas == null){
+            if(citas == null || citas.isEmpty()){
                 return med.get(i);
             }
             citas = this.filtrarDia(citas, fecha);
+            if(citas == null || citas.isEmpty()){
+                return med.get(i);
+            }
             citas = this.ordenarCitas(citas);
+            System.out.println(citas.size());
             for(int j = 0; j < citas.size(); j++){
                 int hora = citas.get(j).getFecha().getHours();
                 int minutos = citas.get(j).getFecha().getMinutes() + hora*60;
@@ -192,8 +231,21 @@ public class CitasController implements Serializable{
     }
     
     public void borrarcita(){
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));
-        System.out.println("Cita cancelada: "+nuevo.getFecha());
+        /*Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Cita cancelarCita = null;
+        if(us.getTipo() == 0){
+            for (int i = 0; i < listaCitasMedico.size(); i++) {
+                if(listaCitasMedico.get(i).getFecha().equals(cancelar)) cancelarCita = listaCitasMedico.get(i);
+            }
+        }
+        else if(us.getTipo() == 2){
+            for (int i = 0; i < listaCitasPaciente.size(); i++) {
+                if(listaCitasPaciente.get(i).getFecha().equals(cancelar)) cancelarCita = listaCitasPaciente.get(i);
+            }    
+        }
+        citaEJB.remove(cancelarCita);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"))*/
+        System.out.println(cancelar.getFecha());
     }
     
     public void listarPacientes(){
@@ -270,6 +322,22 @@ public class CitasController implements Serializable{
 
     public void setItems(List<Character> items) {
         this.items = items;
+    }
+
+    public List<Date> getFechas() {
+        return fechas;
+    }
+
+    public void setFechas(List<Date> fechas) {
+        this.fechas = fechas;
+    }
+
+    public Cita getCancelar() {
+        return cancelar;
+    }
+
+    public void setCancelar(Cita cancelar) {
+        this.cancelar = cancelar;
     }
     
     

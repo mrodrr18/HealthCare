@@ -5,12 +5,14 @@
  */
 package com.unileon.controller;
 
+import com.unileon.EJB.UsuarioFacadeLocal;
 import com.unileon.modelo.Persona;
 import com.unileon.modelo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -23,45 +25,12 @@ import javax.inject.Named;
 public class MedicoController implements Serializable{
     private List <Usuario> listaMedicos;
     
+    @EJB
+    private UsuarioFacadeLocal usuarioEJB;
+    
     @PostConstruct
     public void init(){
-        listaMedicos = new ArrayList <Usuario> ();
-        
-        Usuario m = new Usuario();
-        Persona p = new Persona();
-        p.setNombre("Pablo");
-        m.setPersona(p);
-        listaMedicos.add(m);
-        
-        m=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        m.setPersona(p);
-        listaMedicos.add(m);
-        
-        m=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        m.setPersona(p);
-        listaMedicos.add(m);
-        
-        m=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        m.setPersona(p);
-        listaMedicos.add(m);
-        
-        m=new Usuario();
-        p= new Persona();
-        
-        p.setNombre("Lucía");
-        p.setApellido1("Martínez");
-        m.setPersona(p);
-        listaMedicos.add(m);
-       
+        listaMedicos = usuarioEJB.listarMedicos();
         
     }
     
@@ -70,6 +39,14 @@ public class MedicoController implements Serializable{
     }
      public String cancelarCita(){
         return "/privado/medico/cancelarCitaMedico?faces-redirect=true";
+    }
+     
+    public String irAHistorial(){
+        return "/privado/medico/verPaciente?faces-redirect=true";
+    }
+    
+    public String solicitarCitaHistorial(){
+        return "/privado/medico/solicitarCitaHistorial?faces-redirect=true";
     }
     
      public String irAlInicio(){
