@@ -98,15 +98,19 @@
                             <p:message for="seleccionarTipo"/>
                             
                              <p:outputLabel for="seleccionarEspecialidad" value="Especialidad del Médico" />
-                            <p:selectOneMenu id="seleccionarEspecialidad" value="Especialidad"
-                                hideNoSelectionOption="#{not empty usuarioController.tipoAltaUsuario}"
+                             <p:selectOneMenu id="seleccionarEspecialidad" value="#{usuarioController.especialidad}"
+                                hideNoSelectionOption="#{not empty usuarioController.especialidad}"
                                 disabled="#{!usuarioController.tipoActivado()}">
                                 
                                 <f:selectItem itemLabel="Selecciona la especialidad del médico" itemValue="#{null}" noSelectionOption="true"/>
                                 <f:selectItem itemLabel="Cardiología" itemValue="Cardiologia"/>
                                 <f:selectItem itemLabel="Neurología" itemValue="Neurologia"/>
-                                <f:selectItem itemLabel="Médico de familia" itemValue="Familia"/>
                                 <f:selectItem itemLabel="Traumatología" itemValue="Traumatologia"/>
+                                <f:selectItem itemLabel="Oftalmología" itemValue="Oftalmología"/>
+                                <f:selectItem itemLabel="Médico de familia" itemValue="Médico de familia"/>
+                                <f:selectItem itemLabel="Otorrinolaringología" itemValue="Otorrinolaringología"/>
+                                <f:selectItem itemLabel="Urología" itemValue="Urología"/>
+                                <f:selectItem itemLabel="Ginecología" itemValue="Ginecología"/>    
                             </p:selectOneMenu>
                             <p:message for="seleccionarTipo"/>
                             

@@ -48,6 +48,9 @@
                             <p:commandButton icon="pi pi-book" value="Nuevo diagnóstico"
                                              process="@this" action="#{listadoPacientesController.irANuevoDiagnostico()}"
                                          styleClass="ui-button-success" />
+                            <p:commandButton value="Nueva Cita" icon="pi pi-plus" ajax="false" process="@this" action="#{medicoController.solicitarCita()}"
+                                                 styleClass="ui-button-success" >
+                            </p:commandButton>
 
 
                         </f:facet>  

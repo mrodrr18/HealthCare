@@ -23,18 +23,16 @@
                             
                             <p:outputLabel for="txtFecha" value="Fecha: "/>
                             <p:datePicker  value="#{citasController.nuevo.fecha}" 
-                                                       pattern="dd/MM/yyyy" locale="es"
+                                                       pattern="dd/MM/yyyy" locale="es" showTime="true"
                                              required="true" id="txtFecha" requiredMessage="La fecha es un campo obligatorio"/>
                                              
                                          <p:message for="txtFecha"/>
-                            <p:outputLabel for="lista_pacientes" value="Paciente: "/>
-            
-                            <p:selectOneMenu id="lista_pacientes"  value="#{pacienteController.listaPacientes}" required="true" requiredMessage="Es obligatorio seleccionar un paciente"
-                                             panelStyle="width:180px" var="p" filter="true" filterMatchMode="startsWith" >
-                                <f:selectItems value="#{pacienteController.listaPacientes}" var="paciente" itemLabel="#{paciente.persona.nombre} #{paciente.persona.apellido1}" itemValue="#{paciente}" />
-                                
+                            
+                                         <p:selectOneMenu id="group" value="#{citasController.nombrePac}" filter="true">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems value="#{pacienteController.nombres}"/>
                             </p:selectOneMenu>
-                            <p:message for="lista_pacientes"/>
+                            
                             
                             <p:outputLabel for="txtCausa" value="Causa: "/>
                             
@@ -56,7 +54,7 @@
                     </p:fieldset>
                     
 
-                <p:commandButton value="Guardar" update="@form" action="#{citasController.guardarNuevacita()}"></p:commandButton>
+                <p:commandButton value="Guardar" update="@form" action="#{citasController.guardarNuevaCitaMedico()}"></p:commandButton>
                
             </ui:define>
 

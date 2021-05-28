@@ -34,7 +34,7 @@ public class Cita implements Serializable{
     private int idCita;
     
     @Column(name="fecha")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     @Column(name="causa")

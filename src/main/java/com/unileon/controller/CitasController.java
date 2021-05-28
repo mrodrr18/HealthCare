@@ -31,8 +31,10 @@ public class CitasController implements Serializable{
     
     private List <Cita> listaCitasMedico;
     private List <Cita> listaCitasPaciente;
+    private List<Character> items;
     private Cita nuevo; 
     private String especialidad;
+    private String nombrePac;
     
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
@@ -43,9 +45,12 @@ public class CitasController implements Serializable{
     @PostConstruct
     public void init(){
         nuevo = new Cita();
+        nombrePac = new String();
         listaCitasMedico = new ArrayList<Cita>();
         listaCitasPaciente = new ArrayList<Cita>();
+        items = new ArrayList<Character>();
         this.listarCitas();
+        //this.listarPacientes();
         
     }
     
@@ -94,7 +99,36 @@ public class CitasController implements Serializable{
         
             System.out.println("Nueva cita guardada");
         }catch(Exception e){}
-        System.out.println(especialidad + nuevo.getFecha());
+    }
+     
+    public void guardarNuevaCitaMedico(){
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        try{
+            if(us == null) FacesContext.getCurrentInstance().getExternalContext().redirect("/HealthCare/publico/sinPrivilegios.healthcare");
+            else {
+                String [] partes = nombrePac.split(" ");
+                System.out.println(partes.length);
+                Usuario paciente = usuarioEJB.buscarApellido2(partes[0], partes[1], partes[2]).get(0);
+                System.out.println(paciente.getUser());
+                nuevo.setUsuario(paciente);
+                List<Usuario> medicos = new ArrayList<Usuario>();
+                medicos.add(us);
+                System.out.println(nuevo.getCausa() + medicos.size());
+                //nuevo.setFecha(sdf);
+                //Hacer metodo asignar medico, mirar lo de la fecha y la hora
+                Usuario medico = this.asignarMedico(medicos, nuevo.getFecha());
+                System.out.println(nuevo.getFecha());
+                if(medico == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay diponibilidad horaria para esa cita."));
+                else{
+                    nuevo.setMedico(medico);
+                    citaEJB.create(nuevo);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita añadida correctamente"));
+                } 
+            }
+            
+        
+            System.out.println("Nueva cita guardada");
+        }catch(Exception e){}
     }
      
     public Usuario asignarMedico(List<Usuario> med, Date fecha){
@@ -102,6 +136,9 @@ public class CitasController implements Serializable{
         int totalMin = fecha.getMinutes() + fecha.getHours()*60;
         for(int i = 0; i < med.size(); i++){
             List <Cita> citas = citaEJB.buscarCitasMedico(med.get(i));
+            if(citas == null){
+                return med.get(i);
+            }
             citas = this.filtrarDia(citas, fecha);
             citas = this.ordenarCitas(citas);
             for(int j = 0; j < citas.size(); j++){
@@ -119,6 +156,7 @@ public class CitasController implements Serializable{
                     if(totalMin > minutos && (totalMin - minutos) >= 15) return med.get(i);
                 }
             }
+            
             
         }
         System.out.println(med.size());
@@ -156,6 +194,16 @@ public class CitasController implements Serializable{
     public void borrarcita(){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));
         System.out.println("Cita cancelada: "+nuevo.getFecha());
+    }
+    
+    public void listarPacientes(){
+        List<Usuario> lista = usuarioEJB.listarPacientes();
+
+        for(int i = 0; i < lista.size(); i++){
+            String nombre = lista.get(i).getPersona().getNombre() + " " + lista.get(i).getPersona().getApellido1() + " " + lista.get(i).getPersona().getApellido2();
+            this.items.add(nombre.charAt(0));
+        }
+        
     }
 
     public List<Cita> getListaCitasMedico() {
@@ -206,6 +254,22 @@ public class CitasController implements Serializable{
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public String getNombrePac() {
+        return nombrePac;
+    }
+
+    public void setNombrePac(String nombrePac) {
+        this.nombrePac = nombrePac;
+    }
+
+    public List<Character> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Character> items) {
+        this.items = items;
     }
     
     

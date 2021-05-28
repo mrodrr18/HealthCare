@@ -31,6 +31,8 @@ public class PacienteController implements Serializable{
     
     private List <Usuario> listaPacientes;
     
+    private List <String>  nombres;
+    
     private String nombreCompleto;
     
     private String nombreUsuario;
@@ -46,8 +48,19 @@ public class PacienteController implements Serializable{
         
         n = new String();
         listaPacientes = usuarioEJB.listarPacientes();
+        nombres = new ArrayList<String>();
+        nombres = this.listarNombres();
         
     }
+    
+    public List<String> listarNombres(){
+        for(int i = 0; i < listaPacientes.size(); i++){
+            nombres.add(listaPacientes.get(i).getPersona().getNombre() + " " + listaPacientes.get(i).getPersona().getApellido1() + " " + listaPacientes.get(i).getPersona().getApellido2());
+        }
+        return nombres;
+    }
+    
+    
     
     public String buscar(){
         //String[] partes = this.nombreCompleto.split(" ");
@@ -131,6 +144,14 @@ public class PacienteController implements Serializable{
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public List<String> getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(List<String> nombres) {
+        this.nombres = nombres;
     }
     
     
