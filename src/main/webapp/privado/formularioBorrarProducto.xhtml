@@ -22,11 +22,11 @@
                     <p:messages showDetail="true"/>
                 </p:panelGrid>
                     
-                    <p:fieldset legend="Escribe el nombre del producto en el campo de texto">
+                    <p:fieldset legend="Seleccione el nombre del producto que desa eliminar">
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             <p:outputLabel for="txtNombre" value="Nombre:"/>
                             <p:selectOneMenu id="txtNombre" value="#{inventarioController.borrar.nombre}" filter="true">
-                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItem itemLabel="Seleccione el producto" itemValue=""/>
                                 <f:selectItems value="#{inventarioController.nombres}"/>
                             </p:selectOneMenu>
                             <p:message for="txtNombre"/>
