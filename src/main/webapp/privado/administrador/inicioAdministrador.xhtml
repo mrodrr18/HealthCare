@@ -14,13 +14,9 @@
                 <h:form>
                     <p:growl id="messages" showDetail="true"/>
                     <p:menubar>
-                        <p:submenu label="Nuevo Usuario" icon="pi pi-fw pi-users">
-                            
-                            <p:menuitem value=" Médico" icon="pi pi-fw pi-user" outcome="#{administradorController.crearUsuario()}"/>
-                            <p:menuitem value=" Auxiliar" icon="pi pi-fw pi-user" outcome="#{administradorController.crearUsuario()}"/>
-                            <p:menuitem value=" Paciente" icon="pi pi-fw pi-user" outcome="#{administradorController.crearUsuario()}"/>
+                        <p:menuitem value="Nuevo Usuario" icon="pi pi-fw pi-users" outcome="#{administradorController.crearUsuario()}">
                            
-                        </p:submenu>
+                        </p:menuitem>
                         
                         <p:menuitem value="Inventario" icon="pi pi-fw pi-list" ajax="false" outcome="#{administradorController.verInventario()}"/>
                         
