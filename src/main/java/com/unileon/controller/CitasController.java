@@ -104,12 +104,18 @@ public class CitasController implements Serializable{
     }
     
     public boolean comprobarCita(Date fecha){
-        if(listaCitasPaciente == null) return true;
-        for(int i = 0; i < listaCitasPaciente.size(); i++){
-            if(listaCitasPaciente.get(i).getFecha().equals(fecha)) return false;
+        boolean resultado = true;
+        if(listaCitasPaciente == null) resultado = true;
+        else{
+            for(int i = 0; i < listaCitasPaciente.size(); i++){
+                if(listaCitasPaciente.get(i).getFecha().equals(fecha)){
+                    resultado = false;
+                }
+            }
         }
-        return true;
+        return resultado;
     }
+    
     
      public void guardarNuevacita(){
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -251,6 +257,7 @@ public class CitasController implements Serializable{
                 if(j != citas.size()-1){
                     int siguientes = citas.get(j+1).getFecha().getMinutes() + citas.get(j+1).getFecha().getHours()*60;
                     if(totalMin == minutos) break;
+                    else if(totalMin < minutos && j == 0 && (minutos-totalMin) >= 15) return med.get(i);
                     else if(totalMin > minutos && totalMin < siguientes){
                         if((totalMin - minutos) >= 15 && (siguientes - totalMin) >= 15) return med.get(i);
                         else break;
@@ -288,6 +295,7 @@ public class CitasController implements Serializable{
                 if(j != citas.size()-1){
                     int siguientes = citas.get(j+1).getFecha().getMinutes() + citas.get(j+1).getFecha().getHours()*60;
                     if(totalMin == minutos) break;
+                    else if(totalMin < minutos && j == 0 && (minutos-totalMin) >= 5) return med.get(i);
                     else if(totalMin > minutos && totalMin < siguientes){
                         if((totalMin - minutos) >= 5 && (siguientes - totalMin) >= 5) return med.get(i);
                         else break;

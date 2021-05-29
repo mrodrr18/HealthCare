@@ -88,24 +88,23 @@ public class RecetaController implements Serializable {
             
             //Todas las recetas
             List<Receta> lista = recetaEJB.findAll();
+            List<Receta> resultado = new ArrayList<Receta>();
             
             //Todos los diagnosticos almacenados a ese paciente
             List<Historial> listaHistoriales = historialEJB.listarDiagnosticos(us);
-            
+            System.out.println("lista historiales" + listaHistoriales.size());
             //Elimino las recetas que no sean de ese paciente
             for(int i = 0; i <lista.size(); i++){
-                boolean encontrado = false;
                 int j = 0;
-                while(j < listaHistoriales.size() && !encontrado){
-                    if(lista.get(i).getHistorial().equals(listaHistoriales.get(j))) encontrado = true;
+                while(j < listaHistoriales.size()){
+                    if(lista.get(i).getHistorial().equals(listaHistoriales.get(j))) resultado.add(lista.get(i));
                     j++;
                 }
-                if (!encontrado) lista.remove(i);
             }
             
             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Recetas listadas","Aviso"));
             
-            return lista;
+            return resultado;
             
         }catch(Exception e){
             System.err.println("Error al listas recetas");
