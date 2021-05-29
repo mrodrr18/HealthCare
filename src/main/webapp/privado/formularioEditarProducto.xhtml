@@ -15,7 +15,7 @@
             <ui:define name="content">
                <p:panelGrid columns="3" layout="grid">
                      <p:commandButton value="Inventario" icon="pi pi-fw pi-list" process="@this" ajax="false"
-                                    action="#{inventarioController.irAlInventario()}" immediate="true" 
+                                    action="#{editarProductoController.irAlInventario()}" immediate="true" 
                                    styleClass="ui-button-success" style="margin-right: .5rem">
                    </p:commandButton>
                     <h1>FORMULARIO PARA EDITAR UN PRODUCTO</h1>
@@ -28,15 +28,15 @@
                                 
                             </p:selectOneMenu-->
                             <p:outputLabel for="txtNombre" value="Nombre:"/>
-                            <p:inputText value="#{inventarioController.editar.nombre}" required="true" requiredMessage="El nombre es un campo obligatorio"
+                            <p:inputText value="#{editarProductoController.editar.nombre}" required="true" requiredMessage="El nombre es un campo obligatorio"
                                          id="txtNombre"/>
                                          <p:message for="txtNombre"/>
                             <p:outputLabel for="txtDescripcion" value="Descripción:"/>
-                            <p:inputText value="#{inventarioController.editar.descripcion}" required="true" requiredMessage="La descripcion es un campo obligatorio"
+                            <p:inputText value="#{editarProductoController.editar.descripcion}" required="true" requiredMessage="La descripcion es un campo obligatorio"
                                          id="txtDescripcion"/>
                                          <p:message for="txtDescripcion"/>
                             <p:outputLabel for="txtUnidades" value="Unidades:"/>
-                            <p:inputNumber value="#{inventarioController.editar.unidades}" required="true" requiredMessage="El número de unidades es un campo obligatorio"
+                            <p:inputNumber value="#{editarProductoController.editar.unidades}" required="true" requiredMessage="El número de unidades es un campo obligatorio"
                                          id="txtUnidades"/>
                                          <p:message for="txtUnidades"/>
                             
@@ -44,7 +44,7 @@
                     </p:fieldset>
                     
 
-                    <p:commandButton value="Guardar" update="@form" action="#{inventarioController.guardarProductoEditado()}"></p:commandButton>
+                    <p:commandButton value="Guardar" update="@form" action="#{editarProductoController.guardarProductoEditado()}"></p:commandButton>
 
                 
             </ui:define>

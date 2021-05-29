@@ -22,10 +22,9 @@
                     <p:fieldset legend="Seleccione el horario la cita que desea cancelar">
                         <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center" style="border:0px none; background-color: transparent; align-content: left">
                             <p:outputLabel for="lista_cancelar" value="Fecha:"/>
-                            <p:selectOneMenu id="lista_cancelar"  value="#{citasController.cancelar}" required="true" requiredMessage="Es obligatorio seleccionar una cita"
-                                             panelStyle="width:180px" var="c" filter="true" filterMatchMode="startsWith" >
-                                <f:selectItems value="#{citasController.listaCitasMedico}" var="cita" itemLabel="#{cita.fecha}" itemValue="#{cita}" />
-                                
+                            <p:selectOneMenu id="lista_cancelar" value="#{citasController.cancelar}" filter="true">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems value="#{citasController.fechas}"/>
                             </p:selectOneMenu>
                                          <p:message for="lista_cancelar"/>
                             
