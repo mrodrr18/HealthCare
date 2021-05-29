@@ -27,12 +27,13 @@
                                              required="true" id="txtFecha" requiredMessage="La fecha es un campo obligatorio"/>
                                              
                                          <p:message for="txtFecha"/>
-                            
-                            <p:selectOneMenu id="group" value="#{citasController.nombrePac}" filter="true">
+                            <p:outputLabel for="group" value="Paciente: "/>
+                            <p:selectOneMenu id="group" value="#{citasController.nombrePac}" filter="true" required="true" requiredMessage="El paciente es un campo obligatorio">
                                 <f:selectItem itemLabel="Select One" itemValue=""/>
                                 <f:selectItems value="#{pacienteController.nombres}"/>
                             </p:selectOneMenu>
-                            
+                            <p:message for="group"/>
+
                             
                             <p:outputLabel for="txtCausa" value="Causa: "/>
                             
