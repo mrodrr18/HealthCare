@@ -26,18 +26,22 @@
                             
                             <p:outputLabel for="txtFecha" value="Fecha: "/>
                             <p:datePicker  value="#{citasController.nuevo.fecha}" 
-                                                       pattern="dd/MM/yyyy" locale="es"
+                                           pattern="dd/MM/yyyy" locale="es" showTime="true"
                                              required="true" id="txtFecha" requiredMessage="La fecha es un campo obligatorio"/>
                                              
                                          <p:message for="txtFecha"/>
                             <p:outputLabel for="txtEspecialidad" value="Especialidad del médico: "/>
-            
-                            <p:selectOneRadio id="txtEspecialidad"  unselectable="true">
+                            <p:selectOneMenu id="txtEspecialidad" value="#{citasController.especialidad}">
                                 <f:selectItem itemLabel="Cardiología" itemValue="Cardiologia"/>
                                 <f:selectItem itemLabel="Neurología" itemValue="Neurologia"/>
-                                <f:selectItem itemLabel="Médico de familia" itemValue="Familia"/>
                                 <f:selectItem itemLabel="Traumatología" itemValue="Traumatologia"/>
-                            </p:selectOneRadio>
+                                <f:selectItem itemLabel="Oftalmología" itemValue="Oftalmología"/>
+                                <f:selectItem itemLabel="Médico de familia" itemValue="Médico de familia"/>
+                                <f:selectItem itemLabel="Otorrinolaringología" itemValue="Otorrinolaringología"/>
+                                <f:selectItem itemLabel="Urología" itemValue="Urología"/>
+                                <f:selectItem itemLabel="Ginecología" itemValue="Ginecología"/>    
+                            </p:selectOneMenu>
+                            
                             <p:message for="txtEspecialidad"/>
                             
                             <p:outputLabel for="txtCausa" value="Causa: "/>
@@ -55,12 +59,12 @@
                                         </p:selectOneMenu>
                             
                                          <p:message for="txtUrgencia"/>
-                            
+                            <p:commandButton value="Guardar" update="@form" process="@parent" action="#{citasController.guardarNuevacita()}"></p:commandButton>
+
                         </p:panelGrid>
                     </p:fieldset>
                     
 
-                <p:commandButton value="Guardar" update="@form" action="#{citasController.guardarNuevacita()}"></p:commandButton>
                
                                        
             </ui:define>

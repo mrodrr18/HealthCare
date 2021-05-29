@@ -28,7 +28,7 @@
                                 </p:commandButton>
                             </p:toolbarGroup>
                             <p:toolbarGroup style="margin-right: 10%">
-                                Citas del Paciente
+                                Citas del Médico
                                 
                             </p:toolbarGroup>
                             
@@ -38,13 +38,13 @@
                                 </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
-                        <p:dataTable var="cita" value="#{citasController.listaCitas}">
+                        <p:dataTable var="cita" value="#{citasController.listaCitasMedico}">
                              <p:column headerText="Fecha">
                                  <h:outputText value="#{cita.fecha}" />
                             </p:column>
                             
                             <p:column headerText="Nombre del paciente">
-                                <h:outputText value="#{cita.usuario.persona.nombre}  #{cita.usuario.persona.nombre}" />
+                                <h:outputText value="#{cita.usuario.persona.nombre}  #{cita.usuario.persona.apellido1} #{cita.usuario.persona.apellido2}" />
                             </p:column>
 
                             <p:column headerText="Causa">

@@ -61,6 +61,20 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
     
     @Override
+    public List<Usuario> listarMedicos(){
+        String consulta = "FROM Usuario u WHERE u.tipo=:param1";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", 0);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
+    }
+    
+    @Override
     public List<Usuario> buscarNombre(String nombre){
         String consulta = "FROM Usuario u WHERE u.persona.nombre=:param1";
         
@@ -86,6 +100,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         
         if(resultado.isEmpty()) return null;
         else return resultado.get(0);
+    }
+    
+    @Override
+    public List<Usuario> buscarTipo(int tipo, String especialidad){
+        String consulta = "FROM Usuario u WHERE u.tipo=:param1 and u.especialidad=:param2";
+        
+        Query query = em.createQuery(consulta);
+        
+        query.setParameter("param1", tipo);
+        
+        query.setParameter("param2", especialidad);
+        
+        List<Usuario> resultado = query.getResultList();
+        
+        if(resultado.isEmpty()) return null;
+        else return resultado;
     }
     
     @Override

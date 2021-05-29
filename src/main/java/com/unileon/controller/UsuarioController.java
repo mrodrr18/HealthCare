@@ -32,15 +32,18 @@ public class UsuarioController implements Serializable{
     
     private String repPass;
     
+    private String especialidad;
+    
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
     
     @PostConstruct
     public void init(){
         usuario = new Usuario();
-        
         persona = new Persona();
         tipoAltaUsuario = "2";
+        especialidad = null;
+       
     }
     
     public void insertarUsuario(){
@@ -49,9 +52,21 @@ public class UsuarioController implements Serializable{
             if(u != null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","El nombre de usuario ya existe."));
             else{
                 usuario.setPersona(persona);
-                usuario.setTipo(Integer.parseInt(tipoAltaUsuario));   
-                usuarioEJB.create(usuario);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","Usuario registrado."));
+                usuario.setTipo(Integer.parseInt(tipoAltaUsuario));  
+                if(usuario.getTipo() == 0){
+                    if(especialidad != null){
+                        usuario.setEspecialidad(especialidad);
+                        usuarioEJB.create(usuario);
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","Usuario registrado."));
+                    }
+                    else{
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","Debes escoger la especialidad del médico."));
+                    }
+                }
+                else{
+                    usuarioEJB.create(usuario);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","Usuario registrado."));
+                }
             }
             
         }catch(Exception e){
@@ -65,6 +80,11 @@ public class UsuarioController implements Serializable{
         if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") == null) return false;
         else return true;
         
+    }
+    
+    public boolean especialidaActivada(){
+        if(Integer.parseInt(tipoAltaUsuario) == 0) return true;
+        else return false;
     }
     
     public String irAlInicio(){
@@ -112,6 +132,14 @@ public class UsuarioController implements Serializable{
 
     public void setRepPass(String repPass) {
         this.repPass = repPass;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
     
     

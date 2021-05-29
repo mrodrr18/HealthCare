@@ -37,7 +37,7 @@
                                 </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
-                        <p:dataTable var="cita" value="#{citasController.listaCitas}">
+                        <p:dataTable var="cita" value="#{citasController.listaCitasPaciente}">
                              <p:column headerText="Fecha">
                                  <h:outputText value="#{cita.fecha}" />
                             </p:column>
@@ -51,7 +51,7 @@
                             </p:column>
                             
                             <p:column headerText="Médico">
-                               <h:outputText value="medico_añadir" />
+                                <h:outputText value="#{cita.medico.especialidad}" />
                             </p:column>
                            
                         </p:dataTable>

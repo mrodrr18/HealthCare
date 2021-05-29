@@ -68,7 +68,7 @@ public class HistorialController implements Serializable{
         
         try{
             //Guardo el historial
-            Usuario us = usuarioEJB.buscarUser(pacienteDiag);
+            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("paciente");
             if(us.getTipo() != 2 || us == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error: El usuario introducido no exite o no es un paciente.","Error"));
             else{
                 nuevo.setUsuario(us);
@@ -90,25 +90,6 @@ public class HistorialController implements Serializable{
         return "/privado/medico/nuevaReceta?faces-redirect=true";
     }
     
-    public void guardarReceta(){
-        //Guardo la receta
-        /*Usuario usuarioR = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        List <Historial> diagnosticos = historialEJB.listarDiagnosticos(usuarioR);
-        
-        //Busco el último diagnostico
-        Historial result = diagnosticos.get(0);
-        for(int i = 0; i < diagnosticos.size(); i++){
-            if(diagnosticos.get(i).getFechaModificacion().compareTo(result.getFechaModificacion()) >= 0) {
-                result = diagnosticos.get(i);
-            }
-        }
-        nuevaReceta.setHistorial(result);
-        nuevaReceta.setUsuario(usuarioR);
-        recetaEJB.create(nuevaReceta);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
-        */System.out.println("Receta creada" + this.pacienteDiag);   
-        
-    }
     
     public Historial getNuevo() {
         return nuevo;

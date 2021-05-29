@@ -56,7 +56,7 @@ public class RecetaController implements Serializable {
         
         try{
             Usuario medico = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            Usuario paciente = usuarioEJB.buscarUser(pacienteR);
+            Usuario paciente = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("paciente");
             List <Historial> diagnosticos = historialEJB.listarDiagnosticos(paciente);
             if(paciente == null || paciente.getTipo() != 2) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error: El usuario introducido no exite o no es un paciente.","Error"));
             else if(diagnosticos.isEmpty()) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error: No hay ningun diagnóstico asociado a ese paciente.","Error"));

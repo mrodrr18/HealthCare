@@ -30,7 +30,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named
 @ViewScoped
-public class InventarioController implements Serializable{
+public class EditarProductoController implements Serializable{
     
     private List<Inventario> listaProductos;
     
@@ -54,20 +54,12 @@ public class InventarioController implements Serializable{
     @PostConstruct
     public void init(){
        listaProductos = inventarioEJB.findAll();
-       nuevo = new Inventario();
-       editar = new Inventario();
-       borrar = new Inventario();
-       nombres = new ArrayList<String>();
-       this.listarNombres();
+       editar = this.recogerEditar();
     }
     
-    public void listarNombres(){
-        try{
-           for(int i = 0; i < listaProductos.size(); i++){
-            nombres.add(listaProductos.get(i).getNombre());
-            } 
-        }catch(Exception e){}
-        
+    public Inventario recogerEditar(){
+        Inventario i = (Inventario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("editar");
+        return i;
     }
     
     public int numeroDeProductos(){
@@ -136,63 +128,8 @@ public class InventarioController implements Serializable{
         return "/privado/inventarioVista?faces-redirect=true";
     }
     
-    public String eliminarProductoInventario(){
-        System.out.println("He eliminado el producto del inventario" + borrar.getNombre());
-        try{
-            if(borrar == null){
-                System.out.println("El producto a borrar es null");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Debes escribir el nombre del producto que quieres eliminar."));
-
-            }
-            else{
-                Inventario i = inventarioEJB.consultarInventario(borrar.getNombre());
-                if (i == null){
-                    System.out.println("El producto no está registrado");
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Ese producto no está registrado."));
-
-                }
-                else{
-                    inventarioEJB.remove(i);
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso."," Producto eliminado correctamente."));
-
-                }
-
-                //System.out.println("He editado el producto" + i.getNombre());
-            }
-        }catch(Exception e){
-            System.err.println("Error al borrar producto");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Error al borrar el producto."));
-
-        }
-        
-        return null;
-    }
     
-    public String nuevoProducto(){
-        try{
-            System.out.println("Entro a nuevo producto");
-            Inventario i = inventarioEJB.consultarInventario(nuevo.getNombre());
-            if (i == null){
-                Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-                nuevo.setUsuario(us);
-                inventarioEJB.create(nuevo);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso: Registro Completado","Aviso"));
-
-            }
-            else{
-                System.out.println("El producto ya existe");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error: El producto ya existe","Error"));
-
-            }
-                        
-        }catch(Exception e){
-            System.err.println("Error al insertar producto");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error."," Error al insertar el producto."));
-
-        }
-        return null;
-        
-    }
+    
     public String editarProducto(){
         System.out.println("HOLA SOY EDITAR");
         return "/privado/escogerProductoEditar?faces-redirect=true";
@@ -210,14 +147,8 @@ public class InventarioController implements Serializable{
     
     public String siguienteEditar(){
         Inventario e = inventarioEJB.consultarInventario(nombreEditar);
-        if(e == null){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error.","No hay productos guardados."));
-            return null;
-        }
-        else{
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("editar", e);
-            return "/privado/formularioEditarProducto?faces-redirect=true";
-        }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("editar", e);
+        return "/privado/formularioEditarProducto?faces-redirect=true";
 
     }
 
