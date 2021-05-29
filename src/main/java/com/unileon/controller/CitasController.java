@@ -78,14 +78,16 @@ public class CitasController implements Serializable{
     
     public void listarCitas(){
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        if(us.getTipo() == 0){
-            listaCitasMedico = citaEJB.buscarCitasMedico(us);
-            listaCitasMedico = this.ordenarCitas(listaCitasMedico);
-        }
-        else if(us.getTipo() == 2){
-            listaCitasPaciente = citaEJB.buscarCitasPaciente(us);
-            listaCitasPaciente = this.ordenarCitas(listaCitasPaciente);
-        }
+        try{
+            if(us.getTipo() == 0){
+                listaCitasMedico = citaEJB.buscarCitasMedico(us);
+                listaCitasMedico = this.ordenarCitas(listaCitasMedico);
+            }
+            else if(us.getTipo() == 2){
+                listaCitasPaciente = citaEJB.buscarCitasPaciente(us);
+                listaCitasPaciente = this.ordenarCitas(listaCitasPaciente);
+            }
+        }catch(Exception e){}
     }
     
     public boolean comprobarHorario(Date fecha){
@@ -316,44 +318,49 @@ public class CitasController implements Serializable{
     }
     
     public List<Cita> ordenarCitas (List<Cita> lista){
-        for(int i=0;i<(lista.size()-1);i++){
-            for(int j=i+1;j<lista.size();j++){
-                if(lista.get(i).getFecha().after(lista.get(j).getFecha())){
-                    //Intercambiamos valores
-                    Cita aux =lista.get(i);
-                    lista.set(i, lista.get(j));
-                    lista.set(j, aux);
- 
+        try{
+            for(int i=0;i<(lista.size()-1);i++){
+                for(int j=i+1;j<lista.size();j++){
+                    if(lista.get(i).getFecha().after(lista.get(j).getFecha())){
+                        //Intercambiamos valores
+                        Cita aux =lista.get(i);
+                        lista.set(i, lista.get(j));
+                        lista.set(j, aux);
+
+                    }
                 }
             }
-        }
+        }catch(Exception e){}
         return lista;
     }
     
     public void borrarcita(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date fecha = null;
-        try{
-            fecha = sdf.parse(cancelar);
-        }catch(ParseException ex){
-            ex.printStackTrace();
-        }
-        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        Cita cancelarCita = null;
-        if(us.getTipo() == 0){
-            for (int i = 0; i < listaCitasMedico.size(); i++) {
-                if(listaCitasMedico.get(i).getFecha().equals(fecha)) cancelarCita = listaCitasMedico.get(i);
+        if(cancelar == null) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error","No hay citas previstas."));        
+        else{
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date fecha = null;
+            try{
+                fecha = sdf.parse(cancelar);
+            }catch(ParseException ex){
+                ex.printStackTrace();
             }
+            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            Cita cancelarCita = null;
+            if(us.getTipo() == 0){
+                for (int i = 0; i < listaCitasMedico.size(); i++) {
+                    if(listaCitasMedico.get(i).getFecha().equals(fecha)) cancelarCita = listaCitasMedico.get(i);
+                }
+            }
+            else if(us.getTipo() == 2){
+                for (int i = 0; i < listaCitasPaciente.size(); i++) {
+                    if(listaCitasPaciente.get(i).getFecha().equals(fecha)) cancelarCita = listaCitasPaciente.get(i);
+                }    
+            }
+            citaEJB.remove(cancelarCita);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));        
+
+            System.out.println(fecha);
         }
-        else if(us.getTipo() == 2){
-            for (int i = 0; i < listaCitasPaciente.size(); i++) {
-                if(listaCitasPaciente.get(i).getFecha().equals(fecha)) cancelarCita = listaCitasPaciente.get(i);
-            }    
-        }
-        citaEJB.remove(cancelarCita);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso","Cita cancelada"));        
-                
-        System.out.println(fecha);
     }
     
     public void listarPacientes(){

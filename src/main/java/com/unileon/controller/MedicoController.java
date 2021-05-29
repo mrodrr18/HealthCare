@@ -32,6 +32,7 @@ public class MedicoController implements Serializable{
     public void init(){
         listaMedicos = usuarioEJB.listarMedicos();
         
+        
     }
     
     public String solicitarCita(){
