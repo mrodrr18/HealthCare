@@ -29,7 +29,7 @@
                                          <p:message for="txtFecha"/>
                             <p:outputLabel for="group" value="Paciente: "/>
                             <p:selectOneMenu id="group" value="#{citasController.nombrePac}" filter="true" required="true" requiredMessage="El paciente es un campo obligatorio">
-                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItem itemLabel="Seleccione el nombre de un paciente" itemValue=""/>
                                 <f:selectItems value="#{pacienteController.nombres}"/>
                             </p:selectOneMenu>
                             <p:message for="group"/>
