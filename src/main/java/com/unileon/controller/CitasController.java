@@ -265,6 +265,7 @@ public class CitasController implements Serializable{
                 }
                 else{
                     if(totalMin > minutos && (totalMin - minutos) >= 15) return med.get(i);
+                    else if(j == 0 && totalMin < minutos && (minutos-totalMin) >= 15) return med.get(i);
                 }
             }
             
@@ -303,6 +304,7 @@ public class CitasController implements Serializable{
                 }
                 else{
                     if(totalMin > minutos && (totalMin - minutos) >= 5) return med.get(i);
+                    else if(j == 0 && totalMin < minutos && (minutos-totalMin) >= 5) return med.get(i);
                 }
             }
             
@@ -314,14 +316,17 @@ public class CitasController implements Serializable{
     
     public List<Cita> filtrarDia(List<Cita> citas, Date dia){
         List<Cita> resultado = new ArrayList<Cita>();
-        for(int i = 0; i < citas.size(); i++){
-            int y = citas.get(i).getFecha().getYear();
-            int m = citas.get(i).getFecha().getMonth();
-            int d = citas.get(i).getFecha().getDay();
-            if(dia.getDay() == d && dia.getMonth() == m && dia.getYear() == y){
-                resultado.add(citas.get(i));
+        try{
+            
+            for(int i = 0; i < citas.size(); i++){
+                int y = citas.get(i).getFecha().getYear();
+                int m = citas.get(i).getFecha().getMonth();
+                int d = citas.get(i).getFecha().getDay();
+                if(dia.getDay() == d && dia.getMonth() == m && dia.getYear() == y){
+                    resultado.add(citas.get(i));
+                }
             }
-        }
+        }catch(Exception e){}
         return resultado;
     }
     

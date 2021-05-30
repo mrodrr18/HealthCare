@@ -64,6 +64,7 @@ public class UsuarioController implements Serializable{
                     }
                 }
                 else{
+                    usuario.setEspecialidad(null);
                     usuarioEJB.create(usuario);
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso.","Usuario registrado."));
                 }
